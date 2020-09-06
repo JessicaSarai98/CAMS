@@ -1,0 +1,25 @@
+C:\Users\Yenier\AppData\Local\Temporary Projects\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.pdb
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.csprojResolveAssemblyReference.cache
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form1.resources
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Properties.Resources.resources
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.csproj.GenerateResource.Cache
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
+D:\Escritorio\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+D:\Documentos\Visual Studio 2012\Projects(CSharp)\BlocNotasToDatagridview\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+D:\Documentos\Visual Studio 2012\Projects(CSharp)\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
+D:\Documentos\Visual Studio 2012\Projects(CSharp)\BlocNotasToDatagridview\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+D:\Escritorio\BlocNotasToDatagridviewEnC#ByYenier\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+D:\Escritorio\BlocNotasToDatagridviewEnC#ByYenier\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
+D:\Escritorio\BlocNotasToDatagridviewEnC#ByYenier\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.pdb
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.csprojAssemblyReference.cache
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form1.resources
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Properties.Resources.resources
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.csproj.GenerateResource.cache
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
+C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
