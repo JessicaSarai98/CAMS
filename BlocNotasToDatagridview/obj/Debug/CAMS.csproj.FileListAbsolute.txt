@@ -7,3 +7,13 @@ C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\o
 C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.GenerateResource.cache
 C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
 C:\Users\Jessica\Documents\BlocNotasToDatagridviewEnC#\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe.config
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.exe
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\bin\Debug\BlocNotasToDatagridview.pdb
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csprojAssemblyReference.cache
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form1.resources
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Properties.Resources.resources
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.GenerateResource.cache
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.ParejasAleatorias.resources

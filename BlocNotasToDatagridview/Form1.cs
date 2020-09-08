@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
 
 namespace BlocNotasToDatagridview
 {
@@ -64,10 +60,66 @@ namespace BlocNotasToDatagridview
         {
             cargarArchivo();
         }
-
+        int contador = 0;
+        string[] nombres = new string[11];
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           
+            if (contador < 10)
+            {
+                contador += 1;
+                string a = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                nombres[contador] = a;
+            }            
+            if(contador == 10)
+            {
+                MessageBox.Show("Usted ya ha seleccionado 10 participantes.");
+                btnTerminar.Visible = true;
+            }
+        }
+
+        Random rnd = new Random();
+        List<int> listaNoRepetidos = new List<int>();
+        int IntialCount;
+        int contValor = 0;
+        ParejasAleatorias Parejas = new ParejasAleatorias();
+        int valor1 = 0;
+        int valor2;
+        private void btnTerminar_Click(object sender, EventArgs e)
+        {
+            listaNoRepetidos.Clear();
+            IntialCount = 1;
+            var result = MessageBox.Show("A continuación se generá la lista de parejas con los " +
+                "participantes seleccionados. ¿Desea continuar?", "Mensaje", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+            {                
+                while (IntialCount <= 10)
+                {
+                    //GENERAMOS EL NÚMERO ALEATORIO
+                    rnd = new Random();
+                    int aux = Convert.ToInt32(rnd.Next(1, contador + 1));
+                    //si no esta en la lista, lo anexamos y sí evitamos que salgan nombres
+                    // o numero repetidos en el algoritmo
+                    if (!listaNoRepetidos.Contains(aux))
+                    {
+                        listaNoRepetidos.Add(aux);
+                        IntialCount++;
+                        contValor++;
+                        if(contValor == 1)
+                        {
+                            valor1 = aux;
+                        }
+                        if(contValor == 2)
+                        {
+                            valor2 = aux;
+                            contValor = 0;
+                            Parejas.TablaParejas.Rows.Add(nombres[valor1], nombres[valor2]);
+                        }
+                    }
+
+                }
+
+                Parejas.Show();
+            }
         }
     }
 }
