@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BlocNotasToDatagridview
 {
@@ -90,7 +89,7 @@ namespace BlocNotasToDatagridview
                     {
                         nombres[i] = null;
                         contador--;
-                        ///MessageBox.Show("" + contador);
+                        //MessageBox.Show("" + contador);
                         encontradoNombre = true;
                         posicion = i;
                     }
@@ -121,7 +120,7 @@ namespace BlocNotasToDatagridview
                 {
                     if (nombres[9].Equals(row.Cells[0].Value.ToString()))
                     {
-                        row.Cells[5].Value = false; 
+                        row.Cells[5].Value = false;
                     }
                     i++; 
                 }
@@ -133,7 +132,6 @@ namespace BlocNotasToDatagridview
             if (contador == 10)
             {
                 btnTerminar.Visible = true;
-                
             }
             else
             {
@@ -152,16 +150,13 @@ namespace BlocNotasToDatagridview
         List<int> listaNoRepetidos = new List<int>();
         int IntialCount;
         int contValor = 0;
-        ParejasAleatorias Parejas = new ParejasAleatorias();
+        ParejasAleatorias Parejas;
         int valor1 = 0;
         int valor2;
-
-        int cont = 0;
 
 
         private void btnTerminar_Click(object sender, EventArgs e)
         {
-
 
             listaNoRepetidos.Clear();
             IntialCount = 1;
@@ -169,6 +164,13 @@ namespace BlocNotasToDatagridview
                 "participantes seleccionados. ¿Desea continuar?", "Mensaje", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (result == DialogResult.OK)
             {
+                if (Parejas == null)
+                {
+                    Parejas = new ParejasAleatorias();
+                    Parejas.Owner = this;
+                    Parejas.FormClosed += Parejas_FormClosed;
+                }
+                else Parejas.Activate();
                 while (IntialCount <= 10)
                 {
                     //GENERAMOS EL NÚMERO ALEATORIO
@@ -194,8 +196,10 @@ namespace BlocNotasToDatagridview
                     }
 
                 }
-
-                Parejas.Show();
+                if (Parejas != null)
+                {
+                    Parejas.Show();
+                }
 
             }
 
@@ -206,6 +210,10 @@ namespace BlocNotasToDatagridview
         private void dataGridView1_CellValeChanged(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+        private void Parejas_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Parejas = null;
         }
 
         private bool encontrado(String[] nombres, String nombre, int contador)
@@ -237,6 +245,17 @@ namespace BlocNotasToDatagridview
                     String aux = nombres[i + 1];
                     nombres[i] = aux;
                 }
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Array.Clear(nombres, 0, 10);
+            btnTerminar.Visible = false;
+            contador = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Cells[5].Value = false;
             }
         }
     }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.TablaParejas = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TablaParejas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,16 +50,6 @@
             this.TablaParejas.Size = new System.Drawing.Size(650, 243);
             this.TablaParejas.TabIndex = 0;
             // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Participante A";
-            this.Column2.Name = "Column2";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Participante B";
-            this.Column1.Name = "Column1";
-            // 
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -71,6 +61,18 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Parejas";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Participante A";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Participante B";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
             // ParejasAleatorias
             // 
@@ -87,8 +89,8 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.DataGridView TablaParejas;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        public System.Windows.Forms.DataGridView TablaParejas;
     }
 }
