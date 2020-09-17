@@ -192,6 +192,7 @@ namespace BlocNotasToDatagridview
                             valor2 = aux;
                             contValor = 0;
                             Parejas.TablaParejas.Rows.Add(nombres[valor1], nombres[valor2]);
+
                         }
                     }
 
