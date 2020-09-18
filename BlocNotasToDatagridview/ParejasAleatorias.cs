@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO; 
 
@@ -26,7 +19,8 @@ namespace BlocNotasToDatagridview
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   //C:\Users\Jessica\Documents\CAMS
+            //karina C:\Users\William carmona\Documents\Servicio Social
             if (!Directory.Exists(@"C:\Users\Jessica\Documents\CAMS"))
             {
                 Directory.CreateDirectory(@"C:\Users\Jessica\Documents\CAMS");
