@@ -200,6 +200,7 @@ namespace BlocNotasToDatagridview
                 if (Parejas != null)
                 {
                     Parejas.Show();
+                    Parejas.setForm1(this); 
                 }
 
             }
@@ -259,6 +260,46 @@ namespace BlocNotasToDatagridview
                 row.Cells[5].Value = false;
             }
         }
+
+        public String escuela(String name)
+        {
+            String esc = null; 
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (name.Equals(row.Cells[0].Value.ToString()))
+                {
+                    return row.Cells[1].Value.ToString(); 
+                }
+            }
+            return esc; 
+        }
+
+        public float calif(String name)
+        {
+            float g = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (name.Equals(row.Cells[0].Value.ToString()))
+                {
+                    return float.Parse(row.Cells[4].Value.ToString());
+                }
+            }
+            return g; 
+        }
+
+        public String estado(String name)
+        {
+            String est = null; 
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (name.Equals(row.Cells[0].Value.ToString()))
+                {
+                    return row.Cells[2].Value.ToString(); 
+                }
+            }
+            return est; 
+        }
+
     }
 }
 

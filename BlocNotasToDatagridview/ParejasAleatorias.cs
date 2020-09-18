@@ -14,7 +14,7 @@ namespace BlocNotasToDatagridview
     public partial class ParejasAleatorias : Form
     {
         String[] escuelas = new string[10];
-        Form1 f; 
+        public Form1 f; 
         public ParejasAleatorias()
         {
             InitializeComponent();
@@ -23,17 +23,6 @@ namespace BlocNotasToDatagridview
         private void ParejasAleatorias_Load(object sender, EventArgs e)
         {
 
-            //for(int i=0; i < f.dataGridView1.Rows.Count; i++)
-            //{
-            //    for(int j=0; j < f.dataGridView1.Columns.Count; j++)
-            //    {
-            //        if ((f.dataGridView1.Rows[i].Cells[j]) == (dataGridView1.Rows[i].Cells[j]))
-            //        {
-            //            string b= f.dataGridView1.CurrentRow.Cells[1].Value.ToString();
-            //            dataGridView1.Rows.Add(b.ToString());
-            //        }
-            //    }
-            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -43,48 +32,48 @@ namespace BlocNotasToDatagridview
                 Directory.CreateDirectory(@"C:\Users\Jessica\Documents\CAMS");
             }
 
-            using (TextWriter tw = new StreamWriter(@"C:\Users\Jessica\Documents\parejas.txt"))
+            using (TextWriter tw = new StreamWriter(@"C:\Users\Jessica\Documents\impresion_parejas.txt"))
             {
                 tw.Write("Participante A:\n");
                 for (int i = 0; i < 5; i++)
                 {
-                    tw.WriteLine($"{TablaParejas.Rows[i].Cells[0].Value.ToString()}");
+                    String escuela = this.f.escuela(TablaParejas.Rows[i].Cells[0].Value.ToString());
+                    tw.WriteLine($"{TablaParejas.Rows[i].Cells[0].Value.ToString()}"+","+escuela);
                 }
-                //tw.Write("Participante A:\n");
-                //tw.WriteLine($"{TablaParejas.Rows[0].Cells[0].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[1].Cells[0].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[2].Cells[0].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[3].Cells[0].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[4].Cells[0].Value.ToString()}");
+            
 
                 tw.Write("\nParticipante B:\n");
                 for(int j = 0; j < 5; j++)
                 {
-                    tw.WriteLine($"{TablaParejas.Rows[j].Cells[1].Value.ToString()}");
+                    String esc = this.f.escuela(TablaParejas.Rows[j].Cells[1].Value.ToString());
+                    tw.WriteLine($"{TablaParejas.Rows[j].Cells[1].Value.ToString()}"+","+esc);
                 }
-                //tw.WriteLine($"{TablaParejas.Rows[0].Cells[1].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[1].Cells[1].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[2].Cells[1].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[3].Cells[1].Value.ToString()}");
-                //tw.WriteLine($"{TablaParejas.Rows[4].Cells[1].Value.ToString()}");
-
-                //for (int i = 0; i < TablaParejas.Rows.Count-1; i++)
-                //{
-                //    tw.Write("Pareja A: ");
-                //    for (int j = 0; j < TablaParejas.Columns.Count; j++)
-                //    {
-
-                //        tw.WriteLine($"{TablaParejas.Rows[i].Cells[j].Value.ToString()}");
-                //        //if (j != TablaParejas.Columns.Count - 1)
-                //        //{
-                //        //    tw.Write("Pareja B: ");
-                //        //}
-
-                //    }
-                //    tw.WriteLine();
-                //}
+                
             }
-            MessageBox.Show("Datos exportados");
+            using (TextWriter w = new StreamWriter(@"C:\Users\Jessica\Documents\parejas.txt"))
+            {
+                for(int k=0; k < TablaParejas.Rows.Count-1; k++)
+                {
+                    for (int m = 0; m < TablaParejas.Columns.Count; m++)
+                    {
+                        string es = this.f.escuela(TablaParejas.Rows[k].Cells[m].Value.ToString());
+                        string estado = this.f.estado(TablaParejas.Rows[k].Cells[m].Value.ToString());
+                        float cal = this.f.calif(TablaParejas.Rows[k].Cells[m].Value.ToString());
+
+                        w.Write($"{TablaParejas.Rows[k].Cells[m].Value.ToString()}" + "," + es + "," + estado+","+cal);
+                        if (m != TablaParejas.Columns.Count - 1)
+                        {
+                            w.Write(";");
+                        }
+                    }
+                    w.WriteLine("\n"); 
+                }
+            }
+                MessageBox.Show("Datos exportados");
+        }
+        public void setForm1(Form1 tabla)
+        {
+            this.f = tabla; 
         }
     }
 }
