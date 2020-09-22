@@ -98,6 +98,7 @@
             this.Controls.Add(this.TablaParejas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ParejasAleatorias";
+            this.Load += new System.EventHandler(this.ParejasAleatorias_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.TablaParejas)).EndInit();
             this.ResumeLayout(false);
 

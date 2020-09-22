@@ -1,11 +1,30 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.IO; 
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace BlocNotasToDatagridview
 {
     public partial class ParejasAleatorias : Form
     {
+
+        [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
+        private static extern IntPtr GetSystemMenu(IntPtr hwnd, int revert);
+
+        [DllImport("user32.dll", EntryPoint = "GetMenuItemCount")]
+        private static extern int GetMenuItemCount(IntPtr hmenu);
+
+        [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
+        private static extern int RemoveMenu(IntPtr hmenu, int npos, int wflags);
+
+        [DllImport("user32.dll", EntryPoint = "DrawMenuBar")]
+        private static extern int DrawMenuBar(IntPtr hwnd);
+
+        private const int MF_BYPOSITION = 0x0400;
+        private const int MF_DISABLED = 0x0002;
+
+        // ...
+
         String[] escuelas = new string[10];
         public Form1 f; 
         public ParejasAleatorias()
@@ -13,20 +32,15 @@ namespace BlocNotasToDatagridview
             InitializeComponent();
         }
 
-        private void ParejasAleatorias_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {   //C:\Users\Jessica\Documents\CAMS
             //karina C:\Users\William carmona\Documents\Servicio Social
-            if (!Directory.Exists(@"C:\Users\Jessica\Documents\CAMS"))
+            if (!Directory.Exists(@"C:\Users\William carmona\Documents\Servicio Social"))
             {
-                Directory.CreateDirectory(@"C:\Users\Jessica\Documents\CAMS");
+                Directory.CreateDirectory(@"C:\Users\William carmona\Documents\Servicio Social");
             }
 
-            using (TextWriter tw = new StreamWriter(@"C:\Users\Jessica\Documents\impresion_parejas.txt"))
+            using (TextWriter tw = new StreamWriter(@"C:\Users\William carmona\Documents\Servicio Social\impresion_parejas.txt"))
             {
                 tw.Write("Participante A:\n");
                 for (int i = 0; i < 5; i++)
@@ -44,7 +58,7 @@ namespace BlocNotasToDatagridview
                 }
                 
             }
-            using (TextWriter w = new StreamWriter(@"C:\Users\Jessica\Documents\parejas.txt"))
+            using (TextWriter w = new StreamWriter(@"C:\Users\William carmona\Documents\Servicio Social\parejas.txt"))
             {
                 for(int k=0; k < TablaParejas.Rows.Count-1; k++)
                 {
@@ -68,6 +82,20 @@ namespace BlocNotasToDatagridview
         public void setForm1(Form1 tabla)
         {
             this.f = tabla; 
+        }
+
+        private void ParejasAleatorias_Load_1(object sender, EventArgs e)
+        {
+            IntPtr hmenu = GetSystemMenu(this.Handle, 0);
+            int cnt = GetMenuItemCount(hmenu);
+
+            // remove 'close' action
+            RemoveMenu(hmenu, cnt - 1, MF_DISABLED | MF_BYPOSITION);
+
+            // remove extra menu line
+            RemoveMenu(hmenu, cnt - 2, MF_DISABLED | MF_BYPOSITION);
+
+            DrawMenuBar(this.Handle);
         }
     }
 }
