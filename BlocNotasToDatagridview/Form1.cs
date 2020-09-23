@@ -50,6 +50,12 @@ namespace BlocNotasToDatagridview
                     chk.HeaderText = "Elegir";
                     dataGridView1.Columns.Add(chk);
 
+                    this.dataGridView1.Columns[0].ReadOnly = true;
+                    this.dataGridView1.Columns[1].ReadOnly = true;
+                    this.dataGridView1.Columns[2].ReadOnly = true;
+                    this.dataGridView1.Columns[3].ReadOnly = true;
+                    this.dataGridView1.Columns[4].ReadOnly = true;
+
 
 
                 }
