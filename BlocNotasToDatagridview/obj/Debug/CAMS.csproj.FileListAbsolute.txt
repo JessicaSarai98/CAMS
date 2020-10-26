@@ -27,3 +27,5 @@ C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotas
 C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.GenerateResource.cache
 C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
 C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.MenuInicio.resources
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas.resources
