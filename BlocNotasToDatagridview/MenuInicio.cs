@@ -33,7 +33,7 @@ namespace BlocNotasToDatagridview
             {
                 DialogResult respuesta = MessageBox.Show("Ya existe el archivo del pase de lista, ¿desea generar uno nuevo y " +
                     "eliminar el actual?", "Mensaje", MessageBoxButtons.OKCancel , MessageBoxIcon.Warning);
-                if (respuesta == DialogResult.Yes)
+                if (respuesta == DialogResult.OK)
                 {
                     if (Form1 == null)
                     {

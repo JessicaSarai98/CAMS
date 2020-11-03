@@ -10,14 +10,11 @@ namespace BlocNotasToDatagridview
         //Instancia de la clase Leer
         Leer l = new Leer();
         //Alamcena la ruta del archivo .txt
-        public string ARCHIVO = "";
-
-        
+        public string ARCHIVO = "";       
 
         public Form1()
         {
-            InitializeComponent();
-           
+            InitializeComponent();           
         }
 
         private void Form1_Load(object sender, EventArgs e)
