@@ -33,8 +33,8 @@ namespace BlocNotasToDatagridview
             listaPreguntas.Enabled = false;
             btnSig.Enabled = false;
             btnPlay.Enabled = true;
-            ParticipanteA.Text = "SALMA EK";
-            participanteB.Text = "KARINA PRUEBA";
+            ParticipanteA.Text = "SALMA SEGUNDO APELLLIDO";
+            participanteB.Text = "KARINA ANGELICA CARMONA VARGAS";
             ronda_pregunta.Text = "Ronda 1 Pregunta 1";
             min = 3;
             seg = 0;

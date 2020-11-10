@@ -94,35 +94,37 @@
             // 
             this.ronda_pregunta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ronda_pregunta.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ronda_pregunta.Font = new System.Drawing.Font("Nirmala UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ronda_pregunta.Location = new System.Drawing.Point(338, 5);
+            this.ronda_pregunta.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ronda_pregunta.Location = new System.Drawing.Point(298, 0);
             this.ronda_pregunta.Name = "ronda_pregunta";
-            this.ronda_pregunta.Size = new System.Drawing.Size(121, 62);
+            this.ronda_pregunta.Size = new System.Drawing.Size(201, 73);
             this.ronda_pregunta.TabIndex = 3;
             this.ronda_pregunta.Text = "Ronda 1 Pregunta\r\n";
             this.ronda_pregunta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // participanteB
             // 
-            this.participanteB.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.participanteB.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.participanteB.AutoSize = true;
-            this.participanteB.Font = new System.Drawing.Font("Nirmala UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.participanteB.Location = new System.Drawing.Point(591, 21);
+            this.participanteB.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.participanteB.Location = new System.Drawing.Point(623, 20);
             this.participanteB.Name = "participanteB";
-            this.participanteB.Size = new System.Drawing.Size(149, 30);
+            this.participanteB.Size = new System.Drawing.Size(174, 32);
             this.participanteB.TabIndex = 2;
             this.participanteB.Text = "Participante 2";
+            this.participanteB.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ParticipanteA
             // 
-            this.ParticipanteA.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ParticipanteA.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ParticipanteA.AutoSize = true;
-            this.ParticipanteA.Font = new System.Drawing.Font("Nirmala UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ParticipanteA.Location = new System.Drawing.Point(58, 21);
+            this.ParticipanteA.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ParticipanteA.Location = new System.Drawing.Point(3, 20);
             this.ParticipanteA.Name = "ParticipanteA";
-            this.ParticipanteA.Size = new System.Drawing.Size(149, 30);
+            this.ParticipanteA.Size = new System.Drawing.Size(174, 32);
             this.ParticipanteA.TabIndex = 0;
             this.ParticipanteA.Text = "Participante 1";
+            this.ParticipanteA.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel1
             // 
@@ -146,6 +148,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
