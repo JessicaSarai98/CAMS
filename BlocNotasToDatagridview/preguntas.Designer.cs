@@ -33,8 +33,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ronda_pregunta = new System.Windows.Forms.Label();
-            this.participanteB = new System.Windows.Forms.Label();
             this.ParticipanteA = new System.Windows.Forms.Label();
+            this.participanteB = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelPreguntas = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -53,6 +53,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtMin = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -80,8 +81,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.Controls.Add(this.ronda_pregunta, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.participanteB, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.ParticipanteA, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.participanteB, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -102,18 +103,6 @@
             this.ronda_pregunta.Text = "Ronda 1 Pregunta\r\n";
             this.ronda_pregunta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // participanteB
-            // 
-            this.participanteB.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.participanteB.AutoSize = true;
-            this.participanteB.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.participanteB.Location = new System.Drawing.Point(623, 20);
-            this.participanteB.Name = "participanteB";
-            this.participanteB.Size = new System.Drawing.Size(174, 32);
-            this.participanteB.TabIndex = 2;
-            this.participanteB.Text = "Participante 2";
-            this.participanteB.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // ParticipanteA
             // 
             this.ParticipanteA.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -125,6 +114,18 @@
             this.ParticipanteA.TabIndex = 0;
             this.ParticipanteA.Text = "Participante 1";
             this.ParticipanteA.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // participanteB
+            // 
+            this.participanteB.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.participanteB.AutoSize = true;
+            this.participanteB.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.participanteB.Location = new System.Drawing.Point(629, 20);
+            this.participanteB.Name = "participanteB";
+            this.participanteB.Size = new System.Drawing.Size(168, 32);
+            this.participanteB.TabIndex = 2;
+            this.participanteB.Text = "Particpante B";
+            this.participanteB.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel1
             // 
@@ -139,6 +140,7 @@
             // 
             // panelPreguntas
             // 
+            this.panelPreguntas.Controls.Add(this.textBox1);
             this.panelPreguntas.Controls.Add(this.pictureBox1);
             this.panelPreguntas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPreguntas.Location = new System.Drawing.Point(0, 73);
@@ -379,6 +381,13 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(119, 45);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 1;
+            // 
             // preguntas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -393,6 +402,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panelPreguntas.ResumeLayout(false);
+            this.panelPreguntas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelOpciones.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -408,8 +418,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label ronda_pregunta;
-        private System.Windows.Forms.Label participanteB;
-        private System.Windows.Forms.Label ParticipanteA;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panelPreguntas;
         private System.Windows.Forms.Panel panelOpciones;
@@ -428,5 +436,8 @@
         private System.Windows.Forms.Label txtMin;
         public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.Label participanteB;
+        public System.Windows.Forms.Label ParticipanteA;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -10,7 +10,10 @@ namespace BlocNotasToDatagridview
         {
             InitializeComponent();
         }
-        string archivo = @"C:\Users\William carmona\Documents\Servicio Social\parejas.txt";
+        string archivo = @"C:\Users\Jessica\Documents\CAMS\CAMS\integrantes.txt";
+        string orden = @"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt";
+        //string archivo = @"C:\Users\William carmona\Documents\Servicio Social\parejas.txt";
+        preguntas preg = new preguntas();
 
         private void MenuInicio_Load(object sender, EventArgs e)
         {
@@ -64,6 +67,11 @@ namespace BlocNotasToDatagridview
                 preguntas = new preguntas();
                 preguntas.Owner = this;
                 preguntas.FormClosed += Form1_FormClosed;
+                
+                StreamReader lector = File.OpenText(orden);
+                
+                preg.participanteB.Text = lector.ReadToEnd();
+                
                 preguntas.Show();
             }
             else Form1.Activate();
