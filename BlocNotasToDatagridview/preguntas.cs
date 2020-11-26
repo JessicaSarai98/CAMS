@@ -15,6 +15,8 @@ namespace BlocNotasToDatagridview
       
         private void preguntas_Load(object sender, EventArgs e)
         {
+            
+
             //var lines = File.ReadLines(@"C: \Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt");
             //foreach(var line in lines)
             //{
@@ -41,8 +43,8 @@ namespace BlocNotasToDatagridview
             //        participanteB.Text = fields[1];
             //    }
             //}
-            
-            
+
+
         }
         int i = 0;
         System.IO.StreamReader file = null;
@@ -65,6 +67,7 @@ namespace BlocNotasToDatagridview
                 ParticipanteA.Text = valores[0];
                 participanteB.Text = valores[1];
                 ronda_pregunta.Text = "Ronda " + valores[2] + "\n Pregunta " + valores[3];
+                
 
             }
             else

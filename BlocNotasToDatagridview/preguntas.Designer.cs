@@ -37,6 +37,7 @@
             this.participanteB = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelPreguntas = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -53,7 +54,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtMin = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -120,11 +121,11 @@
             this.participanteB.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.participanteB.AutoSize = true;
             this.participanteB.Font = new System.Drawing.Font("Nirmala UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.participanteB.Location = new System.Drawing.Point(629, 20);
+            this.participanteB.Location = new System.Drawing.Point(622, 20);
             this.participanteB.Name = "participanteB";
-            this.participanteB.Size = new System.Drawing.Size(168, 32);
+            this.participanteB.Size = new System.Drawing.Size(175, 32);
             this.participanteB.TabIndex = 2;
-            this.participanteB.Text = "Particpante B";
+            this.participanteB.Text = "Participante B";
             this.participanteB.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel1
@@ -140,13 +141,20 @@
             // 
             // panelPreguntas
             // 
-            this.panelPreguntas.Controls.Add(this.textBox1);
             this.panelPreguntas.Controls.Add(this.pictureBox1);
+            this.panelPreguntas.Controls.Add(this.textBox1);
             this.panelPreguntas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPreguntas.Location = new System.Drawing.Point(0, 73);
             this.panelPreguntas.Name = "panelPreguntas";
             this.panelPreguntas.Size = new System.Drawing.Size(800, 329);
             this.panelPreguntas.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(119, 45);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 1;
             // 
             // pictureBox1
             // 
@@ -381,12 +389,10 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // textBox1
+            // contextMenuStrip1
             // 
-            this.textBox1.Location = new System.Drawing.Point(119, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // preguntas
             // 
@@ -439,5 +445,6 @@
         public System.Windows.Forms.Label participanteB;
         public System.Windows.Forms.Label ParticipanteA;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
