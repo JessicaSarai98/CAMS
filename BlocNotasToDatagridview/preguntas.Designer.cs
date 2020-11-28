@@ -37,7 +37,6 @@
             this.participanteB = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelPreguntas = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -142,19 +141,11 @@
             // panelPreguntas
             // 
             this.panelPreguntas.Controls.Add(this.pictureBox1);
-            this.panelPreguntas.Controls.Add(this.textBox1);
             this.panelPreguntas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPreguntas.Location = new System.Drawing.Point(0, 73);
             this.panelPreguntas.Name = "panelPreguntas";
             this.panelPreguntas.Size = new System.Drawing.Size(800, 329);
             this.panelPreguntas.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(119, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
             // 
             // pictureBox1
             // 
@@ -408,7 +399,6 @@
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panelPreguntas.ResumeLayout(false);
-            this.panelPreguntas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelOpciones.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -444,7 +434,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.Label participanteB;
         public System.Windows.Forms.Label ParticipanteA;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

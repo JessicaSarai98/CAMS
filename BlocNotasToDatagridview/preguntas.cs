@@ -48,6 +48,7 @@ namespace BlocNotasToDatagridview
         }
         int i = 0;
         System.IO.StreamReader file = null;
+        System.IO.StreamReader file2 = null;
         private void button1_Click(object sender, EventArgs e)
         {
             funcion1();
@@ -55,19 +56,36 @@ namespace BlocNotasToDatagridview
 
             string line;
 
+            //toma el archivo para mostrar las parejas
             if (file == null)
-                file = new System.IO.StreamReader("C:\\Users\\Jessica\\Documents\\CAMS\\CAMS\\orden_rpp.txt");
+                file = new System.IO.StreamReader("C:\\Users\\Jessica\\Documents\\CAMS\\CAMS\\parejas.txt");
             if (!file.EndOfStream)
             {
                string lines = file.ReadLine();
-               // string a = File.ReadAllLines(@"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt")[i];
-                textBox1.Text = lines;
-                char delimitador = ',';
-                string[] valores = lines.Split(delimitador);
+ 
+                string[] valores = lines.Split(',',';');
                 ParticipanteA.Text = valores[0];
-                participanteB.Text = valores[1];
-                ronda_pregunta.Text = "Ronda " + valores[2] + "\n Pregunta " + valores[3];
+                participanteB.Text = valores[4];
                 
+                
+            }
+            else
+            {
+                MessageBox.Show("Fin del documento");
+                file.Close();
+            }
+
+            //toma el archivo orden_rpp 
+            if(file2==null)
+                file2 = new System.IO.StreamReader("C:\\Users\\Jessica\\Documents\\CAMS\\CAMS\\orden_rpp.txt");
+            if (!file.EndOfStream)
+            {
+                string linea = file2.ReadLine();
+               
+                char delimitador = ',';
+                string[] valores = linea.Split(delimitador);
+                
+                ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
 
             }
             else
