@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Drawing;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using System.IO;
-using Microsoft.VisualBasic.FileIO;
+
 namespace BlocNotasToDatagridview
 {
     public partial class preguntas : Form
@@ -51,23 +52,22 @@ namespace BlocNotasToDatagridview
         System.IO.StreamReader file2 = null;
         private void button1_Click(object sender, EventArgs e)
         {
-            funcion1();
-            
-
-            string line;
+            axAcroPDF1.Visible = false;
+            //se habilitan y se deshabilitan los botones correspondientes
+            listaPreguntas.Enabled = false;
+            btnSig.Enabled = false;
+            btnPlay.Enabled = true;
 
             //toma el archivo para mostrar las parejas
             if (file == null)
-                file = new System.IO.StreamReader("C:\\Users\\Jessica\\Documents\\CAMS\\CAMS\\parejas.txt");
+                file = new System.IO.StreamReader("parejas.txt");
             if (!file.EndOfStream)
             {
-               string lines = file.ReadLine();
- 
+                string lines = file.ReadLine();
+                //muestra los nombres de parejas.txt
                 string[] valores = lines.Split(',',';');
                 ParticipanteA.Text = valores[0];
                 participanteB.Text = valores[4];
-                
-                
             }
             else
             {
@@ -77,16 +77,24 @@ namespace BlocNotasToDatagridview
 
             //toma el archivo orden_rpp 
             if(file2==null)
-                file2 = new System.IO.StreamReader("C:\\Users\\Jessica\\Documents\\CAMS\\CAMS\\orden_rpp.txt");
+                file2 = new System.IO.StreamReader("orden_rpp.txt");
             if (!file.EndOfStream)
             {
-                string linea = file2.ReadLine();
-               
+                //se lee todo el archivo orden_rpp y se dividen las lineas por los comas
+                string linea = file2.ReadLine();               
                 char delimitador = ',';
                 string[] valores = linea.Split(delimitador);
-                
+                //se lee el num de pregunta y de ronda del archivo            
                 ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
-
+                //se asigna el tiempo al cronometro
+                string[] tiempo = valores[4].Split('.');
+                min = Convert.ToInt32(tiempo[0]);
+                seg = Convert.ToInt32(tiempo[1]);
+                txtMin.Text = tiempo[0];
+                txtSeg.Text = tiempo[1];
+                //se asigna la pregunta que se lee del pdf
+                PreguntasPDF(Convert.ToInt32(valores[5]));
+                RespuestasPDF(Convert.ToInt32(valores[6]), Convert.ToInt32(valores[7]));
             }
             else
             {
@@ -95,39 +103,73 @@ namespace BlocNotasToDatagridview
             }
 
         }
+
+        PdfReader reader = null;
+        Document sourceDocument = null;
+        PdfCopy pdfCopyProvider = null;
+        PdfImportedPage importedPage = null;
+        public void RespuestasPDF(int startPage, int endPage)
+        {
+            string sourcePdfPath = "Programas.pdf";
+            string outputPdfPath = "respuesta.pdf";
+            if (File.Exists(outputPdfPath))
+            {
+                System.IO.File.Delete(outputPdfPath);
+            }
+            try
+            {
+                reader = new PdfReader(sourcePdfPath);
+                sourceDocument = new Document(reader.GetPageSizeWithRotation(startPage));
+                pdfCopyProvider = new PdfCopy(sourceDocument,
+                    new System.IO.FileStream(outputPdfPath, System.IO.FileMode.Create));
+                sourceDocument.Open();
+                for (int i = startPage; i <= endPage; i++)
+                {
+                    importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                    pdfCopyProvider.AddPage(importedPage);
+                }
+                sourceDocument.Close();
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void PreguntasPDF(int page)
+        {
+            string sourcePdfPath = "Programas.pdf"; 
+            string outputPdfPath = "pregunta.pdf";
+            if (File.Exists(outputPdfPath))
+            {
+                System.IO.File.Delete(outputPdfPath);
+            }            
+            try {
+                reader = new PdfReader(sourcePdfPath);
+                // se conserva el mismo tamaño de la página
+                sourceDocument = new Document(reader.GetPageSizeWithRotation(page));
+                pdfCopyProvider = new PdfCopy(sourceDocument,
+                    new System.IO.FileStream(outputPdfPath, System.IO.FileMode.Create));
+                sourceDocument.Open();
+                importedPage = pdfCopyProvider.GetImportedPage(reader, page);
+                pdfCopyProvider.AddPage(importedPage);
+                sourceDocument.Close();
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         private void listaPreguntas_SelectedIndexChanged(object sender, EventArgs e)
         {
             funcion1();
-        }
-        //Instancia de la clase Leer
-        Leer l = new Leer();
-        //Alamcena la ruta del archivo .txt
-        string archivo = @"C:\Users\William carmona\Documents\Servicio Social\parejas.txt";
-       
+        }       
         public void funcion1()
         {
             listaPreguntas.Enabled = false;
             btnSig.Enabled = false;
             btnPlay.Enabled = true;
-
-            //if (i == 0)
-            //{
-            //    string a = File.ReadAllLines(@"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt")[i];
-            //    char delimitador = ',';
-            //    string[] valores = a.Split(delimitador);
-            //    ParticipanteA.Text = valores[0];
-            //    participanteB.Text = valores[1];
-            //    ronda_pregunta.Text = "Ronda " + valores[2];
-                
-            //    //ParticipanteA.Text = "SALMA SEGUNDO APELLLIDO";
-            //    //participanteB.Text = "KARINA ANGELICA CARMONA VARGAS";
-            //}
-            
-
-
-            //ronda_pregunta.Text = "Ronda 1 Pregunta 1";
-            min = 3;
-            seg = 0;
             txtMin.Text = "3";
             txtSeg.Text = "00";
         }
@@ -139,8 +181,11 @@ namespace BlocNotasToDatagridview
             tiempo.Start(); 
             timer1.Enabled = true;
             btnPlay.Enabled = false;
-            pictureBox1.Visible = true;
+            //PreguntaImg.Visible = true;
             btnPausa.Enabled = true;
+            //se muestra el pdf con la pregunta
+            axAcroPDF1.Visible = true;
+            axAcroPDF1.LoadFile("pregunta.pdf");
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -149,12 +194,9 @@ namespace BlocNotasToDatagridview
                 min -= 1;
                 seg = 60;
             }
-            seg -= 1;
-            string minutos;
-            string segundos;            
-            if (min == 0 && seg == 0) { seg = 60; }
-            if (min.ToString().Length > 2) { minutos = "0" + min.ToString(); }
-            if (seg.ToString().Length > 2) { segundos = "0" + seg.ToString(); }
+            seg -= 1;        
+            if (min.ToString().Length < 2) { txtMin.Text = "0" + min.ToString(); }
+            if (seg.ToString().Length < 2) { txtSeg.Text = "0" + seg.ToString(); }
             if (min == 0 && seg == 0) { 
                 timer1.Stop();
                 //ejecutar el audio
@@ -170,17 +212,18 @@ namespace BlocNotasToDatagridview
             timer1.Stop();
             tiempo.Stop();
             btnIgual.Enabled = true;
+            btnPausa.Enabled = false;
         }
 
         private void btnIgual_Click(object sender, EventArgs e)
         {
             btnIgual.Enabled = false;
             btnPausa.Enabled = false;
-            pictureBox1.ImageLocation = @"C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\iconos\respuesta.png";
-
-            //pictureBox1.ImageLocation = @"C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\iconos\respuesta.png";
             btnSig.Enabled = true;
             listaPreguntas.Enabled = true;
+            //se muestra el pdf con las respuestas
+            axAcroPDF1.Visible = true;
+            axAcroPDF1.LoadFile("respuesta.pdf");
         }
     }
 }

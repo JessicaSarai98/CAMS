@@ -1,0 +1,5 @@
+1,Pareja A,1,TipoProb,1.10,1,2,2
+2,Pareja B,2,TipoProb,2.3,3,4,5
+3,Pareja A,1,TipoProb,3.5,6,7,7
+4,Pareja B,3,TipoProb,5.3,8,9,12
+5,Pareja A,20,TipoProb,1.5,13,14,16

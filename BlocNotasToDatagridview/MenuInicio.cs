@@ -10,9 +10,8 @@ namespace BlocNotasToDatagridview
         {
             InitializeComponent();
         }
-        string archivo = @"C:\Users\Jessica\Documents\CAMS\CAMS\integrantes.txt";
-        string orden = @"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt";
-        //string archivo = @"C:\Users\William carmona\Documents\Servicio Social\parejas.txt";
+        string orden = "orden_rpp.txt";
+        string archivo = "parejas.txt";
         preguntas preg = new preguntas();
 
         private void MenuInicio_Load(object sender, EventArgs e)
@@ -47,10 +46,17 @@ namespace BlocNotasToDatagridview
                     }
                     else Form1.Activate();
                 }
-                if (respuesta == DialogResult.No)
+            }
+            else
+            {
+                if (Form1 == null)
                 {
-
+                    Form1 = new Form1();
+                    Form1.Owner = this;
+                    Form1.FormClosed += Form1_FormClosed;
+                    Form1.Show();
                 }
+                else Form1.Activate();
             }
         }
 
@@ -85,6 +91,20 @@ namespace BlocNotasToDatagridview
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void actualizarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(archivo))
+            {
+                desempateToolStripMenuItem.Enabled = true;
+                problemasToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                desempateToolStripMenuItem.Enabled = false;
+                problemasToolStripMenuItem.Enabled = false;
+            }
         }
     }
 }

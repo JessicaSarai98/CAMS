@@ -37,7 +37,7 @@
             this.participanteB = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelPreguntas = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.axAcroPDF1 = new AxAcroPDFLib.AxAcroPDF();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnPausa = new System.Windows.Forms.Button();
@@ -58,7 +58,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelPreguntas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).BeginInit();
             this.panelOpciones.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -140,25 +140,23 @@
             // 
             // panelPreguntas
             // 
-            this.panelPreguntas.Controls.Add(this.pictureBox1);
+            this.panelPreguntas.Controls.Add(this.axAcroPDF1);
             this.panelPreguntas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPreguntas.Location = new System.Drawing.Point(0, 73);
             this.panelPreguntas.Name = "panelPreguntas";
             this.panelPreguntas.Size = new System.Drawing.Size(800, 329);
             this.panelPreguntas.TabIndex = 2;
             // 
-            // pictureBox1
+            // axAcroPDF1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(800, 329);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
+            this.axAcroPDF1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axAcroPDF1.Enabled = true;
+            this.axAcroPDF1.Location = new System.Drawing.Point(0, 0);
+            this.axAcroPDF1.Name = "axAcroPDF1";
+            this.axAcroPDF1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axAcroPDF1.OcxState")));
+            this.axAcroPDF1.Size = new System.Drawing.Size(800, 329);
+            this.axAcroPDF1.TabIndex = 0;
+            this.axAcroPDF1.Visible = false;
             // 
             // panelOpciones
             // 
@@ -399,7 +397,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panelPreguntas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).EndInit();
             this.panelOpciones.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -431,9 +429,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label txtMin;
         public System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.Label participanteB;
         public System.Windows.Forms.Label ParticipanteA;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private AxAcroPDFLib.AxAcroPDF axAcroPDF1;
     }
 }

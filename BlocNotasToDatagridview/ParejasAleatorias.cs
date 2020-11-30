@@ -33,19 +33,8 @@ namespace BlocNotasToDatagridview
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {   //C:\Users\Jessica\Documents\CAMS\CAMS
-            //karina C:\Users\William carmona\Documents\Servicio Social
-
-            if(!Directory.Exists(@"C:\Users\Jessica\Documents\CAMS\CAMS"))
-               
-                // if (!Directory.Exists(@"C:\Users\William carmona\Documents\Servicio Social"))
-            { 
-                Directory.CreateDirectory(@"C:\Users\Jessica\Documents\CAMS\CAMS");  
-                //Directory.CreateDirectory(@"C:\Users\William carmona\Documents\Servicio Social");
-            }
-
-            using (TextWriter tw = new StreamWriter(@"C:\Users\Jessica\Documents\CAMS\CAMS\impresion.txt"))
-           // using (TextWriter tw = new StreamWriter(@"C:\Users\William carmona\Documents\Servicio Social\impresion_parejas.txt"))
+        { 
+            using (TextWriter tw = new StreamWriter("impresion.txt"))
             {
                 tw.Write("Participante A:\n");
                 for (int i = 0; i < 5; i++)
@@ -63,8 +52,7 @@ namespace BlocNotasToDatagridview
                 }
                 
             }
-            using (TextWriter w = new StreamWriter(@"C:\Users\Jessica\Documents\CAMS\CAMS\parejas.txt"))
-            //using (TextWriter w = new StreamWriter(@"C:\Users\William carmona\Documents\Servicio Social\parejas.txt"))
+            using (TextWriter w = new StreamWriter("parejas.txt"))
             {
                 for(int k=0; k < TablaParejas.Rows.Count-1; k++)
                 {
@@ -80,7 +68,7 @@ namespace BlocNotasToDatagridview
                             w.Write(";");
                         }
                     }
-                    w.WriteLine("\n"); 
+                    w.Write("\n");
                 }
             }
                 MessageBox.Show("Datos exportados");
