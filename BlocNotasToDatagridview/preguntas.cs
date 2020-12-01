@@ -18,33 +18,6 @@ namespace BlocNotasToDatagridview
         {
             
 
-            //var lines = File.ReadLines(@"C: \Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt");
-            //foreach(var line in lines)
-            //{
-            //    var col = line.Split(',');
-            //    ParticipanteA.Text = col[0];
-            //    participanteB.Text = col[1]; 
-            //}
-
-            //string orden = @"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt";
-            //StreamReader lector = File.OpenText(orden);
-            ////textBox1.Text = lector.ReadLine();
-            //participanteB.Text = lector.ReadToEnd();
-            //string a, b;
-
-            //using (TextFieldParser parser = new TextFieldParser(@"C:\Users\Jessica\Documents\CAMS\CAMS\orden_rpp.txt"))
-            //{
-            //    parser.SetDelimiters(new string[] { "," });
-            //    parser.HasFieldsEnclosedInQuotes = true;
-            //    parser.ReadLine();
-            //    while (!parser.EndOfData)
-            //    {
-            //        string[] fields = parser.ReadFields();
-            //        ParticipanteA.Text = fields[0];
-            //        participanteB.Text = fields[1];
-            //    }
-            //}
-
 
         }
         int i = 0;
@@ -78,7 +51,7 @@ namespace BlocNotasToDatagridview
             //toma el archivo orden_rpp 
             if(file2==null)
                 file2 = new System.IO.StreamReader("orden_rpp.txt");
-            if (!file.EndOfStream)
+            if (!file2.EndOfStream)
             {
                 //se lee todo el archivo orden_rpp y se dividen las lineas por los comas
                 string linea = file2.ReadLine();               
@@ -99,7 +72,7 @@ namespace BlocNotasToDatagridview
             else
             {
                 MessageBox.Show("Fin del documento");
-                file.Close();
+                file2.Close();
             }
 
         }

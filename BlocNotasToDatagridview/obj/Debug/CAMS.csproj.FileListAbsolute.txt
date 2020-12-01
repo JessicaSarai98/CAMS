@@ -40,3 +40,12 @@ C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.ResolveComReference.cache
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\bin\Debug\Interop.AcroPDFLib.dll
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\bin\Debug\AxInterop.AcroPDFLib.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\bin\Debug\itextsharp.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\bin\Debug\itextsharp.xml
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\bin\Debug\Interop.AcroPDFLib.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\bin\Debug\AxInterop.AcroPDFLib.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\Interop.AcroPDFLib.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\AxInterop.AcroPDFLib.dll
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.ResolveComReference.cache
+C:\Users\Jessica\Documents\CAMS\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csproj.CopyComplete
