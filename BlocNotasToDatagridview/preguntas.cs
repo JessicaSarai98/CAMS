@@ -4,6 +4,7 @@ using System.Diagnostics;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.IO;
+using System.Media;
 
 namespace BlocNotasToDatagridview
 {
@@ -160,6 +161,8 @@ namespace BlocNotasToDatagridview
             axAcroPDF1.Visible = true;
             axAcroPDF1.LoadFile("pregunta.pdf");
         }
+
+        SoundPlayer sonido;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (seg == 0 && min > 0)
@@ -169,15 +172,18 @@ namespace BlocNotasToDatagridview
             }
             seg -= 1;        
             if (min.ToString().Length < 2) { txtMin.Text = "0" + min.ToString(); }
+                else { txtMin.Text = min.ToString(); }
             if (seg.ToString().Length < 2) { txtSeg.Text = "0" + seg.ToString(); }
+                else { txtSeg.Text = seg.ToString(); }
             if (min == 0 && seg == 0) { 
                 timer1.Stop();
                 //ejecutar el audio
+                sonido = new SoundPlayer(Application.StartupPath+@"/SONIDO-TIEMPO.wav" );
+                sonido.Play();
+                //cambia los botones
                 btnPausa.Enabled = false;
                 btnIgual.Enabled = true;
             }
-            txtMin.Text = min.ToString();
-            txtSeg.Text = seg.ToString();
         }
 
         private void btnPausa_Click(object sender, EventArgs e)

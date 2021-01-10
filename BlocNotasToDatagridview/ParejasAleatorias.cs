@@ -71,7 +71,10 @@ namespace BlocNotasToDatagridview
                     w.Write("\n");
                 }
             }
-                MessageBox.Show("Datos exportados");
+            MenuInicio pre = new MenuInicio();            
+            pre.desempateToolStripMenuItem.Enabled = true;
+            pre.problemasToolStripMenuItem.Enabled = true;
+            MessageBox.Show("Datos exportados");
         }
         public void setForm1(Form1 tabla)
         {

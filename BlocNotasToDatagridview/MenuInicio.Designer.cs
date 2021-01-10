@@ -161,12 +161,12 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem pasarListaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem problemasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem desempateToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actualizarToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem problemasToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem desempateToolStripMenuItem;
     }
 }

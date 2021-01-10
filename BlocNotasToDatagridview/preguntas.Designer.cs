@@ -36,14 +36,10 @@
             this.ParticipanteA = new System.Windows.Forms.Label();
             this.participanteB = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panelPreguntas = new System.Windows.Forms.Panel();
-            this.axAcroPDF1 = new AxAcroPDFLib.AxAcroPDF();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnPausa = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.btnIgual = new System.Windows.Forms.Button();
             this.btnSig = new System.Windows.Forms.Button();
             this.listaPreguntas = new System.Windows.Forms.ComboBox();
@@ -54,15 +50,15 @@
             this.txtMin = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.axAcroPDF1 = new AxAcroPDFLib.AxAcroPDF();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panelPreguntas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).BeginInit();
             this.panelOpciones.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -129,7 +125,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.panelPreguntas);
+            this.panel1.Controls.Add(this.axAcroPDF1);
             this.panel1.Controls.Add(this.panelOpciones);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -137,26 +133,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
-            // 
-            // panelPreguntas
-            // 
-            this.panelPreguntas.Controls.Add(this.axAcroPDF1);
-            this.panelPreguntas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPreguntas.Location = new System.Drawing.Point(0, 73);
-            this.panelPreguntas.Name = "panelPreguntas";
-            this.panelPreguntas.Size = new System.Drawing.Size(800, 329);
-            this.panelPreguntas.TabIndex = 2;
-            // 
-            // axAcroPDF1
-            // 
-            this.axAcroPDF1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axAcroPDF1.Enabled = true;
-            this.axAcroPDF1.Location = new System.Drawing.Point(0, 0);
-            this.axAcroPDF1.Name = "axAcroPDF1";
-            this.axAcroPDF1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axAcroPDF1.OcxState")));
-            this.axAcroPDF1.Size = new System.Drawing.Size(800, 329);
-            this.axAcroPDF1.TabIndex = 0;
-            this.axAcroPDF1.Visible = false;
             // 
             // panelOpciones
             // 
@@ -182,8 +158,6 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7F));
             this.tableLayoutPanel2.Controls.Add(this.btnPausa, 7, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnPlay, 6, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button6, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button5, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnIgual, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnSig, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.listaPreguntas, 2, 0);
@@ -225,34 +199,6 @@
             this.btnPlay.TabIndex = 6;
             this.btnPlay.UseVisualStyleBackColor = false;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
-            // 
-            // button6
-            // 
-            this.button6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button6.BackColor = System.Drawing.Color.Silver;
-            this.button6.Enabled = false;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.Location = new System.Drawing.Point(631, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(51, 42);
-            this.button6.TabIndex = 5;
-            this.button6.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button5.BackColor = System.Drawing.Color.Silver;
-            this.button5.Enabled = false;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.Location = new System.Drawing.Point(571, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(54, 42);
-            this.button5.TabIndex = 4;
-            this.button5.UseVisualStyleBackColor = false;
             // 
             // btnIgual
             // 
@@ -383,6 +329,19 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // axAcroPDF1
+            // 
+            this.axAcroPDF1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.axAcroPDF1.Enabled = true;
+            this.axAcroPDF1.Location = new System.Drawing.Point(0, 73);
+            this.axAcroPDF1.Name = "axAcroPDF1";
+            this.axAcroPDF1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axAcroPDF1.OcxState")));
+            this.axAcroPDF1.Size = new System.Drawing.Size(800, 329);
+            this.axAcroPDF1.TabIndex = 2;
+            this.axAcroPDF1.Visible = false;
+            // 
             // preguntas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,13 +355,12 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panelPreguntas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).EndInit();
             this.panelOpciones.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -413,14 +371,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label ronda_pregunta;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panelPreguntas;
         private System.Windows.Forms.Panel panelOpciones;
         private System.Windows.Forms.Button btnSig;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnPausa;
         private System.Windows.Forms.Button btnPlay;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btnIgual;
         private System.Windows.Forms.ComboBox listaPreguntas;
         private System.Windows.Forms.Panel panel3;
