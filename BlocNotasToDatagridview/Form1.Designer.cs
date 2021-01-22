@@ -114,12 +114,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnTerminar;
         public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnLimpiar;
+        public System.Windows.Forms.Button button1;
     }
 }
 
