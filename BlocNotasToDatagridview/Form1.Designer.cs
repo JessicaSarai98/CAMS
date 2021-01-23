@@ -35,6 +35,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnTerminar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,11 +97,24 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(29, 264);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(136, 34);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Terminar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 310);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnTerminar);
             this.Controls.Add(this.dataGridView1);
@@ -117,8 +131,9 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnTerminar;
         public System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btnLimpiar;
         public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button btnLimpiar;
+        public System.Windows.Forms.Button button2;
     }
 }
 

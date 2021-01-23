@@ -71,6 +71,25 @@ namespace BlocNotasToDatagridview
                     w.Write("\n");
                 }
             }
+            using (TextWriter x = new StreamWriter("parejas2.txt"))
+            {
+                for (int p=0; p < TablaParejas.Rows.Count-1; p++)
+                {
+                    for (int q=0; q < TablaParejas.Columns.Count; q++)
+                    {
+                        string escu = this.f.escuela(TablaParejas.Rows[p].Cells[q].Value.ToString());
+                        string est = this.f.estado(TablaParejas.Rows[p].Cells[q].Value.ToString());
+                        float cali = this.f.calif(TablaParejas.Rows[p].Cells[q].Value.ToString());
+
+                        x.Write($"{TablaParejas.Rows[p].Cells[q].Value.ToString()}" + "," + escu + "," + est + "," + cali);
+                        if (q != TablaParejas.Columns.Count-1)
+                        {
+                            x.Write("\n");
+                        }
+                    }
+                    x.Write("\n");
+                }
+            }
             MenuInicio pre = new MenuInicio();            
             pre.desempateToolStripMenuItem.Enabled = true;
             pre.problemasToolStripMenuItem.Enabled = true;

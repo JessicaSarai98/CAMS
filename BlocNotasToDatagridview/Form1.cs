@@ -19,7 +19,7 @@ namespace BlocNotasToDatagridview
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         //Abre el openFileDialog y captura la ruta del bloc de notas'
