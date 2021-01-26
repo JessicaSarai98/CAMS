@@ -14,12 +14,20 @@ namespace BlocNotasToDatagridview
         {
             InitializeComponent();
         }
-      
+
         private void preguntas_Load(object sender, EventArgs e)
         {
-            
-
-
+            //toma el archivo para llenar el combobox de las preguntas
+            int counter = 0;
+            System.IO.StreamReader file =
+                new System.IO.StreamReader("orden_rpp.txt");
+            while ((file.ReadLine()) != null)
+            {
+                counter++;
+                listaPreguntas.Items.Add(counter);
+            }
+            file.Close();
+            file = null;
         }
         int i = 0;
         System.IO.StreamReader file = null;
@@ -28,36 +36,19 @@ namespace BlocNotasToDatagridview
         {
             axAcroPDF1.Visible = false;
             //se habilitan y se deshabilitan los botones correspondientes
-            listaPreguntas.Enabled = false;
-            btnSig.Enabled = false;
-            btnPlay.Enabled = true;
-
-            //toma el archivo para mostrar las parejas
-            if (file == null)
-                file = new System.IO.StreamReader("parejas.txt");
-            if (!file.EndOfStream)
-            {
-                string lines = file.ReadLine();
-                //muestra los nombres de parejas.txt
-                string[] valores = lines.Split(',',';');
-                ParticipanteA.Text = valores[0];
-                participanteB.Text = valores[4];
-            }
-            else
-            {
-                MessageBox.Show("Fin del documento");
-                file.Close();
-            }
+            funcion1();
 
             //toma el archivo orden_rpp 
-            if(file2==null)
+            if (file2 == null)
                 file2 = new System.IO.StreamReader("orden_rpp.txt");
             if (!file2.EndOfStream)
             {
                 //se lee todo el archivo orden_rpp y se dividen las lineas por los comas
-                string linea = file2.ReadLine();               
+                string linea = file2.ReadLine();
                 char delimitador = ',';
                 string[] valores = linea.Split(delimitador);
+                //encontramos la pareja de esa pregunta
+                EncontrarParticipantes(Convert.ToInt32(valores[1]));
                 //se lee el num de pregunta y de ronda del archivo            
                 ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
                 //se asigna el tiempo al cronometro
@@ -73,6 +64,7 @@ namespace BlocNotasToDatagridview
             else
             {
                 MessageBox.Show("Fin del documento");
+                btnPlay.Enabled = false;
                 file2.Close();
             }
 
@@ -112,12 +104,12 @@ namespace BlocNotasToDatagridview
         }
         public void PreguntasPDF(int page)
         {
-            string sourcePdfPath = "Programas.pdf"; 
+            string sourcePdfPath = "Programas.pdf";
             string outputPdfPath = "pregunta.pdf";
             if (File.Exists(outputPdfPath))
             {
                 System.IO.File.Delete(outputPdfPath);
-            }            
+            }
             try {
                 reader = new PdfReader(sourcePdfPath);
                 // se conserva el mismo tamaño de la página
@@ -135,17 +127,66 @@ namespace BlocNotasToDatagridview
                 throw ex;
             }
         }
+        string linea, lineaPareja;
+        string[] valores;
+        public void EncontrarParticipantes(int pareja)
+        {
+            //leemos el nombre de la pareja
+            i = 1;
+            if (file == null)
+                file = new System.IO.StreamReader("parejas.txt");
+            while ((lineaPareja = file.ReadLine()) != null)
+            {
+                if (pareja == i)
+                {
+                    //muestra los nombres de parejas.txt
+                    valores = lineaPareja.Split(',', ';');
+                    ParticipanteA.Text = valores[0];
+                    participanteB.Text = valores[4];
+                    file = null;
+                    break;
+                }
+                i++;
+            }
+        }
         private void listaPreguntas_SelectedIndexChanged(object sender, EventArgs e)
         {
             funcion1();
+            i = 1;
+            int pregunta = Convert.ToInt32(listaPreguntas.SelectedItem);
+            //toma el archivo orden_rpp 
+            if (file2 == null)
+                file2 = new System.IO.StreamReader("orden_rpp.txt");
+            while ((linea = file2.ReadLine()) != null)
+            {
+                if (i == pregunta)
+                {
+                    valores = linea.Split(',');
+                    EncontrarParticipantes(Convert.ToInt32(valores[1]));
+                    break;
+                }
+                i++;
+            }
+            char delimitador = ',';
+            valores = linea.Split(delimitador);
+            //se lee el num de pregunta y de ronda del archivo            
+            ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
+            //se asigna el tiempo al cronometro
+            string[] tiempo = valores[4].Split('.');
+            min = Convert.ToInt32(tiempo[0]);
+            seg = Convert.ToInt32(tiempo[1]);
+            txtMin.Text = tiempo[0];
+            txtSeg.Text = tiempo[1];
+            //se asigna la pregunta que se lee del pdf
+            PreguntasPDF(Convert.ToInt32(valores[5]));
+            RespuestasPDF(Convert.ToInt32(valores[6]), Convert.ToInt32(valores[7]));
+            
         }       
         public void funcion1()
         {
             listaPreguntas.Enabled = false;
             btnSig.Enabled = false;
             btnPlay.Enabled = true;
-            txtMin.Text = "3";
-            txtSeg.Text = "00";
         }
         Stopwatch tiempo = new Stopwatch();
         int min;
