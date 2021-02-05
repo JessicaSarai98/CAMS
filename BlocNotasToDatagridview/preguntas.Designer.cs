@@ -355,17 +355,17 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnPausa;
         private System.Windows.Forms.Button btnPlay;
-        private System.Windows.Forms.Button btnIgual;
         private System.Windows.Forms.ComboBox listaPreguntas;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label txtSeg;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label txtMin;
         public System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Label participanteB;
         public System.Windows.Forms.Label ParticipanteA;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private AxAcroPDFLib.AxAcroPDF axAcroPDF1;
+        public AxAcroPDFLib.AxAcroPDF axAcroPDF1;
+        public System.Windows.Forms.Label txtSeg;
+        public System.Windows.Forms.Label txtMin;
+        public System.Windows.Forms.Button btnIgual;
     }
 }

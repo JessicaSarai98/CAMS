@@ -72,3 +72,4 @@ C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasT
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form2.resources
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form2.resources
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Extras.resources

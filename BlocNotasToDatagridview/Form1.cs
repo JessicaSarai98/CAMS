@@ -76,10 +76,7 @@ namespace BlocNotasToDatagridview
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-
             int count = dataGridView1.Columns.GetColumnCount(DataGridViewElementStates.None) - 1;
-
 
             int posicion = -1;
             string nombre = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();

@@ -51,15 +51,8 @@ namespace BlocNotasToDatagridview
                 EncontrarParticipantes(Convert.ToInt32(valores[1]));
                 //se lee el num de pregunta y de ronda del archivo            
                 ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
-                //se asigna el tiempo al cronometro
-                string[] tiempo = valores[4].Split('.');
-                min = Convert.ToInt32(tiempo[0]);
-                seg = Convert.ToInt32(tiempo[1]);
-                txtMin.Text = tiempo[0];
-                txtSeg.Text = tiempo[1];
-                //se asigna la pregunta que se lee del pdf
-                PreguntasPDF(Convert.ToInt32(valores[5]));
-                RespuestasPDF(Convert.ToInt32(valores[6]), Convert.ToInt32(valores[7]));
+                //se asigna el tiempo al cronometro y se asigna la pregunta que se lee del pdf
+                tiempo_pregunta_respuesta(valores[4],valores[5],valores[6],valores[7]);
             }
             else
             {
@@ -155,8 +148,7 @@ namespace BlocNotasToDatagridview
             i = 1;
             int pregunta = Convert.ToInt32(listaPreguntas.SelectedItem);
             //toma el archivo orden_rpp 
-            if (file2 == null)
-                file2 = new System.IO.StreamReader("orden_rpp.txt");
+            file2 = new System.IO.StreamReader("orden_rpp.txt");
             while ((linea = file2.ReadLine()) != null)
             {
                 if (i == pregunta)
@@ -171,17 +163,20 @@ namespace BlocNotasToDatagridview
             valores = linea.Split(delimitador);
             //se lee el num de pregunta y de ronda del archivo            
             ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
-            //se asigna el tiempo al cronometro
-            string[] tiempo = valores[4].Split('.');
-            min = Convert.ToInt32(tiempo[0]);
-            seg = Convert.ToInt32(tiempo[1]);
-            txtMin.Text = tiempo[0];
-            txtSeg.Text = tiempo[1];
-            //se asigna la pregunta que se lee del pdf
-            PreguntasPDF(Convert.ToInt32(valores[5]));
-            RespuestasPDF(Convert.ToInt32(valores[6]), Convert.ToInt32(valores[7]));
-            
+            //se asigna el tiempo al cronometro Y se asigna la pregunta que se lee del pdf
+            tiempo_pregunta_respuesta(valores[4], valores[5], valores[6], valores[7]);          
         }       
+        public void tiempo_pregunta_respuesta(string tiempo, string pregunta, 
+            string respuestaInicio, string respuestaFinal)
+        {
+            string[] tiempoTodo = tiempo.Split('.');
+            min = Convert.ToInt32(tiempoTodo[0]);
+            seg = Convert.ToInt32(tiempoTodo[1]);
+            txtMin.Text = tiempoTodo[0];
+            txtSeg.Text = tiempoTodo[1];
+            PreguntasPDF(Convert.ToInt32(pregunta));
+            RespuestasPDF(Convert.ToInt32(respuestaInicio), Convert.ToInt32(respuestaFinal));
+        }
         public void funcion1()
         {
             listaPreguntas.Enabled = false;
@@ -193,16 +188,14 @@ namespace BlocNotasToDatagridview
         int seg;
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            tiempo.Start(); 
+            tiempo.Start();
             timer1.Enabled = true;
             btnPlay.Enabled = false;
-            //PreguntaImg.Visible = true;
             btnPausa.Enabled = true;
-            //se muestra el pdf con la pregunta
             axAcroPDF1.Visible = true;
             axAcroPDF1.LoadFile("pregunta.pdf");
-        }
 
+        }
         SoundPlayer sonido;
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -230,11 +223,15 @@ namespace BlocNotasToDatagridview
         private void btnPausa_Click(object sender, EventArgs e)
         {
             timer1.Stop();
-            tiempo.Stop();
+            tiempo.Stop(); 
+            Extras extras = new Extras();
+            //le decimos que es un form hijo para poder recibir la información y cambiar
+            //los valores de este form
+            AddOwnedForm(extras);
+            extras.Show();
             btnIgual.Enabled = true;
             btnPausa.Enabled = false;
-        }
-
+        }        
         private void btnIgual_Click(object sender, EventArgs e)
         {
             btnIgual.Enabled = false;
