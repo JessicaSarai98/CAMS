@@ -7,10 +7,16 @@ namespace BlocNotasToDatagridview
 {
     public partial class Form1 : Form
     {
+        int limite;
         //Instancia de la clase Leer
         Leer l = new Leer();
         //Alamcena la ruta del archivo .txt
         public string ARCHIVO = "";       
+
+        public void setLimite(int limite)
+        {
+            this.limite = limite;
+        }
 
         public Form1()
         {
@@ -64,22 +70,58 @@ namespace BlocNotasToDatagridview
             }
         }
 
+        public void cargarArchivo2()
+        {
+            try
+            {
 
+                if (!string.IsNullOrEmpty(this.openFileDialog1.FileName))
+                {
+                    l.lecturaArchivo(dataGridView1, ',', "parejas2.txt");
+
+                    dataGridView1.Columns[0].HeaderText = "Nombre";
+                    dataGridView1.Columns[1].HeaderText = "Escuela";
+                    dataGridView1.Columns[2].HeaderText = "Estado";
+
+                    dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
+
+                    dataGridView1.Columns[3].Visible = false;
+                    dataGridView1.Columns[4].Visible = false;
+
+                    DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+                    chk.HeaderText = "Elegir";
+                    dataGridView1.Columns.Add(chk);
+
+                    this.dataGridView1.Columns[0].ReadOnly = true;
+                    this.dataGridView1.Columns[1].ReadOnly = true;
+                    this.dataGridView1.Columns[2].ReadOnly = true;
+                    this.dataGridView1.Columns[3].ReadOnly = true;
+                    this.dataGridView1.Columns[4].ReadOnly = true;
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.ToString());
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             cargarArchivo();
         }
+
         int contador = 0;
         string[] nombres = new string[20];
-
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int count = dataGridView1.Columns.GetColumnCount(DataGridViewElementStates.None) - 1;
 
+            Object obj = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            String nombre = (String)obj;
             int posicion = -1;
-            string nombre = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
             bool encontradoNombre = false;
             if (contador > 0)
             {
@@ -97,9 +139,9 @@ namespace BlocNotasToDatagridview
             }
             if (encontradoNombre == false)
             {
+                //MessageBox.Show("nombres[" + contador + "] = " + nombre);
                 nombres[contador] = nombre;
                 contador++;
-                //MessageBox.Show("" + contador);
             }
             if (encontradoNombre)
             {
@@ -113,31 +155,35 @@ namespace BlocNotasToDatagridview
                 }
             }
 
-            if(contador>10 && encontradoNombre == false)
+            if(contador>limite && encontradoNombre == false)
             {
                 int i = 0; 
                 foreach(DataGridViewRow row in dataGridView1.Rows)
                 {
-                    if (nombres[9].Equals(row.Cells[0].Value.ToString()))
+                    if (nombres[limite-1].Equals(row.Cells[0].Value.ToString()))
                     {
                         row.Cells[5].Value = false;
                     }
                     i++; 
                 }
-                nombres[9] = nombre;
+                nombres[limite-1] = nombre;
                 contador--;
                 MessageBox.Show("Se ha desmarcado el anterior candidato");
             }
 
-            if (contador == 10)
+            if (contador == limite)
             {
                 btnTerminar.Visible = true;
+                if (limite == 2)
+                {
+                    btnTerminar.Visible = false;
+                }
             }
             else
             {
                 btnTerminar.Visible = false;
             }
-            if (contador > 10 && encontradoNombre == false)
+            if (contador > limite && encontradoNombre == false)
             {
                 dataGridView1.CurrentRow.Cells[5].Value = false;
             }
@@ -171,7 +217,7 @@ namespace BlocNotasToDatagridview
                     Parejas.FormClosed += Parejas_FormClosed;
                 }
                 else Parejas.Activate();
-                while (IntialCount <= 10)
+                while (IntialCount <= limite)
                 {
                     //GENERAMOS EL NÚMERO ALEATORIO
                     rnd = new Random();
@@ -274,7 +320,7 @@ namespace BlocNotasToDatagridview
             return esc; 
         }
 
-        public float calif(String name)
+        public float prom(String name)
         {
             float g = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -285,6 +331,19 @@ namespace BlocNotasToDatagridview
                 }
             }
             return g; 
+        }
+
+        public float calif(String name)
+        {
+            float g = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (name.Equals(row.Cells[0].Value.ToString()))
+                {
+                    return float.Parse(row.Cells[3].Value.ToString());
+                }
+            }
+            return g;
         }
 
         public String estado(String name)
