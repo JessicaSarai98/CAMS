@@ -177,11 +177,13 @@ namespace BlocNotasToDatagridview
                 if (limite == 2)
                 {
                     btnTerminar.Visible = false;
+                    btnAceptar.Visible = true; 
                 }
             }
             else
             {
                 btnTerminar.Visible = false;
+                btnAceptar.Visible = false;
             }
             if (contador > limite && encontradoNombre == false)
             {
@@ -359,6 +361,12 @@ namespace BlocNotasToDatagridview
             return est; 
         }
 
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            Extras extras= new Extras();
+            AddOwnedForm(extras);
+            extras.Show(); 
+        }
     }
 }
 

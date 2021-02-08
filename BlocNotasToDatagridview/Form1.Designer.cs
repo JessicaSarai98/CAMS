@@ -36,6 +36,7 @@
             this.btnTerminar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,11 +110,23 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Visible = false;
             // 
+            // btnAceptar
+            // 
+            this.btnAceptar.Location = new System.Drawing.Point(192, 264);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(87, 34);
+            this.btnAceptar.TabIndex = 5;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Visible = false;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 310);
+            this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnTerminar);
@@ -134,6 +147,7 @@
         public System.Windows.Forms.Button btnLimpiar;
         public System.Windows.Forms.Button button2;
         public System.Windows.Forms.Button btnTerminar;
+        public System.Windows.Forms.Button btnAceptar;
     }
 }
 
