@@ -101,16 +101,18 @@ namespace BlocNotasToDatagridview
                 Form1.FormClosed += Form1_FormClosed;
                 Form1.btnLimpiar.Visible = false;
                 Form1.button1.Visible = false;
-                Form1.btnTerminar.Visible = false; 
+                Form1.btnTerminar.Visible = false;
+               
+                
 
 
                 //DataTable dt = new DataTable();
 
-                
+
                 //String[] lines = System.IO.File.ReadAllLines("parejas2.txt");
                 //if (lines.Length > 0)
                 //{
-                        
+
                 //    String firts = lines[0];
                 //    String[] header = firts.Split(',',';');
                 //    foreach(string headerWord in header)
@@ -132,13 +134,13 @@ namespace BlocNotasToDatagridview
                 //}
                 //if (dt.Rows.Count > 0)
                 //{
-                    
+
                 //    Form1.dataGridView1.DataSource = dt;
                 //    Form1.dataGridView1.Columns[3].Visible = false;
-                    
+
                 // //   Form1.dataGridView1.Columns[7].Visible = false;
                 //}
-                
+
                 //Form1.dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
 
                 //Form1.dataGridView1.Columns[0].HeaderText = "Nombre";

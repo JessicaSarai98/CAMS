@@ -31,8 +31,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Extras));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnAceptar = new System.Windows.Forms.Button();
             this.preguntas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.btnAcepDes = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,6 +55,11 @@
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // preguntas
+            // 
+            this.preguntas.HeaderText = "Preguntas extras";
+            this.preguntas.Name = "preguntas";
+            // 
             // btnAceptar
             // 
             this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -66,16 +72,22 @@
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // preguntas
+            // btnAcepDes
             // 
-            this.preguntas.HeaderText = "Preguntas extras";
-            this.preguntas.Name = "preguntas";
+            this.btnAcepDes.Location = new System.Drawing.Point(193, 243);
+            this.btnAcepDes.Name = "btnAcepDes";
+            this.btnAcepDes.Size = new System.Drawing.Size(122, 33);
+            this.btnAcepDes.TabIndex = 5;
+            this.btnAcepDes.Text = "Aceptar";
+            this.btnAcepDes.UseVisualStyleBackColor = true;
+            this.btnAcepDes.Click += new System.EventHandler(this.btnAcepDes_Click);
             // 
             // Extras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(515, 288);
+            this.Controls.Add(this.btnAcepDes);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.dataGridView1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -92,5 +104,6 @@
         public System.Windows.Forms.DataGridView dataGridView1;
         public System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.DataGridViewTextBoxColumn preguntas;
+        public System.Windows.Forms.Button btnAcepDes;
     }
 }

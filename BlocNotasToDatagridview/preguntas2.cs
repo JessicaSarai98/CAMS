@@ -8,9 +8,9 @@ using System.Media;
 
 namespace BlocNotasToDatagridview
 {
-    public partial class preguntas : Form
+    public partial class preguntas2 : Form
     {
-        public preguntas()
+        public preguntas2()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace BlocNotasToDatagridview
             //toma el archivo para llenar el combobox de las preguntas
             int counter = 0;
             System.IO.StreamReader file =
-                new System.IO.StreamReader("orden_rpp.txt");
+                new System.IO.StreamReader("orden_rpp_extras.txt");
             while ((file.ReadLine()) != null)
             {
                 counter++;
@@ -40,7 +40,7 @@ namespace BlocNotasToDatagridview
 
             //toma el archivo orden_rpp 
             if (file2 == null)
-                file2 = new System.IO.StreamReader("orden_rpp.txt");
+                file2 = new System.IO.StreamReader("orden_rpp_extras.txt");
             if (!file2.EndOfStream)
             {
                 //se lee todo el archivo orden_rpp y se dividen las lineas por los comas
@@ -50,9 +50,9 @@ namespace BlocNotasToDatagridview
                 //encontramos la pareja de esa pregunta
                 EncontrarParticipantes(Convert.ToInt32(valores[1]));
                 //se lee el num de pregunta y de ronda del archivo            
-                ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
+                //ronda_pregunta.Text = "Ronda " + valores[0] + "\n Pregunta " + valores[2];
                 //se asigna el tiempo al cronometro y se asigna la pregunta que se lee del pdf
-                tiempo_pregunta_respuesta(valores[4],valores[5],valores[6],valores[7]);
+                tiempo_pregunta_respuesta(valores[3],valores[0],valores[1],valores[2]);
             }
             else
             {
@@ -134,8 +134,8 @@ namespace BlocNotasToDatagridview
                 {
                     //muestra los nombres de parejas.txt
                     valores = lineaPareja.Split(',', ';');
-                    ParticipanteA.Text = valores[0];
-                    participanteB.Text = valores[4];
+                    //ParticipanteA.Text = valores[0];
+                    //participanteB.Text = valores[4];
                     file = null;
                     break;
                 }

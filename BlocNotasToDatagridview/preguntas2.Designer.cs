@@ -1,6 +1,6 @@
 ﻿namespace BlocNotasToDatagridview
 {
-    partial class preguntas
+    partial class preguntas2
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(preguntas));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(preguntas2));
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ronda_pregunta = new System.Windows.Forms.Label();
@@ -96,7 +96,7 @@
             this.ronda_pregunta.Name = "ronda_pregunta";
             this.ronda_pregunta.Size = new System.Drawing.Size(201, 73);
             this.ronda_pregunta.TabIndex = 3;
-            this.ronda_pregunta.Text = "Ronda 1 Pregunta\r\n";
+            this.ronda_pregunta.Text = "DESEMPATE";
             this.ronda_pregunta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ParticipanteA
@@ -321,14 +321,14 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // preguntas
+            // preguntas2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "preguntas";
+            this.Name = "preguntas2";
             this.Load += new System.EventHandler(this.preguntas_Load);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

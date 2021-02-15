@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
 
 namespace BlocNotasToDatagridview
 {
@@ -29,7 +34,7 @@ namespace BlocNotasToDatagridview
                     FormPreguntas.axAcroPDF1.Visible = false;
                     FormPreguntas.funcion1();
                     FormPreguntas.btnIgual.Enabled = false;
-                    FormPreguntas.tiempo_pregunta_respuesta(valores[3],valores[0],valores[1],valores[2]);
+                    FormPreguntas.tiempo_pregunta_respuesta(valores[3], valores[0], valores[1], valores[2]);
                     file = null;
                     this.Close();
                     break;
@@ -48,7 +53,7 @@ namespace BlocNotasToDatagridview
             {
                 while ((linea = file.ReadLine()) != null)
                 {
-                    dataGridView1.Rows.Add("PROBLEMA EXTRA "+ i++);                 
+                    dataGridView1.Rows.Add("PROBLEMA EXTRA " + i++);
                 }
                 file.Close();
                 file = null;
@@ -59,7 +64,7 @@ namespace BlocNotasToDatagridview
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.ToString());
-            }           
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -69,7 +74,36 @@ namespace BlocNotasToDatagridview
             {
                 row.Cells[1].Value = false;
             }
-            problemaSeleccioando = e.RowIndex +1;
+            problemaSeleccioando = e.RowIndex + 1;
+        }
+       // preguntas preg = new preguntas();
+        Form1 Form1;
+        preguntas2 pre;
+        string orden = "orden_rpp.txt";
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form1 = null;
+            preguntas = null;
+        }
+        private void btnAcepDes_Click(object sender, EventArgs e)
+        {
+            if (pre == null)
+            {
+                preguntas2 preg = new preguntas2();
+                preg.Owner = this;
+                preg.FormClosed += Form1_FormClosed;
+
+                StreamReader lector = File.OpenText(orden);
+
+                preg.participanteB.Text = lector.ReadToEnd();
+                preg.ronda_pregunta.Text = "DESEMPATE";
+                preg.ParticipanteA.Text = "PARTICIPANTE 1";
+                preg.participanteB.Text = "PARTICIPANTE 2";
+
+                preg.Show();
+
+            }
+            else Form1.Activate();
         }
     }
 }

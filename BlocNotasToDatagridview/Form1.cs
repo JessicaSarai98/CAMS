@@ -365,7 +365,9 @@ namespace BlocNotasToDatagridview
         {
             Extras extras= new Extras();
             AddOwnedForm(extras);
+            extras.btnAceptar.Visible = false; 
             extras.Show(); 
+            
         }
     }
 }
