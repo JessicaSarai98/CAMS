@@ -17,6 +17,10 @@ namespace BlocNotasToDatagridview
 
         private void preguntas_Load(object sender, EventArgs e)
         {
+            //karina
+            //se cierran los forms anteriores
+            Form1 extras = new Form1 ();
+            extras.Close();
             //toma el archivo para llenar el combobox de las preguntas
             int counter = 0;
             System.IO.StreamReader file =

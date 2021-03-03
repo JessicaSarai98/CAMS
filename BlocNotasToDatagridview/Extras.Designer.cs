@@ -74,12 +74,14 @@
             // 
             // btnAcepDes
             // 
+            this.btnAcepDes.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F);
             this.btnAcepDes.Location = new System.Drawing.Point(193, 243);
             this.btnAcepDes.Name = "btnAcepDes";
             this.btnAcepDes.Size = new System.Drawing.Size(122, 33);
             this.btnAcepDes.TabIndex = 5;
             this.btnAcepDes.Text = "Aceptar";
             this.btnAcepDes.UseVisualStyleBackColor = true;
+            this.btnAcepDes.Visible = false;
             this.btnAcepDes.Click += new System.EventHandler(this.btnAcepDes_Click);
             // 
             // Extras

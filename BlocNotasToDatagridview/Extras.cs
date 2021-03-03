@@ -2,10 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 
 namespace BlocNotasToDatagridview
 {
@@ -15,6 +11,15 @@ namespace BlocNotasToDatagridview
         string linea;
         int i = 1;
         int problemaSeleccioando;
+
+        //karina
+        string[] nombres = new string[2];
+        public void nombresSeleccionados(string[] nombres)
+        {
+            this.nombres = nombres;
+        }
+
+        //fin karina
         public Extras()
         {
             InitializeComponent();
@@ -67,14 +72,21 @@ namespace BlocNotasToDatagridview
             }
         }
 
+        string nombre = "ayuda";
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //bool encontradoNombre = false;
+            /*string aux = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            if (nombre.Equals(aux)) btnAcepDes.Visible = false;
+            else btnAcepDes.Visible = true;
+            nombre = aux;*/
             //limpiamos todo y almacenamos el problema seleccioando
             foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
+            {               
                 row.Cells[1].Value = false;
             }
             problemaSeleccioando = e.RowIndex + 1;
+            btnAcepDes.Visible = true;
         }
        // preguntas preg = new preguntas();
         Form1 Form1;
@@ -92,16 +104,14 @@ namespace BlocNotasToDatagridview
                 preguntas2 preg = new preguntas2();
                 preg.Owner = this;
                 preg.FormClosed += Form1_FormClosed;
-
                 StreamReader lector = File.OpenText(orden);
-
                 preg.participanteB.Text = lector.ReadToEnd();
                 preg.ronda_pregunta.Text = "DESEMPATE";
-                preg.ParticipanteA.Text = "PARTICIPANTE 1";
-                preg.participanteB.Text = "PARTICIPANTE 2";
-
+                //karina
+                //se pasan los datos de los nombres al siguiente form
+                preg.ParticipanteA.Text = nombres[0];
+                preg.participanteB.Text = nombres[1];
                 preg.Show();
-
             }
             else Form1.Activate();
         }
