@@ -113,7 +113,7 @@ namespace BlocNotasToDatagridview
                 preg.participanteB.Text = nombres[1];
                 preg.Show();
             }
-            else Form1.Activate();
+           // else Form1.Activate();
         }
     }
 }
