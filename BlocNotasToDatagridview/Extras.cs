@@ -100,10 +100,13 @@ namespace BlocNotasToDatagridview
                 preg.ParticipanteA.Text = "PARTICIPANTE 1";
                 preg.participanteB.Text = "PARTICIPANTE 2";
 
+                
+                 
                 preg.Show();
+                
 
             }
-            else Form1.Activate();
+           // else Form1.Activate();
         }
     }
 }

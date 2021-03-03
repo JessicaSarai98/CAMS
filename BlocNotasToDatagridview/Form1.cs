@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Web.UI;
+using System.Data;
+
 
 namespace BlocNotasToDatagridview
 {
@@ -11,7 +14,8 @@ namespace BlocNotasToDatagridview
         //Instancia de la clase Leer
         Leer l = new Leer();
         //Alamcena la ruta del archivo .txt
-        public string ARCHIVO = "";       
+        public string ARCHIVO = "";
+        preguntas2 preg; 
 
         public void setLimite(int limite)
         {
@@ -97,6 +101,8 @@ namespace BlocNotasToDatagridview
                     this.dataGridView1.Columns[2].ReadOnly = true;
                     this.dataGridView1.Columns[3].ReadOnly = true;
                     this.dataGridView1.Columns[4].ReadOnly = true;
+
+
                     
                 }
 
@@ -360,13 +366,25 @@ namespace BlocNotasToDatagridview
             }
             return est; 
         }
+        
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             Extras extras= new Extras();
             AddOwnedForm(extras);
-            extras.btnAceptar.Visible = false; 
-            extras.Show(); 
+            extras.btnAceptar.Visible = false;
+
+            int cont = 0;
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[3].Value.Equals(true))
+                {
+                    cont++;
+                }
+            }
+            MessageBox.Show(" "+cont);
+
+            //extras.Show(); 
             
         }
     }
