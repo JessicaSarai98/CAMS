@@ -228,10 +228,11 @@ namespace BlocNotasToDatagridview
             //le decimos que es un form hijo para poder recibir la información y cambiar
             //los valores de este form
             AddOwnedForm(extras);
+            extras.SeleccionarTipoForm(1);
             extras.Show();
+            extras.btnAcepDes.Visible = false;
             btnIgual.Enabled = true;
             btnPausa.Enabled = false;
-            extras.btnAcepDes.Visible = false;
             
         }        
         private void btnIgual_Click(object sender, EventArgs e)

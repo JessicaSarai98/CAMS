@@ -373,8 +373,10 @@ namespace BlocNotasToDatagridview
             Extras extras= new Extras();
             AddOwnedForm(extras);
             extras.nombresSeleccionados(nombres);
-            extras.btnAceptar.Visible = false; 
+            extras.btnAceptar.Visible = false;
+            extras.SeleccionarTipoForm(2);
             extras.Show();
+            this.Hide();
 
             //nota ¿sirve de algo?
             int cont = 0;

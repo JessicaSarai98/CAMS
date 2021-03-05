@@ -14,9 +14,14 @@ namespace BlocNotasToDatagridview
 
         //karina
         string[] nombres = new string[2];
+        int TipoFormPadre;
         public void nombresSeleccionados(string[] nombres)
         {
             this.nombres = nombres;
+        }
+        public void SeleccionarTipoForm(int form)
+        {
+            this.TipoFormPadre = form;
         }
 
         //fin karina
@@ -71,30 +76,22 @@ namespace BlocNotasToDatagridview
                 MessageBox.Show("Error: " + ex.ToString());
             }
         }
-
-        string nombre = "ayuda";
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //bool encontradoNombre = false;
-            /*string aux = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            if (nombre.Equals(aux)) btnAcepDes.Visible = false;
-            else btnAcepDes.Visible = true;
-            nombre = aux;*/
             //limpiamos todo y almacenamos el problema seleccioando
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {               
                 row.Cells[1].Value = false;
             }
             problemaSeleccioando = e.RowIndex + 1;
-            btnAcepDes.Visible = true;
+            if (TipoFormPadre==1) btnAceptar.Visible = true;
+            if (TipoFormPadre == 2) btnAcepDes.Visible = true;
         }
-       // preguntas preg = new preguntas();
-        Form1 Form1;
+       // preguntas preg = new preguntas
         preguntas2 pre;
         string orden = "orden_rpp.txt";
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Form1 = null;
             preguntas = null;
         }
         private void btnAcepDes_Click(object sender, EventArgs e)
@@ -112,6 +109,7 @@ namespace BlocNotasToDatagridview
                 preg.ParticipanteA.Text = nombres[0];
                 preg.participanteB.Text = nombres[1];
                 preg.Show();
+                this.Hide();
             }
            // else Form1.Activate();
         }
