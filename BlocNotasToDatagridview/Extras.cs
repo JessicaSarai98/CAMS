@@ -32,6 +32,7 @@ namespace BlocNotasToDatagridview
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+
             file = new System.IO.StreamReader("Orden_rpp_extras.txt");
             i = 1;
             while ((linea = file.ReadLine()) != null)
@@ -54,6 +55,8 @@ namespace BlocNotasToDatagridview
         }
         private void Extras_Load(object sender, EventArgs e)
         {
+
+
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
             DataGridViewCheckBoxColumn chk;

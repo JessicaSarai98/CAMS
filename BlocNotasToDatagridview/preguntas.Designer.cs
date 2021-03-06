@@ -305,11 +305,11 @@
             this.txtMin.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.txtMin.AutoSize = true;
             this.txtMin.Font = new System.Drawing.Font("Microsoft Tai Le", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMin.Location = new System.Drawing.Point(152, 0);
+            this.txtMin.Location = new System.Drawing.Point(134, 0);
             this.txtMin.Name = "txtMin";
-            this.txtMin.Size = new System.Drawing.Size(36, 41);
+            this.txtMin.Size = new System.Drawing.Size(54, 41);
             this.txtMin.TabIndex = 1;
-            this.txtMin.Text = "3";
+            this.txtMin.Text = "00";
             // 
             // timer1
             // 

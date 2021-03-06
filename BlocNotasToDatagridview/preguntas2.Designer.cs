@@ -169,12 +169,12 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.125F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.375F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7F));
-            this.tableLayoutPanel2.Controls.Add(this.btnPausa, 7, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnPlay, 6, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnIgual, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnSig, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.listaPreguntas, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnPausa, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnPlay, 7, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -191,11 +191,12 @@
             this.btnPausa.FlatAppearance.BorderSize = 0;
             this.btnPausa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPausa.Image = ((System.Drawing.Image)(resources.GetObject("btnPausa.Image")));
-            this.btnPausa.Location = new System.Drawing.Point(747, 3);
+            this.btnPausa.Location = new System.Drawing.Point(631, 3);
             this.btnPausa.Name = "btnPausa";
             this.btnPausa.Size = new System.Drawing.Size(50, 42);
             this.btnPausa.TabIndex = 7;
             this.btnPausa.UseVisualStyleBackColor = false;
+            this.btnPausa.Visible = false;
             this.btnPausa.Click += new System.EventHandler(this.btnPausa_Click);
             // 
             // btnPlay
@@ -206,9 +207,9 @@
             this.btnPlay.FlatAppearance.BorderSize = 0;
             this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPlay.Image = ((System.Drawing.Image)(resources.GetObject("btnPlay.Image")));
-            this.btnPlay.Location = new System.Drawing.Point(688, 3);
+            this.btnPlay.Location = new System.Drawing.Point(747, 3);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(53, 42);
+            this.btnPlay.Size = new System.Drawing.Size(50, 42);
             this.btnPlay.TabIndex = 6;
             this.btnPlay.UseVisualStyleBackColor = false;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
@@ -305,11 +306,12 @@
             this.txtMin.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.txtMin.AutoSize = true;
             this.txtMin.Font = new System.Drawing.Font("Microsoft Tai Le", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMin.Location = new System.Drawing.Point(152, 0);
+            this.txtMin.Location = new System.Drawing.Point(134, 0);
             this.txtMin.Name = "txtMin";
-            this.txtMin.Size = new System.Drawing.Size(36, 41);
+            this.txtMin.Size = new System.Drawing.Size(54, 41);
             this.txtMin.TabIndex = 1;
-            this.txtMin.Text = "3";
+            this.txtMin.Text = "00";
+            this.txtMin.Click += new System.EventHandler(this.txtMin_Click);
             // 
             // timer1
             // 

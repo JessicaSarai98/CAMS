@@ -35,6 +35,7 @@ namespace BlocNotasToDatagridview
         }
         Form1 Form1;
         preguntas preguntas;
+        preguntas2 p;
         private void pasarListaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (File.Exists(archivo))
@@ -93,7 +94,7 @@ namespace BlocNotasToDatagridview
 
         private void desempateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Form1 == null)
+            if (Form1 == null ||  p== null)
             {
                 Form1 = new Form1();
                 Form1.setLimite(2);

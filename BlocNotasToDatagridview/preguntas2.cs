@@ -238,7 +238,13 @@ namespace BlocNotasToDatagridview
             btnPausa.Enabled = false;
             extras.btnAcepDes.Visible = false;
             
-        }        
+        }
+
+        private void txtMin_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnIgual_Click(object sender, EventArgs e)
         {
             btnIgual.Enabled = false;
