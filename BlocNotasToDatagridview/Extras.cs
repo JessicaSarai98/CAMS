@@ -23,7 +23,6 @@ namespace BlocNotasToDatagridview
         {
             this.TipoFormPadre = form;
         }
-
         //fin karina
         public Extras()
         {
@@ -32,7 +31,6 @@ namespace BlocNotasToDatagridview
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
             file = new System.IO.StreamReader("Orden_rpp_extras.txt");
             i = 1;
             while ((linea = file.ReadLine()) != null)
@@ -55,8 +53,6 @@ namespace BlocNotasToDatagridview
         }
         private void Extras_Load(object sender, EventArgs e)
         {
-
-
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
             DataGridViewCheckBoxColumn chk;
@@ -90,31 +86,36 @@ namespace BlocNotasToDatagridview
             if (TipoFormPadre==1) btnAceptar.Visible = true;
             if (TipoFormPadre == 2) btnAcepDes.Visible = true;
         }
-       // preguntas preg = new preguntas
-        preguntas2 pre;
-        string orden = "orden_rpp.txt";
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             preguntas = null;
         }
         private void btnAcepDes_Click(object sender, EventArgs e)
         {
-            if (pre == null)
+            file = new System.IO.StreamReader("Orden_rpp_extras.txt");
+            i = 1;
+            while ((linea = file.ReadLine()) != null)
             {
-                preguntas2 preg = new preguntas2();
-                preg.Owner = this;
-                preg.FormClosed += Form1_FormClosed;
-                StreamReader lector = File.OpenText(orden);
-                preg.participanteB.Text = lector.ReadToEnd();
-                preg.ronda_pregunta.Text = "DESEMPATE";
-                //karina
-                //se pasan los datos de los nombres al siguiente form
-                preg.ParticipanteA.Text = nombres[0];
-                preg.participanteB.Text = nombres[1];
-                preg.Show();
-                this.Hide();
+                if (problemaSeleccioando == i)
+                {
+                    preguntas2 preg = new preguntas2();
+                    preg.Owner = this;
+                    preg.FormClosed += Form1_FormClosed;
+                    //creamos los archivos de los problemas y las preguntas
+                    string[] valores = linea.Split(',');
+                    preg.funcion1();
+                    preg.tiempo_pregunta_respuesta(valores[3], valores[0], valores[1], valores[2]);
+                    //karina
+                    //se pasan los datos de los nombres al siguiente form
+                    preg.ParticipanteA.Text = nombres[0];
+                    preg.participanteB.Text = nombres[1];
+                    preg.Show();
+                    this.Hide();
+                    file = null;
+                    break;
+                }
+                i++;
             }
-           // else Form1.Activate();
         }
     }
 }
