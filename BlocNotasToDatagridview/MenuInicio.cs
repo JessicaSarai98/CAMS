@@ -1,11 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 
 namespace BlocNotasToDatagridview
 {
@@ -15,7 +10,7 @@ namespace BlocNotasToDatagridview
         {
             InitializeComponent();
         }
-        string orden = "orden_rpp.txt";
+        string orden = "CAMS/orden_rpp.txt";
         string archivo = "parejas.txt";
         preguntas preg = new preguntas();
         System.IO.StreamReader file = null;

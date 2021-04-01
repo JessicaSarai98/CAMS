@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
 
 namespace BlocNotasToDatagridview
 {
@@ -31,7 +30,7 @@ namespace BlocNotasToDatagridview
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            file = new System.IO.StreamReader("Orden_rpp_extras.txt");
+            file = new System.IO.StreamReader("CAMS/Orden_rpp_extras.txt");
             i = 1;
             while ((linea = file.ReadLine()) != null)
             {
@@ -57,7 +56,7 @@ namespace BlocNotasToDatagridview
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
             DataGridViewCheckBoxColumn chk;
             //toma el archivo para llenar la tabla
-            file = new System.IO.StreamReader("Orden_rpp_extras.txt");
+            file = new System.IO.StreamReader("CAMS/Orden_rpp_extras.txt");
             try
             {
                 while ((linea = file.ReadLine()) != null)
@@ -92,7 +91,7 @@ namespace BlocNotasToDatagridview
         }
         private void btnAcepDes_Click(object sender, EventArgs e)
         {
-            file = new System.IO.StreamReader("Orden_rpp_extras.txt");
+            file = new System.IO.StreamReader("CAMS/Orden_rpp_extras.txt");
             i = 1;
             while ((linea = file.ReadLine()) != null)
             {

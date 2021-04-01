@@ -8,7 +8,7 @@
 using namespace std;
 
 int main(){
-    string folio, nombre, salon; //variables
+    string id, nombre, fila, columna; //variables
     vector<string>F; //para guardar los datos leidos del folio
     vector<string>nom; //del nombre
     vector<string>sa; //del salon
@@ -38,7 +38,7 @@ int main(){
         cout <<"Numero de filas: "<<i-1<<endl;*/
         string line=""; 
 
-        ifstream infile("lista.csv");
+        ifstream infile("Salones.csv");
         while(getline(infile,line)){
             stringstream strstr(line);
             string word="";
@@ -55,15 +55,15 @@ int main(){
     system("pause");
 
 
-    /*cout <<"Folio"<<"\t"<<"Nombre"<<"\t"<<"Salon"<<endl;
+    cout <<"Folio"<<"\t"<<"Nombre"<<"\t"<<"Salon"<<endl;
     string fo,no,so;
     for(int j=0;j<i;j++){
         cout<<F[j]<<"\t"<<nom[j]<<"\t"<<sa[j]<<endl;
         
-            //no=nom[j];
-            //so=sa[j];
+            no=nom[j];
+            so=sa[j];
         
         
-    }*/
+    }
     
 }
