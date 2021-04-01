@@ -24,7 +24,7 @@ namespace BlocNotasToDatagridview
             //toma el archivo para llenar el combobox de las preguntas
             int counter = 0;
             System.IO.StreamReader file =
-                new System.IO.StreamReader("CAMS/orden_rpp_extras.txt");
+                new System.IO.StreamReader("CAMS/Orden_rpp_extras.txt");
             while ((file.ReadLine()) != null)
             {
                 counter++;
@@ -44,7 +44,7 @@ namespace BlocNotasToDatagridview
 
             //toma el archivo orden_rpp 
             if (file2 == null)
-                file2 = new System.IO.StreamReader("CAMS/orden_rpp_extras.txt");
+                file2 = new System.IO.StreamReader("CAMS/Orden_rpp_extras.txt");
             if (!file2.EndOfStream)
             {
                 //se lee todo el archivo orden_rpp y se dividen las lineas por los comas
@@ -73,7 +73,7 @@ namespace BlocNotasToDatagridview
         PdfImportedPage importedPage = null;
         public void RespuestasPDF(int startPage, int endPage)
         {
-            string sourcePdfPath = "CAMS/Programas.pdf";
+            string sourcePdfPath = "CAMS/Extra.pdf";
             string outputPdfPath = "respuesta.pdf";
             if (File.Exists(outputPdfPath))
             {
@@ -101,7 +101,7 @@ namespace BlocNotasToDatagridview
         }
         public void PreguntasPDF(int page)
         {
-            string sourcePdfPath = "CAMS/Programas.pdf";
+            string sourcePdfPath = "CAMS/Extra.pdf";
             string outputPdfPath = "pregunta.pdf";
             if (File.Exists(outputPdfPath))
             {

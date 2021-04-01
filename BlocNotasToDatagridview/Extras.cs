@@ -38,7 +38,7 @@ namespace BlocNotasToDatagridview
                 {
                     //creamos los archivos de los problemas y las preguntas
                     string[] valores = linea.Split(',');
-                    preguntas FormPreguntas = Owner as preguntas;
+                    preguntas2 FormPreguntas = Owner as preguntas2;
                     FormPreguntas.axAcroPDF1.Visible = false;
                     FormPreguntas.funcion1();
                     FormPreguntas.btnIgual.Enabled = false;
