@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BlocNotasToDatagridview
@@ -76,12 +79,9 @@ namespace BlocNotasToDatagridview
             {
                 preguntas = new preguntas();
                 preguntas.Owner = this;
-                preguntas.FormClosed += Form1_FormClosed;
-                
-                StreamReader lector = File.OpenText(orden);
-                
-                preg.participanteB.Text = lector.ReadToEnd();
-                
+                preguntas.FormClosed += Form1_FormClosed;                
+                StreamReader lector = File.OpenText(orden);                
+                preg.participanteB.Text = lector.ReadToEnd();                
                 preguntas.Show();
             }
             else Form1.Activate();
@@ -98,61 +98,6 @@ namespace BlocNotasToDatagridview
                 Form1.btnLimpiar.Visible = false;
                 Form1.button1.Visible = false;
                 Form1.btnTerminar.Visible = false;
-               
-                
-
-
-                //DataTable dt = new DataTable();
-
-
-                //String[] lines = System.IO.File.ReadAllLines("parejas2.txt");
-                //if (lines.Length > 0)
-                //{
-
-                //    String firts = lines[0];
-                //    String[] header = firts.Split(',',';');
-                //    foreach(string headerWord in header)
-                //    {
-                //        dt.Columns.Add(new DataColumn(headerWord));
-
-                //    }
-                //    for(int i = 1; i<lines.Length; i++)
-                //    {
-                //        string[] data = lines[i].Split(',',';');
-                //        DataRow dr = dt.NewRow();
-                //        int columnIndex = 0;
-                //        foreach(string headerWord in header)
-                //        {
-                //            dr[headerWord] = data[columnIndex++];
-                //        }
-                //        dt.Rows.Add(dr);
-                //    }
-                //}
-                //if (dt.Rows.Count > 0)
-                //{
-
-                //    Form1.dataGridView1.DataSource = dt;
-                //    Form1.dataGridView1.Columns[3].Visible = false;
-
-                // //   Form1.dataGridView1.Columns[7].Visible = false;
-                //}
-
-                //Form1.dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
-
-                //Form1.dataGridView1.Columns[0].HeaderText = "Nombre";
-                //Form1.dataGridView1.Columns[1].HeaderText = "Escuela";
-                //Form1.dataGridView1.Columns[2].HeaderText = "Estado";
-                //DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-                //chk.HeaderText = "Elegir";
-                //Form1.dataGridView1.Columns.Add(chk);
-
-                //Form1.dataGridView1.Columns[0].ReadOnly = true;
-                //Form1.dataGridView1.Columns[1].ReadOnly = true;
-                //Form1.dataGridView1.Columns[2].ReadOnly = true;
-                //Form1.dataGridView1.Columns[3].ReadOnly = true;
-
-
-                //Form1.dataGridView1.Columns[4].ReadOnly = true;
                 Form1.cargarArchivo2();
                 Form1.Show();
             }
@@ -176,6 +121,84 @@ namespace BlocNotasToDatagridview
                 desempateToolStripMenuItem.Enabled = false;
                 problemasToolStripMenuItem.Enabled = false;
             }
+        }
+        //*****     AQUI COMIENZA TODO EL PROCESO PARA HACER LAS ETIQUETAS *****
+        //creamos la clase escuela y la de salones
+        class NombreEscuelas
+        { 
+            public string nombre { get; set; }
+            public int capacidad { get; set; }
+            public int estado { get; set; }
+            public double[] capacidadxSalon { get; set; }
+        }
+        class ListaSalones
+        {
+            public string id { get; set; }
+            public string nombre { get; set; }
+            public int capacidad { get; set; }
+        }
+
+        // Creamos la lista y las variables
+        string linea;
+        string[] valores;
+        int capacidadTotal = 0, capacidad, i=0;
+        List<NombreEscuelas> Escuelas = new List<NombreEscuelas>();
+        List<ListaSalones> Salones = new List<ListaSalones>();
+        private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Leemos el archivo "Entrada" para saber cuantos alumnos hay de cada escuela y agruparlos
+            System.IO.StreamReader file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
+            file.ReadLine();
+            //Se lee la siguiente línea y se compara hasta que se termine de leer el archivo
+            while ((linea = file.ReadLine()) != null) { 
+                valores = linea.Split(',');
+                //Agregamos todos los valores del archivo a la lista
+                Escuelas.Add(new NombreEscuelas() { nombre = valores[0] });
+            }
+
+            //Vemos cuantas líneas tiene el archivo para declarar el arreglo
+            file = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
+            file.ReadLine();
+            //procesamos cada fila para saber la capacidad del mismo
+            while ( (linea = file.ReadLine()) != null)
+            {
+                valores = linea.Split(',');
+                capacidad = Convert.ToInt32(valores[2]) * Convert.ToInt32(valores[3]);
+                capacidadTotal += capacidad;
+                Salones.Add(new ListaSalones() { id = valores[0], nombre = valores[1], capacidad = capacidad });
+            }
+
+            //Vemos cuantas escuelas hay en total, cuantos alumnos tienen cada una
+            var query = from escuela in Escuelas group escuela by escuela.nombre;
+            foreach (var group in query)
+            {
+                Escuelas[i].nombre = group.Key;
+                Escuelas[i].capacidad = group.Count();
+                Escuelas[i].estado = 0;
+                Escuelas[i].capacidadxSalon = new double[Salones.Count()];
+                for (int j = 0; j < Salones.Count(); j++) {
+                    Escuelas[i].capacidadxSalon[j] = Math.Round((double)Salones[j].capacidad/capacidadTotal * Escuelas[i].capacidad);
+                }
+                i++;
+            }
+
+            //asignamos lugares en los salones, primero los separamos por salon
+            for (i=0; i < Escuelas.Count(); i++)
+            {
+                if (Escuelas[i].capacidadxSalon != null)
+                {
+                    dataGridView1.Rows.Add(Escuelas[i].nombre, Escuelas[i].capacidad,
+                    Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
+                    Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
+                    Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
+                    Escuelas[i].capacidadxSalon[6]);
+                }
+                else Escuelas.RemoveRange(i,1);
+            }
+            //query.OrderBy(x => capacidad);
+
+
+
         }
     }
 }

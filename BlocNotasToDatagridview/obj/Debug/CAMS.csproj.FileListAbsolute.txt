@@ -76,3 +76,4 @@ C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Extras.resources
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas2.resources
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas2.resources
+C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Etiquetas.resources

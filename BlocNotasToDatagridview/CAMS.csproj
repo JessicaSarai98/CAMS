@@ -79,6 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Etiquetas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Etiquetas.Designer.cs">
+      <DependentUpon>Etiquetas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extras.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Etiquetas.resx">
+      <DependentUpon>Etiquetas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extras.resx">
       <DependentUpon>Extras.cs</DependentUpon>
     </EmbeddedResource>
