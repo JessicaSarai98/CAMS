@@ -128,6 +128,8 @@ namespace BlocNotasToDatagridview
         { 
             public string nombre { get; set; }
             public int capacidad { get; set; }
+            //PARA SABER SI TODAVÍA SE ASIGNAN ALUMNOS O YA ESTÁN TODOS.
+            public int capacidadAUX { get; set; }
             public int estado { get; set; }
             public double[] capacidadxSalon { get; set; }
         }
@@ -136,12 +138,15 @@ namespace BlocNotasToDatagridview
             public string id { get; set; }
             public string nombre { get; set; }
             public int capacidad { get; set; }
+            //Para saber si ya está ocupado todo el salón o tiene espacio
+            public int capacidadAUX { get; set; }
         }
 
         // Creamos la lista y las variables
         string linea;
         string[] valores;
         int capacidadTotal = 0, capacidad, i=0;
+        double auxAlumno;
         List<NombreEscuelas> Escuelas = new List<NombreEscuelas>();
         List<ListaSalones> Salones = new List<ListaSalones>();
         private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,19 +170,43 @@ namespace BlocNotasToDatagridview
                 valores = linea.Split(',');
                 capacidad = Convert.ToInt32(valores[2]) * Convert.ToInt32(valores[3]);
                 capacidadTotal += capacidad;
-                Salones.Add(new ListaSalones() { id = valores[0], nombre = valores[1], capacidad = capacidad });
+                Salones.Add(new ListaSalones() { id = valores[0], nombre = valores[1], capacidad = capacidad, capacidadAUX = capacidad });
             }
 
             //Vemos cuantas escuelas hay en total, cuantos alumnos tienen cada una
-            var query = from escuela in Escuelas group escuela by escuela.nombre;
+            //y van de mayor a menor
+            var query = from escuela in Escuelas group escuela  by escuela.nombre into nuevoGrupo
+                        orderby nuevoGrupo.Count() descending select nuevoGrupo;
             foreach (var group in query)
             {
                 Escuelas[i].nombre = group.Key;
-                Escuelas[i].capacidad = group.Count();
+                Escuelas[i].capacidad = Escuelas[i].capacidadAUX = group.Count();
                 Escuelas[i].estado = 0;
                 Escuelas[i].capacidadxSalon = new double[Salones.Count()];
                 for (int j = 0; j < Salones.Count(); j++) {
-                    Escuelas[i].capacidadxSalon[j] = Math.Round((double)Salones[j].capacidad/capacidadTotal * Escuelas[i].capacidad);
+                   auxAlumno = Math.Round((double)Escuelas[i].capacidad / capacidadTotal *Salones[j].capacidad );
+                    //si todavía hay alumnos de esa escuela, se asigna
+                    if (Escuelas[i].capacidadAUX >= auxAlumno)
+                    {
+                        //Preguntamos si todavía hay espacio en ese salón
+                        if (Salones[j].capacidadAUX > auxAlumno)
+                        {
+                            //preguntamos si la escuela sólo tiene un participante
+                            if (Escuelas[i].capacidad == 1)
+                            {//de ser así, se asigna al primer salón y se pasa al siguiente
+                                Escuelas[i].capacidadxSalon[j] = 1;
+                                Salones[j].capacidadAUX = Salones[j].capacidadAUX - 1;
+                                capacidadTotal = capacidadTotal - 1 ;
+                                Escuelas[i].capacidadAUX = Escuelas[i].capacidadAUX - 1;
+                                break;
+                            }
+                            Escuelas[i].capacidadxSalon[j] = auxAlumno;
+                            capacidadTotal = capacidadTotal - (int)auxAlumno;
+                            Escuelas[i].capacidadAUX = Escuelas[i].capacidadAUX - (int)auxAlumno;
+                            Salones[j].capacidadAUX = Salones[j].capacidadAUX - (int)auxAlumno;
+                            //MessageBox.Show("Escuela "+Escuelas[i].capacidad+((double)Salones[j].capacidad / capacidadTotal * Escuelas[i].capacidad).ToString());
+                        }
+                    }
                 }
                 i++;
             }
@@ -187,7 +216,7 @@ namespace BlocNotasToDatagridview
             {
                 if (Escuelas[i].capacidadxSalon != null)
                 {
-                    dataGridView1.Rows.Add(Escuelas[i].nombre, Escuelas[i].capacidad,
+                    dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes:"+Escuelas[i].capacidad,
                     Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
                     Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
                     Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +

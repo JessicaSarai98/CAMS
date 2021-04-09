@@ -36,10 +36,10 @@
             this.pasarListaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.problemasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.desempateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.escuela = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.algo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,7 +104,7 @@
             // pasarListaToolStripMenuItem
             // 
             this.pasarListaToolStripMenuItem.Name = "pasarListaToolStripMenuItem";
-            this.pasarListaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pasarListaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.pasarListaToolStripMenuItem.Text = "Pasar lista";
             this.pasarListaToolStripMenuItem.Click += new System.EventHandler(this.pasarListaToolStripMenuItem_Click);
             // 
@@ -112,7 +112,7 @@
             // 
             this.problemasToolStripMenuItem.Enabled = false;
             this.problemasToolStripMenuItem.Name = "problemasToolStripMenuItem";
-            this.problemasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.problemasToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.problemasToolStripMenuItem.Text = "Problemas";
             this.problemasToolStripMenuItem.Click += new System.EventHandler(this.problemasToolStripMenuItem_Click);
             // 
@@ -120,35 +120,35 @@
             // 
             this.desempateToolStripMenuItem.Enabled = false;
             this.desempateToolStripMenuItem.Name = "desempateToolStripMenuItem";
-            this.desempateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.desempateToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.desempateToolStripMenuItem.Text = "Desempate";
             this.desempateToolStripMenuItem.Click += new System.EventHandler(this.desempateToolStripMenuItem_Click);
+            // 
+            // generarEtiquetasToolStripMenuItem
+            // 
+            this.generarEtiquetasToolStripMenuItem.Name = "generarEtiquetasToolStripMenuItem";
+            this.generarEtiquetasToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.generarEtiquetasToolStripMenuItem.Text = "Generar etiquetas";
+            this.generarEtiquetasToolStripMenuItem.Click += new System.EventHandler(this.generarEtiquetasToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(163, 6);
             // 
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
             // actualizarToolStripMenuItem
             // 
             this.actualizarToolStripMenuItem.Name = "actualizarToolStripMenuItem";
-            this.actualizarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.actualizarToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.actualizarToolStripMenuItem.Text = "Actualizar";
             this.actualizarToolStripMenuItem.Click += new System.EventHandler(this.actualizarToolStripMenuItem_Click);
-            // 
-            // generarEtiquetasToolStripMenuItem
-            // 
-            this.generarEtiquetasToolStripMenuItem.Name = "generarEtiquetasToolStripMenuItem";
-            this.generarEtiquetasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.generarEtiquetasToolStripMenuItem.Text = "Generar etiquetas";
-            this.generarEtiquetasToolStripMenuItem.Click += new System.EventHandler(this.generarEtiquetasToolStripMenuItem_Click);
             // 
             // dataGridView1
             // 
