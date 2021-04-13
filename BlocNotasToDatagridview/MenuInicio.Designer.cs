@@ -40,14 +40,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.escuela = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.algo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.algo2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -150,41 +145,12 @@
             this.actualizarToolStripMenuItem.Text = "Actualizar";
             this.actualizarToolStripMenuItem.Click += new System.EventHandler(this.actualizarToolStripMenuItem_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.escuela,
-            this.algo,
-            this.algo2});
-            this.dataGridView1.Location = new System.Drawing.Point(42, 95);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(712, 300);
-            this.dataGridView1.TabIndex = 5;
-            // 
-            // escuela
-            // 
-            this.escuela.HeaderText = "escuela";
-            this.escuela.Name = "escuela";
-            // 
-            // algo
-            // 
-            this.algo.HeaderText = "capacidad";
-            this.algo.Name = "algo";
-            // 
-            // algo2
-            // 
-            this.algo2.HeaderText = "salones";
-            this.algo2.Name = "algo2";
-            // 
             // MenuInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -195,7 +161,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -213,9 +178,5 @@
         public System.Windows.Forms.ToolStripMenuItem problemasToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem desempateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generarEtiquetasToolStripMenuItem;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn escuela;
-        private System.Windows.Forms.DataGridViewTextBoxColumn algo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn algo2;
     }
 }
