@@ -236,7 +236,7 @@ namespace BlocNotasToDatagridview
             }
             tabla.Show();
             // Inicializamos el documento PDF
-            Document doc = new Document();
+            Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
             // Importante Abrir el documento
             doc.Open();
@@ -244,12 +244,15 @@ namespace BlocNotasToDatagridview
             Paragraph title;
             
 
-            //asignamos lugares en los salones, primero los separamos por salon
+            //asignamos lugares en los salones, primero los separamos por salon 
+            //son 7 salones
             for (i=0; i < Salones.Count(); i++ )
             {
                 //checamos cuantas filas y columnas tiene para saber quien puede ir
                 filas = Salones[i].filas_columnas.Split(';')[0];
                 columnas = Salones[i].filas_columnas.Split(';')[1];
+                int capac = Int32.Parse(filas)*Int32.Parse(columnas);
+                //MessageBox.Show("%d"+capac);
                 title = new Paragraph();
                 title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
                 title.Add("Lista de alumnos del salón "+Salones[i].nombre);
@@ -264,36 +267,50 @@ namespace BlocNotasToDatagridview
                 table.AddCell("Nombre");
                 table.AddCell("lugar");
                 //asignamos cuantos alumnos hay de cada escuela en cada salón
-                for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
-                {
-                    AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];    
-                }
-                for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
-                {
-                    int k = 0;
-                    //si tiene al menos un alumno se ingresa
-                    if (Escuelas[j].capacidadxSalon[i] != 0 && AlumnosPorEscuelaPorSalon[j] !=0)
-                    {
+                //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+                //{
+                //    AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
+                //    //MessageBox.Show("Capacidad: %i"+AlumnosPorEscuelaPorSalon[j]);
+                //}
+                //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+                //{
+                int k = 0;
+                    //si tiene al menos un alumno se ingres
+                //if (capac!= 0 && AlumnosPorEscuelaPorSalon[j] !=0)
+                //    {
                         //leemos de nuevo el archivo para acceder a la información
-                        file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
-                        file.ReadLine();
-                        while ((linea = file.ReadLine()) != null)
-                        {
-                            //MessageBox.Show(valores[0] + "/"+ Escuelas[j].nombre+ "  -valores[0]");
-                            valores = linea.Split(',');
+          
+               
+                file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
+                file.ReadLine();
+                while ((linea = file.ReadLine()) != null)
+                {
+                    for (j = 0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+                    {
+                        AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
+                        if(capac!=0 && AlumnosPorEscuelaPorSalon[j] != 0) { 
+
+                        //MessageBox.Show(valores[0] + "/"+ Escuelas[j].nombre+ "  -valores[0]");
+                             valores = linea.Split(',');
                             if (valores[0] == Escuelas[j].nombre)
                             {
                                 table.AddCell(valores[1]);
                                 table.AddCell(valores[2]);
                                 table.AddCell((j + k + 1).ToString());
                                 k++;
+                                capac--;
+
                                 AlumnosPorEscuelaPorSalon[j] = AlumnosPorEscuelaPorSalon[j] - 1;
+                                //MessageBox.Show(valores[0] + valores[1] + valores[2]);
+
                                 break;
                             }
                         }
-
                     }
                 }
+
+                 //   }
+               // }
                 
 
                 // Agregamos un parrafo vacio como separacion.
