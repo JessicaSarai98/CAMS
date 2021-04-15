@@ -246,82 +246,160 @@ namespace BlocNotasToDatagridview
 
             //asignamos lugares en los salones, primero los separamos por salon 
             //son 7 salones
-            for (i=0; i < Salones.Count(); i++ )
-            {
-                //checamos cuantas filas y columnas tiene para saber quien puede ir
-                filas = Salones[i].filas_columnas.Split(';')[0];
-                columnas = Salones[i].filas_columnas.Split(';')[1];
-                int capac = Int32.Parse(filas)*Int32.Parse(columnas);
-                //MessageBox.Show("%d"+capac);
-                title = new Paragraph();
-                title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
-                title.Add("Lista de alumnos del salón "+Salones[i].nombre);
-                doc.Add(title);
-                // Agregamos un parrafo vacio como separacion.
-                doc.Add(new Paragraph(" "));
+            //for (i=0; i < Salones.Count(); i++ )
+            //{
+            //    //checamos cuantas filas y columnas tiene para saber quien puede ir
+            //    filas = Salones[i].filas_columnas.Split(';')[0];
+            //    columnas = Salones[i].filas_columnas.Split(';')[1];
+            //    int capac = Int32.Parse(filas)*Int32.Parse(columnas);
+            //    //MessageBox.Show("%d"+capac);
+            //    title = new Paragraph();
+            //    title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+            //    title.Add("Lista de alumnos del salón "+Salones[i].nombre);
+            //    doc.Add(title);
+            //    // Agregamos un parrafo vacio como separacion.
+            //    doc.Add(new Paragraph(" "));
 
-                // Empezamos a crear la tabla, definimos una tabla de 6 columnas
-                PdfPTable table = new PdfPTable(3);
-                // Comenzamos a llenar las filas
-                table.AddCell("Folio");
-                table.AddCell("Nombre");
-                table.AddCell("lugar");
-                //asignamos cuantos alumnos hay de cada escuela en cada salón
-                //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
-                //{
-                //    AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
-                //    //MessageBox.Show("Capacidad: %i"+AlumnosPorEscuelaPorSalon[j]);
-                //}
-                //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
-                //{
-                int k = 0;
+            //    // Empezamos a crear la tabla, definimos una tabla de 6 columnas
+            //    PdfPTable table = new PdfPTable(3);
+            //    // Comenzamos a llenar las filas
+            //    table.AddCell("Folio");
+            //    table.AddCell("Nombre");
+            //    table.AddCell("lugar");
+            //    //asignamos cuantos alumnos hay de cada escuela en cada salón
+            //    //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+            //    //{
+            //    //    AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
+            //    //    //MessageBox.Show("Capacidad: %i"+AlumnosPorEscuelaPorSalon[j]);
+            //    //}
+            //    //for (j=0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+            //    //{
+            //    int k = 0;
                     //si tiene al menos un alumno se ingres
                 //if (capac!= 0 && AlumnosPorEscuelaPorSalon[j] !=0)
                 //    {
                         //leemos de nuevo el archivo para acceder a la información
           
                
-                file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
-                file.ReadLine();
-                while ((linea = file.ReadLine()) != null)
+                //file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
+                //file.ReadLine();
+                int maxDeSalones = 30;
+
+                String[,] listaDeAlumnosPorSalon = new String [Salones.Count(),maxDeSalones];
+
+                for (int m=0; m<30; m++)
                 {
-                    for (j = 0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+                    if (Escuelas[m].capacidadxSalon != null)
                     {
-                        AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
-                        if(capac!=0 && AlumnosPorEscuelaPorSalon[j] != 0) { 
-
-                        //MessageBox.Show(valores[0] + "/"+ Escuelas[j].nombre+ "  -valores[0]");
-                             valores = linea.Split(',');
-                            if (valores[0] == Escuelas[j].nombre)
+                        System.IO.StreamReader listaAlumnos = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
+                        listaAlumnos.ReadLine();
+                        for (int n = 0; n < Salones.Count(); n++)
+                        {
+                            int ocupados = 0;
+                            while (listaDeAlumnosPorSalon[n, ocupados] != null)
                             {
-                                table.AddCell(valores[1]);
-                                table.AddCell(valores[2]);
-                                table.AddCell((j + k + 1).ToString());
-                                k++;
-                                capac--;
-
-                                AlumnosPorEscuelaPorSalon[j] = AlumnosPorEscuelaPorSalon[j] - 1;
-                                //MessageBox.Show(valores[0] + valores[1] + valores[2]);
-
-                                break;
+                                ocupados++;
+                            }
+                            int seleccionados = 0;
+                            while ((Escuelas[m].capacidadxSalon[n] != 0) && ((linea = listaAlumnos.ReadLine()) != null))
+                            {
+                                valores = linea.Split(',');
+                                if (valores[0] == Escuelas[m].nombre)
+                                {
+                                    listaDeAlumnosPorSalon[n, seleccionados + ocupados] = valores[2];
+                                    //MessageBox.Show("Array[" + n + ","+(seleccionados+ocupados)+"] = " + valores[2]);
+                                    seleccionados++;
+                                }
+                                if (Escuelas[m].capacidadxSalon[n] == seleccionados)
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
+                    else break;
                 }
+                for (int n=0; n<Salones.Count(); n++)
+                {
+                    filas = Salones[n].filas_columnas.Split(';')[0];
+                    columnas = Salones[n].filas_columnas.Split(';')[1];
+                    int capac = Int32.Parse(filas) * Int32.Parse(columnas);
+                    //MessageBox.Show("%d"+capac);
+                    title = new Paragraph();
+                    title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+                    title.Add("Lista de alumnos del salón " + Salones[n].nombre);
+                    doc.Add(title);
+                    // Agregamos un parrafo vacio como separacion.
+                    doc.Add(new Paragraph(" "));
 
-                 //   }
-               // }
-                
+                    // Empezamos a crear la tabla, definimos una tabla de 6 columnas
+                    PdfPTable table = new PdfPTable(3);
+                // Comenzamos a llenar las filas
+                    table.AddCell("Folio");
+                    table.AddCell("Nombre");
+                    table.AddCell("lugar");
 
-                // Agregamos un parrafo vacio como separacion.
-                doc.Add(new Paragraph(" "));
-                // Agregamos la tabla al documento
+                    int alumnoPosicion = 0;
+                    while (listaDeAlumnosPorSalon[n,alumnoPosicion] != null)
+                    {
+                        table.AddCell("Matricula");
+                        table.AddCell(listaDeAlumnosPorSalon[n, alumnoPosicion]);
+                        table.AddCell("Num Asiento");
+                        alumnoPosicion++;
+                    }
                 doc.Add(table);
             }
-
-
-            // Ceramos el documento
+            doc.Add(new Paragraph(" "));
             doc.Close();
+
+            //while ((linea = file.ReadLine()) != null)
+            //{
+            //    //for (j = 0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+            //    //{
+            //    //    AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
+            //    //}
+            //    for (j = 0; j < AlumnosPorEscuelaPorSalon.Length; j++)
+            //    {
+
+            //       //AlumnosPorEscuelaPorSalon[j] = (int)Escuelas[j].capacidadxSalon[i];
+            //        if(capac!=0 && AlumnosPorEscuelaPorSalon[j] != 0) {
+            //            //  MessageBox.Show("%d " + Escuelas[j].capacidadxSalon[i]);
+
+
+            //            //MessageBox.Show(valores[0] + "/"+ Escuelas[j].nombre+ "  -valores[0]");
+            //            valores = linea.Split(',');
+            //            if (valores[0] == Escuelas[j].nombre)
+            //            {
+            //                table.AddCell(valores[1]);
+            //                table.AddCell(valores[2]);
+            //                table.AddCell((j + k + 1).ToString());
+            //                k++;
+            //                capac--;
+
+            //                AlumnosPorEscuelaPorSalon[j] = AlumnosPorEscuelaPorSalon[j] - 1;
+            //                //MessageBox.Show("" + AlumnosPorEscuelaPorSalon[j]);
+            //                //MessageBox.Show(valores[0] + valores[1] + valores[2]);
+
+            //                break;
+            //            }
+            //            //MessageBox.Show("" + AlumnosPorEscuelaPorSalon[j]) ;
+            //        }
+            //    }
+            //}
+
+            //   }
+            // }
+
+
+            // Agregamos un parrafo vacio como separacion.
+            //    doc.Add(new Paragraph(" "));
+            //    // Agregamos la tabla al documento
+            //    doc.Add(table);
+            ////}
+
+
+            //// Ceramos el documento
+            //doc.Close();
         }
     }
 }
