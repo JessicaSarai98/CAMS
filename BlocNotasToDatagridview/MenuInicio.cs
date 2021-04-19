@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.fonts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -150,7 +151,7 @@ namespace BlocNotasToDatagridview
             private String escuela;
             private String nombre;
             private String matricula;
-
+            
             public AlumnoInfo(String escuela, String nombre, String matricula)
             {
                 this.escuela = escuela;
@@ -304,11 +305,11 @@ namespace BlocNotasToDatagridview
             // Importante Abrir el documento
             doc.Open();
             // Creamos un titulo personalizado con tamaño de fuente 18 y color Azul
-            Paragraph title;
+            Paragraph title,tit, titulo;
             AlumnoInfo[,] listaDeAlumnosPorSalon = new AlumnoInfo[Salones.Count(), maxDeSalones];
 
-//FUNCION DE PROGRAMA-----------------------------------------------------------------------------------------------------
-//LISTADO DE ESTUDIANTES POR SALON CON LA CANTIDAD CORRESPONDIENTE-----------------------------------------------------------------------------------------------------
+            //FUNCION DE PROGRAMA-----------------------------------------------------------------------------------------------------
+            //LISTADO DE ESTUDIANTES POR SALON CON LA CANTIDAD CORRESPONDIENTE-----------------------------------------------------------------------------------------------------
             for (int m = 0; m < cantidadDeEscuelas; m++)
             {
                 System.IO.StreamReader listaAlumnos = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
@@ -338,7 +339,7 @@ namespace BlocNotasToDatagridview
                     }
                 }
             }
-//ALGORTIMO PARA ACOMODAR A LOS ESTUDIANTES SIN QUE SEAN DE LA MISMA ESCUELA----------------------------------------------
+            //ALGORTIMO PARA ACOMODAR A LOS ESTUDIANTES SIN QUE SEAN DE LA MISMA ESCUELA----------------------------------------------
             //Array que contiene la informacion Folio/AlumnoNombre/AsientoEnElSalon
             AlumnoInfo_Asiento[,] asientosInfo = new AlumnoInfo_Asiento[Salones.Count(), maxDeSalones];
             System.IO.StreamReader fileSalon = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
@@ -346,7 +347,7 @@ namespace BlocNotasToDatagridview
             //SALONES--------------------------------------------
             for (int n = 0; n < numSalones; n++)
             {
-                MessageBox.Show("Salon " + n);
+                //MessageBox.Show("Salon " + n);
                 int alumnoPosicion = 0;//Posicion en la lista de alumnos del salon
                 int asientosPosicion = 0;//Posicion en los asientos del salon
                 linea = fileSalon.ReadLine();
@@ -369,7 +370,7 @@ namespace BlocNotasToDatagridview
                     int[] puntosCardinales;
                     bool auxUsado = false;
                     //Obtenemos lo puntos cardinales a la posicion del asiento(arriba, derecha, abajo, izquierda)
-                    if (posicionesSaltadas.Count == 0 && auxAsientosPosicion==0)
+                    if (posicionesSaltadas.Count == 0 && auxAsientosPosicion == 0)
                     {
                         puntosCardinales = crearPuntosCardinales(asientosPosicion, Convert.ToInt32(salonesInfo[3]));
                     }
@@ -382,10 +383,10 @@ namespace BlocNotasToDatagridview
 
                     //Obtenermos si estan ocupados, si lo están saber de que escuela es
                     String[] nombresDeEscuelasCardinales = new string[4];
-//SE ASIGNAN LOS NOMBRES DE LAS ESCUELAS CARDINALES AL ASIENTO------------------------------------------------------------------------
+                    //SE ASIGNAN LOS NOMBRES DE LAS ESCUELAS CARDINALES AL ASIENTO------------------------------------------------------------------------
                     for (int m = 0; m < 4; m++)
                     {
-                        if (puntosCardinales[m] >=0)//Indica que el asiento existe
+                        if (puntosCardinales[m] >= 0)//Indica que el asiento existe
                         {
                             if (asientosInfo[n, puntosCardinales[m]] != null)//Hay alguien en los puntos cardinales
                             {
@@ -410,8 +411,8 @@ namespace BlocNotasToDatagridview
                         }
                     }
 
-//ASIGNACIÓN DE LOS ASIENTOS----------------------------------------------------------------------------------------------
-//SE VALIDAN PRIMERO SI SON DISTINTAS ESCUELAS LAS CARDINALES------------------------------------------------------------- 
+                    //ASIGNACIÓN DE LOS ASIENTOS----------------------------------------------------------------------------------------------
+                    //SE VALIDAN PRIMERO SI SON DISTINTAS ESCUELAS LAS CARDINALES------------------------------------------------------------- 
                     int validaciones = 0;
                     for (int k = 0; k < 4; k++)
                     {
@@ -425,7 +426,7 @@ namespace BlocNotasToDatagridview
                         }
                     }
                     if (validaciones == 4)
-//LAS ESCUELAS CARDINALES SON DISTINTAS, AHORA VER SI NO FUE ASIGNADO CON ANTERIORIDAD------------------------------------
+                    //LAS ESCUELAS CARDINALES SON DISTINTAS, AHORA VER SI NO FUE ASIGNADO CON ANTERIORIDAD------------------------------------
                     {
                         int validacionEnLista = 0;
                         for (int k = 0; k < asientosPosicion; k++)//asientosPosicion
@@ -441,7 +442,7 @@ namespace BlocNotasToDatagridview
                         }
                         if (auxUsado)
                         {
-                            for (int k=asientosPosicion; k<posicionAux; k++)
+                            for (int k = asientosPosicion; k < posicionAux; k++)
                             {
                                 if (asientosInfo[n, k] == null)
                                 {
@@ -463,7 +464,7 @@ namespace BlocNotasToDatagridview
                             {
                                 if (auxAsientosPosicion != 0)
                                 {
-                                    MessageBox.Show("Agregando con salto " + auxAsientosPosicion);
+                                    // MessageBox.Show("Agregando con salto " + auxAsientosPosicion);
                                     asientosInfo[n, (int)posicionesSaltadas[0] + auxAsientosPosicion] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + auxAsientosPosicion + 1));
                                     auxAsientosPosicion = 0;
                                     asientosPosicion++;
@@ -471,7 +472,7 @@ namespace BlocNotasToDatagridview
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Agregando en la posicion saltada");
+                                    //MessageBox.Show("Agregando en la posicion saltada");
                                     asientosInfo[n, (int)posicionesSaltadas[0]] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + 1));
                                     posicionesSaltadas.Remove(posicionesSaltadas[0]);
                                     asientosPosicion++;
@@ -498,7 +499,7 @@ namespace BlocNotasToDatagridview
                         {
                         }
                     }
-                    if (numDeVuletasRepetidas>1)
+                    if (numDeVuletasRepetidas > 1)
                     {
                         auxAsientosPosicion++;
                         //Se agrega la posicion saltada a un array
@@ -507,7 +508,7 @@ namespace BlocNotasToDatagridview
                     }
                 }
             }
-//CREANDO LA LISTA DE ESTUDIANTES POR SALON(PDF)--------------------------------------------------------------------------
+            //CREANDO LA LISTA DE ESTUDIANTES POR SALON(PDF)--------------------------------------------------------------------------
             for (int n = 0; n < numSalones; n++)
             {
                 filas = Salones[n].filas_columnas.Split(';')[0];
@@ -515,13 +516,33 @@ namespace BlocNotasToDatagridview
                 int capac = Int32.Parse(filas) * Int32.Parse(columnas);
                 title = new Paragraph();
                 title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+
+                tit = new Paragraph();
+                tit.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+
+                titulo = new Paragraph();
+                titulo.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+
                 title.Add("Lista de alumnos del salón " + Salones[n].nombre);
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
                 PdfPTable table = new PdfPTable(3);
+
                 table.AddCell("Folio");
                 table.AddCell("Nombre");
-                table.AddCell("lugar");
+                table.AddCell("Lugar");
+
+                
+
+                PdfPTable eti = new PdfPTable(7);
+             
+                PdfPTable etiq = new PdfPTable(3);
+                PdfPCell salon = new PdfPCell(new Phrase("PIZARRA"));
+                salon.Colspan = 7;
+                salon.HorizontalAlignment = 1;
+                eti.AddCell(salon);
+                etiq.HorizontalAlignment = 1;
+
                 int alumnoPosicion = 0;
                 while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
                 {
@@ -529,7 +550,7 @@ namespace BlocNotasToDatagridview
                 }
                 int alumnos = alumnoPosicion;
                 int saltosAsientos = 0;
-                for (int p=0; p<alumnos; p++)
+                for (int p = 0; p < alumnos; p++)
                 {
                     while (asientosInfo[n, p + saltosAsientos] == null)
                     {
@@ -538,15 +559,53 @@ namespace BlocNotasToDatagridview
                     table.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
                     table.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre());
                     table.AddCell("" + asientosInfo[n, p + saltosAsientos].getAsiento());
+                    //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
+                    eti.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
+                    //lug.SetTextRise(7);
+                    //eti.AddCell()
+                    etiq.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
                     alumnoPosicion++;
                 }
 
+               
 
                 doc.Add(table);
+                doc.Add(new Paragraph(" "));
+                doc.NewPage(); 
+                tit.Add(" " + Salones[n].nombre + " - Orden visual");
+                doc.Add(tit);
+                doc.Add(new Paragraph(" "));
+                eti.TotalWidth = 600f;
+                eti.WidthPercentage = 100;
+                eti.LockedWidth = true;
+                
+
+                for (int b = 0; b < 22; b++)
+                {
+                    eti.AddCell("VACIO");
+                }
+                doc.Add(eti);
+                
+                doc.Add(new Paragraph("  "));
+
+                titulo.Add(" " + Salones[n].nombre + " - etiquetas");
+                doc.Add(titulo);
+                doc.Add(new Paragraph(" "));
+                etiq.TotalWidth = 600f;
+                etiq.WidthPercentage = 100;
+                etiq.LockedWidth = true;
+                for(int c = 0; c < 4; c++)
+                {
+                    etiq.AddCell(" ");
+                    
+                }
+                doc.Add(etiq);
+                doc.Add(new Paragraph("  "));
+                doc.NewPage();
             }
             doc.Add(new Paragraph(" "));
             doc.Close();
-            MessageBox.Show("pdf terminado");
+           // MessageBox.Show("pdf terminado");
         }
 //FUNCIONES--------------------------------------------------------------------------------------------------------------
 
