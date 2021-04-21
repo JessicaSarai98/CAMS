@@ -528,20 +528,23 @@ namespace BlocNotasToDatagridview
                 doc.Add(new Paragraph(" "));
                 PdfPTable table = new PdfPTable(3);
 
-                table.AddCell("Folio");
-                table.AddCell("Nombre");
-                table.AddCell("Lugar");
-
-                
+                PdfPCell salon = new PdfPCell(new Phrase("Folio"));
+                salon.HorizontalAlignment = 1;
+                table.AddCell(salon);
+                salon = new PdfPCell(new Phrase("Nombre"));
+                salon.HorizontalAlignment = 1;
+                table.AddCell(salon);
+                salon = new PdfPCell(new Phrase("Lugar"));
+                salon.HorizontalAlignment = 1;
+                table.AddCell(salon);                
 
                 PdfPTable eti = new PdfPTable(7);
              
                 PdfPTable etiq = new PdfPTable(3);
-                PdfPCell salon = new PdfPCell(new Phrase("PIZARRA"));
+                salon = new PdfPCell(new Phrase("PIZARRA"));
                 salon.Colspan = 7;
                 salon.HorizontalAlignment = 1;
                 eti.AddCell(salon);
-                etiq.HorizontalAlignment = 1;
 
                 int alumnoPosicion = 0;
                 while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
@@ -556,14 +559,22 @@ namespace BlocNotasToDatagridview
                     {
                         saltosAsientos++;
                     }
-                    table.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
-                    table.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre());
-                    table.AddCell("" + asientosInfo[n, p + saltosAsientos].getAsiento());
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre()));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento()));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
                     //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
-                    eti.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
-                    //lug.SetTextRise(7);
-                    //eti.AddCell()
-                    etiq.AddCell(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula());
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+                    salon.HorizontalAlignment = 1;
+                    eti.AddCell(salon);
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+                    salon.HorizontalAlignment = 1;
+                    etiq.AddCell(salon);
                     alumnoPosicion++;
                 }
 
