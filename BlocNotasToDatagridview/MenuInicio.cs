@@ -515,14 +515,14 @@ namespace BlocNotasToDatagridview
                 columnas = Salones[n].filas_columnas.Split(';')[1];
                 int capac = Int32.Parse(filas) * Int32.Parse(columnas);
                 title = new Paragraph();
-                title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+                title.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
                 tit = new Paragraph();
-                tit.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+                tit.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
                 titulo = new Paragraph();
-                titulo.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
-
+                titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
+                //var boldFont = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
                 title.Add("Lista de alumnos del salón " + Salones[n].nombre);
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
@@ -589,11 +589,12 @@ namespace BlocNotasToDatagridview
                 eti.TotalWidth = 600f;
                 eti.WidthPercentage = 100;
                 eti.LockedWidth = true;
+               
                 
 
                 for (int b = 0; b < 22; b++)
                 {
-                    eti.AddCell("VACIO");
+                    eti.AddCell("LUGAR VACIO");
                 }
                 doc.Add(eti);
                 
