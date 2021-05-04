@@ -526,9 +526,12 @@ namespace BlocNotasToDatagridview
                 title.Add("Lista de alumnos del salón " + Salones[n].nombre);
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
-                PdfPTable table = new PdfPTable(3);
+                PdfPTable table = new PdfPTable(4);
 
-                PdfPCell salon = new PdfPCell(new Phrase("Folio"));
+                PdfPCell salon = new PdfPCell(new Phrase("No."));
+                salon.HorizontalAlignment = 1;
+                table.AddCell(salon);
+                salon = new PdfPCell(new Phrase("Folio"));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Nombre"));
@@ -559,6 +562,10 @@ namespace BlocNotasToDatagridview
                     {
                         saltosAsientos++;
                     }
+                    String numero = Convert.ToString(p + 1);
+                    salon = new PdfPCell(new Phrase(numero));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
                     salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
@@ -569,11 +576,10 @@ namespace BlocNotasToDatagridview
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+
+                    salon = new PdfPCell(new Phrase("Folio:\n" + asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()+"\n"+asientosInfo[n,p+saltosAsientos].getAsiento()));
                     salon.HorizontalAlignment = 1;
                     eti.AddCell(salon);
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
-                    salon.HorizontalAlignment = 1;
                     etiq.AddCell(salon);
                     alumnoPosicion++;
                 }
