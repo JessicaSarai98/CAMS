@@ -305,7 +305,7 @@ namespace BlocNotasToDatagridview
             // Importante Abrir el documento
             doc.Open();
             // Creamos un titulo personalizado con tamaño de fuente 18 y color Azul
-            Paragraph title,tit, titulo;
+            Paragraph title, tit, titulo;
             AlumnoInfo[,] listaDeAlumnosPorSalon = new AlumnoInfo[Salones.Count(), maxDeSalones];
 
             //FUNCION DE PROGRAMA-----------------------------------------------------------------------------------------------------
@@ -514,12 +514,16 @@ namespace BlocNotasToDatagridview
                 filas = Salones[n].filas_columnas.Split(';')[0];
                 columnas = Salones[n].filas_columnas.Split(';')[1];
                 int capac = Int32.Parse(filas) * Int32.Parse(columnas);
+
+                //Lista salon
                 title = new Paragraph();
                 title.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
+                //Orden visual
                 tit = new Paragraph();
                 tit.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
+                //etiquetas
                 titulo = new Paragraph();
                 titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
                 //var boldFont = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
@@ -527,11 +531,13 @@ namespace BlocNotasToDatagridview
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
                 PdfPTable table = new PdfPTable(4);
+                table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
 
                 PdfPCell salon = new PdfPCell(new Phrase("No."));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Folio"));
+
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Nombre"));
@@ -539,10 +545,10 @@ namespace BlocNotasToDatagridview
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Lugar"));
                 salon.HorizontalAlignment = 1;
-                table.AddCell(salon);                
+                table.AddCell(salon);
 
                 PdfPTable eti = new PdfPTable(7);
-             
+
                 PdfPTable etiq = new PdfPTable(3);
                 salon = new PdfPCell(new Phrase("PIZARRA"));
                 salon.Colspan = 7;
@@ -577,8 +583,9 @@ namespace BlocNotasToDatagridview
                     table.AddCell(salon);
                     //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
 
-                    salon = new PdfPCell(new Phrase("Folio:\n" + asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()+"\n"+asientosInfo[n,p+saltosAsientos].getAsiento()));
+                    salon = new PdfPCell(new Phrase("Folio:\n" + asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n" + asientosInfo[n, p + saltosAsientos].getAsiento()));
                     salon.HorizontalAlignment = 1;
+                     
                     eti.AddCell(salon);
                     etiq.AddCell(salon);
                     alumnoPosicion++;
