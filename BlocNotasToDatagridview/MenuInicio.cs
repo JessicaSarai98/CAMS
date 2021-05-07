@@ -305,7 +305,7 @@ namespace BlocNotasToDatagridview
             // Importante Abrir el documento
             doc.Open();
             // Creamos un titulo personalizado con tamaño de fuente 18 y color Azul
-            Paragraph title,tit, titulo;
+            Paragraph title, tit, titulo;
             AlumnoInfo[,] listaDeAlumnosPorSalon = new AlumnoInfo[Salones.Count(), maxDeSalones];
 
             //FUNCION DE PROGRAMA-----------------------------------------------------------------------------------------------------
@@ -514,21 +514,30 @@ namespace BlocNotasToDatagridview
                 filas = Salones[n].filas_columnas.Split(';')[0];
                 columnas = Salones[n].filas_columnas.Split(';')[1];
                 int capac = Int32.Parse(filas) * Int32.Parse(columnas);
+
+                //Lista salon
                 title = new Paragraph();
-                title.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+                title.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
+                //Orden visual
                 tit = new Paragraph();
-                tit.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
+                tit.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
+                //etiquetas
                 titulo = new Paragraph();
-                titulo.Font = FontFactory.GetFont(FontFactory.TIMES, 18f, BaseColor.BLACK);
-
+                titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
+                //var boldFont = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
                 title.Add("Lista de alumnos del salón " + Salones[n].nombre);
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
-                PdfPTable table = new PdfPTable(3);
+                PdfPTable table = new PdfPTable(4);
+                table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
 
-                PdfPCell salon = new PdfPCell(new Phrase("Folio"));
+                PdfPCell salon = new PdfPCell(new Phrase("No."));
+                salon.HorizontalAlignment = 1;
+                table.AddCell(salon);
+                salon = new PdfPCell(new Phrase("Folio"));
+
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Nombre"));
@@ -536,10 +545,10 @@ namespace BlocNotasToDatagridview
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Lugar"));
                 salon.HorizontalAlignment = 1;
-                table.AddCell(salon);                
+                table.AddCell(salon);
 
                 PdfPTable eti = new PdfPTable(7);
-             
+
                 PdfPTable etiq = new PdfPTable(3);
                 salon = new PdfPCell(new Phrase("PIZARRA"));
                 salon.Colspan = 7;
@@ -559,6 +568,10 @@ namespace BlocNotasToDatagridview
                     {
                         saltosAsientos++;
                     }
+                    String numero = Convert.ToString(p + 1);
+                    salon = new PdfPCell(new Phrase(numero));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
                     salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
@@ -569,11 +582,35 @@ namespace BlocNotasToDatagridview
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+                    if (p == 7 || p == 14 || p == 21)
+                    {
+                        for (int l = 0; l < 7; l++)
+                        {
+                            Font fuente = new Font();
+                            fuente.Size = (9);
+                            var asiento = new PdfPCell(new Phrase("  "+ (p-6+l)));
+                            asiento.HorizontalAlignment = 2;
+                            asiento.BorderWidthBottom = asiento.BorderWidthTop = 0;
+                            eti.AddCell(asiento);
+                        }
+                    }
+
+                    if (p == 3 || p == 6 || p == 9 || p==12 || p==15 || p==18 || p==21)
+                    {
+                        for (int l = 0; l < 3; l++)
+                        {
+                            Font fuente = new Font();
+                            fuente.Size = (9);
+                            var asiento = new PdfPCell(new Phrase("  " + (p - 2 + l)));
+                            asiento.HorizontalAlignment = 2;
+                            asiento.BorderWidthBottom = asiento.BorderWidthTop = 0;
+                            etiq.AddCell(asiento);
+                        }
+                    }
+                    salon = new PdfPCell(new Phrase("Folio:\n" + asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n"));
                     salon.HorizontalAlignment = 1;
+                     
                     eti.AddCell(salon);
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
-                    salon.HorizontalAlignment = 1;
                     etiq.AddCell(salon);
                     alumnoPosicion++;
                 }
@@ -589,16 +626,17 @@ namespace BlocNotasToDatagridview
                 eti.TotalWidth = 600f;
                 eti.WidthPercentage = 100;
                 eti.LockedWidth = true;
+               
                 
 
                 for (int b = 0; b < 22; b++)
                 {
-                    eti.AddCell("VACIO");
+                    eti.AddCell("LUGAR VACIO"+"\n"+b);
                 }
                 doc.Add(eti);
                 
                 doc.Add(new Paragraph("  "));
-
+                doc.NewPage();
                 titulo.Add(" " + Salones[n].nombre + " - etiquetas");
                 doc.Add(titulo);
                 doc.Add(new Paragraph(" "));
