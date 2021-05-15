@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.draw;
 using iTextSharp.text.pdf.fonts;
 using System;
 using System.Collections;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace BlocNotasToDatagridview
@@ -203,6 +205,11 @@ namespace BlocNotasToDatagridview
         List<NombreEscuelas> Escuelas = new List<NombreEscuelas>();
         List<ListaSalones> Salones = new List<ListaSalones>();
         int maxDeSalones = 64;//Variables temporal en lo que se calcula el verdadero numero de salones
+        //Fonts
+        iTextSharp.text.Font fontTimes12 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 12, iTextSharp.text.Font.NORMAL);
+        iTextSharp.text.Font fontTimes52 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 52, iTextSharp.text.Font.NORMAL);
+        iTextSharp.text.Font fontTimes9 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 9, iTextSharp.text.Font.NORMAL);
+        Chunk glue = new Chunk(new VerticalPositionMark());
         private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Vemos cuantas líneas tiene el archivo para declarar el arreglo
@@ -345,13 +352,15 @@ namespace BlocNotasToDatagridview
             System.IO.StreamReader fileSalon = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
             fileSalon.ReadLine();
             //SALONES--------------------------------------------
+            int[,] salonesFilasColumnas = new int[numSalones, 2];
             for (int n = 0; n < numSalones; n++)
             {
-                //MessageBox.Show("Salon " + n);
                 int alumnoPosicion = 0;//Posicion en la lista de alumnos del salon
                 int asientosPosicion = 0;//Posicion en los asientos del salon
                 linea = fileSalon.ReadLine();
                 String[] salonesInfo = linea.Split(',');
+                salonesFilasColumnas[n, 0] = Convert.ToInt32(salonesInfo[2]);
+                salonesFilasColumnas[n, 1] = Convert.ToInt32(salonesInfo[3]);
 
                 int cantidadDeAlumnosEnElSalon = 0;//Variable para saber cuantos alumnos hay en el salon actual.
                 while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
@@ -464,7 +473,6 @@ namespace BlocNotasToDatagridview
                             {
                                 if (auxAsientosPosicion != 0)
                                 {
-                                    // MessageBox.Show("Agregando con salto " + auxAsientosPosicion);
                                     asientosInfo[n, (int)posicionesSaltadas[0] + auxAsientosPosicion] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + auxAsientosPosicion + 1));
                                     auxAsientosPosicion = 0;
                                     asientosPosicion++;
@@ -472,7 +480,6 @@ namespace BlocNotasToDatagridview
                                 }
                                 else
                                 {
-                                    //MessageBox.Show("Agregando en la posicion saltada");
                                     asientosInfo[n, (int)posicionesSaltadas[0]] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + 1));
                                     posicionesSaltadas.Remove(posicionesSaltadas[0]);
                                     asientosPosicion++;
@@ -482,7 +489,6 @@ namespace BlocNotasToDatagridview
                             else
                             {
                                 asientosInfo[n, asientosPosicion] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], (asientosPosicion + 1));
-                                //MessageBox.Show("Se ha agregado a " + asientosInfo[n, asientosPosicion].getAlumnoInfo().getNombre());
                                 asientosPosicion++;
                                 numDeVuletasRepetidas = 0;
                             }
@@ -524,20 +530,21 @@ namespace BlocNotasToDatagridview
                 tit.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
                 //etiquetas
+
                 titulo = new Paragraph();
                 titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
                 //var boldFont = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
+
                 title.Add("Lista de alumnos del salón " + Salones[n].nombre);
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
+
                 PdfPTable table = new PdfPTable(4);
                 table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
-
                 PdfPCell salon = new PdfPCell(new Phrase("No."));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Folio"));
-
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
                 salon = new PdfPCell(new Phrase("Nombre"));
@@ -547,13 +554,7 @@ namespace BlocNotasToDatagridview
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
 
-                PdfPTable eti = new PdfPTable(7);
-
                 PdfPTable etiq = new PdfPTable(3);
-                salon = new PdfPCell(new Phrase("PIZARRA"));
-                salon.Colspan = 7;
-                salon.HorizontalAlignment = 1;
-                eti.AddCell(salon);
 
                 int alumnoPosicion = 0;
                 while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
@@ -562,79 +563,121 @@ namespace BlocNotasToDatagridview
                 }
                 int alumnos = alumnoPosicion;
                 int saltosAsientos = 0;
+
+                //Unicamente la Lista de Alumnos del salon
                 for (int p = 0; p < alumnos; p++)
                 {
                     while (asientosInfo[n, p + saltosAsientos] == null)
                     {
                         saltosAsientos++;
                     }
+                    //Escribiendo lista
                     String numero = Convert.ToString(p + 1);
                     salon = new PdfPCell(new Phrase(numero));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
+                    //Num
                     salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
+                    //Matricula
                     salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre()));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
+                    //Nombre
                     salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento()));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
-                    //Chunk lug = new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento());
-                    if (p == 7 || p == 14 || p == 21)
-                    {
-                        for (int l = 0; l < 7; l++)
-                        {
-                            Font fuente = new Font();
-                            fuente.Size = (9);
-                            var asiento = new PdfPCell(new Phrase("  "+ (p-6+l)));
-                            asiento.HorizontalAlignment = 2;
-                            asiento.BorderWidthBottom = asiento.BorderWidthTop = 0;
-                            eti.AddCell(asiento);
-                        }
-                    }
+                    //Número de asiento 
+                    //Fin de lista 
 
-                    if (p == 3 || p == 6 || p == 9 || p==12 || p==15 || p==18 || p==21)
-                    {
-                        for (int l = 0; l < 3; l++)
-                        {
-                            Font fuente = new Font();
-                            fuente.Size = (9);
-                            var asiento = new PdfPCell(new Phrase("  " + (p - 2 + l)));
-                            asiento.HorizontalAlignment = 2;
-                            asiento.BorderWidthBottom = asiento.BorderWidthTop = 0;
-                            etiq.AddCell(asiento);
-                        }
-                    }
-                    salon = new PdfPCell(new Phrase("Folio:\n" + asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n"));
+                    //Etiquetas
+                    Phrase phraseEtiquetasF = new Phrase();
+                    phraseEtiquetasF.Add(
+                        new Chunk("Folio: \n", fontTimes12)
+                    );
+                    phraseEtiquetasF.Add(
+                        new Chunk(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n", fontTimes52)
+                    );
+                    phraseEtiquetasF.Add(glue);
+                    phraseEtiquetasF.Add(
+                        new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento(), fontTimes9)
+                    );
+                    salon = new PdfPCell(phraseEtiquetasF);
                     salon.HorizontalAlignment = 1;
-                     
-                    eti.AddCell(salon);
                     etiq.AddCell(salon);
                     alumnoPosicion++;
+                    //Fin etiquetas
                 }
 
-               
+                //Unicamente el orden visual del salon ------------------------------------------------------------------------------------
+                PdfPTable ordenVisual = new PdfPTable(salonesFilasColumnas[n, 1]);
+                Phrase phrase = new Phrase();
+                phrase.Add(
+                    new Chunk("PIZARRA", fontTimes12)
+                );
+                salon = new PdfPCell(phrase);
+                salon.Colspan = salonesFilasColumnas[n, 1];
+                salon.HorizontalAlignment = 1;
+                ordenVisual.AddCell(salon);
+                for (int l = 0; l<salonesFilasColumnas[n,0]; l++)
+                {
+                    for (int m = 0; m<salonesFilasColumnas[n,1]; m++)
+                    {
+                        if (asientosInfo[n, l*salonesFilasColumnas[n, 1] + m] != null)
+                        {
+                            Phrase phraseOrden = new Phrase();
+                            phraseOrden.Add(
+                                new Chunk("Folio: \n", fontTimes12)
+                            );
+                            phraseOrden.Add(
+                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAlumnoInfo().getMatricula() + " \n", fontTimes12)
+                            );
+                            phraseOrden.Add(glue);
+                            phraseOrden.Add(
+                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAsiento() + " \n", fontTimes9)
+                            );
 
+                            salon = new PdfPCell(phraseOrden);
+                            salon.HorizontalAlignment = 1;
+                            ordenVisual.AddCell(salon);
+                        }
+                        else
+                        {
+                            Phrase phraseOrden = new Phrase();
+                            Chunk glue = new Chunk(new VerticalPositionMark());
+                            phraseOrden.Add(
+                                new Chunk("Lugar vacío \n", fontTimes12)
+                            );
+                            phraseOrden.Add(
+                                new Chunk(" \n", fontTimes12)
+                            );
+                            phraseOrden.Add(glue);
+                            phraseOrden.Add(
+                                new Chunk(" " + (l * salonesFilasColumnas[n, 1] + m + 1), fontTimes9)
+                            );
+
+                            salon = new PdfPCell(phraseOrden);
+                            salon.HorizontalAlignment = 1;
+                            ordenVisual.AddCell(salon);
+                        }
+                    }
+                }
+                //Fin de orden visual------------------------------------------------------------------------------------------------------
                 doc.Add(table);
                 doc.Add(new Paragraph(" "));
+
+                //Inicio de una nueva página
                 doc.NewPage(); 
                 tit.Add(" " + Salones[n].nombre + " - Orden visual");
                 doc.Add(tit);
                 doc.Add(new Paragraph(" "));
-                eti.TotalWidth = 600f;
-                eti.WidthPercentage = 100;
-                eti.LockedWidth = true;
-               
+                ordenVisual.TotalWidth = 600f;
+                ordenVisual.WidthPercentage = 100;
+                ordenVisual.LockedWidth = true;
+                doc.Add(ordenVisual);
                 
-
-                for (int b = 0; b < 22; b++)
-                {
-                    eti.AddCell("LUGAR VACIO"+"\n"+b);
-                }
-                doc.Add(eti);
-                
+                //Unicamente Etiquetas
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
                 titulo.Add(" " + Salones[n].nombre + " - etiquetas");
@@ -643,10 +686,12 @@ namespace BlocNotasToDatagridview
                 etiq.TotalWidth = 600f;
                 etiq.WidthPercentage = 100;
                 etiq.LockedWidth = true;
-                for(int c = 0; c < 4; c++)
+
+                int pAux = alumnos;
+                while (pAux%3 != 0)
                 {
                     etiq.AddCell(" ");
-                    
+                    pAux++;
                 }
                 doc.Add(etiq);
                 doc.Add(new Paragraph("  "));
@@ -654,10 +699,8 @@ namespace BlocNotasToDatagridview
             }
             doc.Add(new Paragraph(" "));
             doc.Close();
-           // MessageBox.Show("pdf terminado");
         }
 //FUNCIONES--------------------------------------------------------------------------------------------------------------
-
         public Boolean sonDistintaEscuela(String escuelaCardinal, String escuelaActual)
         {
             if (escuelaActual != escuelaCardinal)
