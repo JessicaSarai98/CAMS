@@ -541,16 +541,16 @@ namespace BlocNotasToDatagridview
 
                 PdfPTable table = new PdfPTable(4);
                 table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
-                PdfPCell salon = new PdfPCell(new Phrase("No."));
+                PdfPCell salon = new PdfPCell(new Phrase("No.", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
-                salon = new PdfPCell(new Phrase("Folio"));
+                salon = new PdfPCell(new Phrase("Folio", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
-                salon = new PdfPCell(new Phrase("Nombre"));
+                salon = new PdfPCell(new Phrase("Nombre", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
-                salon = new PdfPCell(new Phrase("Lugar"));
+                salon = new PdfPCell(new Phrase("Lugar", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)));
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
 
@@ -672,7 +672,7 @@ namespace BlocNotasToDatagridview
                 tit.Add(" " + Salones[n].nombre + " - Orden visual");
                 doc.Add(tit);
                 doc.Add(new Paragraph(" "));
-                ordenVisual.TotalWidth = 600f;
+                ordenVisual.TotalWidth = 500f;
                 ordenVisual.WidthPercentage = 100;
                 ordenVisual.LockedWidth = true;
                 doc.Add(ordenVisual);
@@ -683,7 +683,7 @@ namespace BlocNotasToDatagridview
                 titulo.Add(" " + Salones[n].nombre + " - etiquetas");
                 doc.Add(titulo);
                 doc.Add(new Paragraph(" "));
-                etiq.TotalWidth = 600f;
+                etiq.TotalWidth = 500f;
                 etiq.WidthPercentage = 100;
                 etiq.LockedWidth = true;
 
