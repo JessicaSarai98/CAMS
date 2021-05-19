@@ -206,9 +206,10 @@ namespace BlocNotasToDatagridview
         List<ListaSalones> Salones = new List<ListaSalones>();
         int maxDeSalones = 64;//Variables temporal en lo que se calcula el verdadero numero de salones
         //Fonts
-        iTextSharp.text.Font fontTimes12 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 12, iTextSharp.text.Font.NORMAL);
-        iTextSharp.text.Font fontTimes52 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 52, iTextSharp.text.Font.NORMAL);
-        iTextSharp.text.Font fontTimes9 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.HELVETICA.ToString(), 9, iTextSharp.text.Font.NORMAL);
+        iTextSharp.text.Font fontTimes12 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 12, iTextSharp.text.Font.NORMAL);
+        //FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)
+        iTextSharp.text.Font fontTimes52 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 52, iTextSharp.text.Font.NORMAL);
+        iTextSharp.text.Font fontTimes9 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 9, iTextSharp.text.Font.NORMAL);
         Chunk glue = new Chunk(new VerticalPositionMark());
         private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -539,6 +540,7 @@ namespace BlocNotasToDatagridview
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
 
+                //Cambiar tamaño
                 PdfPTable table = new PdfPTable(4);
                 table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
                 PdfPCell salon = new PdfPCell(new Phrase("No.", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)));
@@ -573,35 +575,36 @@ namespace BlocNotasToDatagridview
                     }
                     //Escribiendo lista
                     String numero = Convert.ToString(p + 1);
-                    salon = new PdfPCell(new Phrase(numero));
+                    salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Num
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula()));
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Matricula
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre()));
+                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Nombre
-                    salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento()));
+                    salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Número de asiento 
                     //Fin de lista 
 
                     //Etiquetas
+                    //Cambiar tamaño en fontTimes__ 
                     Phrase phraseEtiquetasF = new Phrase();
                     phraseEtiquetasF.Add(
-                        new Chunk("Folio: \n", fontTimes12)
+                        new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                     );
                     phraseEtiquetasF.Add(
-                        new Chunk(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n", fontTimes52)
+                        new Chunk(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n", FontFactory.GetFont(FontFactory.TIMES_BOLD, 52f, BaseColor.BLACK))
                     );
                     phraseEtiquetasF.Add(glue);
                     phraseEtiquetasF.Add(
-                        new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento(), fontTimes9)
+                        new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
                     );
                     salon = new PdfPCell(phraseEtiquetasF);
                     salon.HorizontalAlignment = 1;
@@ -614,7 +617,7 @@ namespace BlocNotasToDatagridview
                 PdfPTable ordenVisual = new PdfPTable(salonesFilasColumnas[n, 1]);
                 Phrase phrase = new Phrase();
                 phrase.Add(
-                    new Chunk("PIZARRA", fontTimes12)
+                    new Chunk("PIZARRA",  FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK))
                 );
                 salon = new PdfPCell(phrase);
                 salon.Colspan = salonesFilasColumnas[n, 1];
@@ -628,14 +631,14 @@ namespace BlocNotasToDatagridview
                         {
                             Phrase phraseOrden = new Phrase();
                             phraseOrden.Add(
-                                new Chunk("Folio: \n", fontTimes12)
+                                new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
                             phraseOrden.Add(
-                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAlumnoInfo().getMatricula() + " \n", fontTimes12)
+                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAlumnoInfo().getMatricula() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
                             phraseOrden.Add(glue);
                             phraseOrden.Add(
-                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAsiento() + " \n", fontTimes9)
+                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAsiento() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
                             );
 
                             salon = new PdfPCell(phraseOrden);
@@ -647,14 +650,14 @@ namespace BlocNotasToDatagridview
                             Phrase phraseOrden = new Phrase();
                             Chunk glue = new Chunk(new VerticalPositionMark());
                             phraseOrden.Add(
-                                new Chunk("Lugar vacío \n", fontTimes12)
+                                new Chunk("Lugar vacío \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
                             phraseOrden.Add(
                                 new Chunk(" \n", fontTimes12)
                             );
                             phraseOrden.Add(glue);
                             phraseOrden.Add(
-                                new Chunk(" " + (l * salonesFilasColumnas[n, 1] + m + 1), fontTimes9)
+                                new Chunk(" " + (l * salonesFilasColumnas[n, 1] + m + 1), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
                             );
 
                             salon = new PdfPCell(phraseOrden);
