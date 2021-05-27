@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -567,30 +568,37 @@ namespace BlocNotasToDatagridview
                 int saltosAsientos = 0;
 
                 //Unicamente la Lista de Alumnos del salon
+                AlumnoInfo_Asiento[] listaOrdenadaDeAlumnos = new AlumnoInfo_Asiento[alumnos];
+
                 for (int p = 0; p < alumnos; p++)
                 {
                     while (asientosInfo[n, p + saltosAsientos] == null)
                     {
                         saltosAsientos++;
                     }
+                    listaOrdenadaDeAlumnos[p] = asientosInfo[n, p + saltosAsientos];
+
                     //Escribiendo lista
-                    String numero = Convert.ToString(p + 1);
-                    salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    salon.HorizontalAlignment = 1;
-                    table.AddCell(salon);
-                    //Num
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    salon.HorizontalAlignment = 1;
-                    table.AddCell(salon);
-                    //Matricula
-                    salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    salon.HorizontalAlignment = 1;
-                    table.AddCell(salon);
-                    //Nombre
-                    salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    salon.HorizontalAlignment = 1;
-                    table.AddCell(salon);
-                    //Número de asiento 
+
+
+                    //String numero = Convert.ToString(p + 1);
+                    //salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    //salon.HorizontalAlignment = 1;
+                    //table.AddCell(salon);
+                    
+                    //salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    //salon.HorizontalAlignment = 1;
+                    //table.AddCell(salon);
+                    
+                    //salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    //salon.HorizontalAlignment = 1;
+                    //table.AddCell(salon);
+                    
+                    //salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    //salon.HorizontalAlignment = 1;
+                    //table.AddCell(salon);
+                    
+
                     //Fin de lista 
 
                     //Etiquetas
@@ -611,6 +619,44 @@ namespace BlocNotasToDatagridview
                     etiq.AddCell(salon);
                     alumnoPosicion++;
                     //Fin etiquetas
+                }
+                
+                for (int a = 0; a<listaOrdenadaDeAlumnos.Length; a++)
+                {
+                    for (int b = 0; b<listaOrdenadaDeAlumnos.Length-a-1; b++)
+                    {
+                        String alumno1 = RemoveDiacritics(listaOrdenadaDeAlumnos[b].getAlumnoInfo().getNombre());
+                        String alumno2 = RemoveDiacritics(listaOrdenadaDeAlumnos[b + 1].getAlumnoInfo().getNombre());
+                        if (alumno1.CompareTo(alumno2)>0)
+                        {
+                            AlumnoInfo_Asiento aux = listaOrdenadaDeAlumnos[b];
+                            listaOrdenadaDeAlumnos[b] = listaOrdenadaDeAlumnos[b + 1];
+                            listaOrdenadaDeAlumnos[b + 1] = aux;
+                        }
+
+                    }
+                }
+                for (int p = 0; p<alumnos; p++)
+                {
+                    //Escribiendo lista
+                    String numero = Convert.ToString(p + 1);
+                    salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    
+                    salon = new PdfPCell(new Phrase(listaOrdenadaDeAlumnos[p].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    //Matricula
+                    salon = new PdfPCell(new Phrase(listaOrdenadaDeAlumnos[p].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    //Nombre
+                    salon = new PdfPCell(new Phrase("" + listaOrdenadaDeAlumnos[p].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon.HorizontalAlignment = 1;
+                    table.AddCell(salon);
+                    //Número de asiento 
+                    //Fin de lista 
                 }
 
                 //Unicamente el orden visual del salon ------------------------------------------------------------------------------------
@@ -721,6 +767,23 @@ namespace BlocNotasToDatagridview
             puntosCardinales[2] = alumnoPosicion + columnas;
             puntosCardinales[3] = alumnoPosicion - 1;
             return puntosCardinales;
+        }
+
+        public string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }
