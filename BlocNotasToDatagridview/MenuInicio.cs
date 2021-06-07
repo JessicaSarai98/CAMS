@@ -149,79 +149,27 @@ namespace BlocNotasToDatagridview
             //Para saber si ya está ocupado todo el salón o tiene espacio
             public int capacidadAUX { get; set; }
         }
-        class AlumnoInfo
-        {
-            private String escuela;
-            private String nombre;
-            private String matricula;
-            
-            public AlumnoInfo(String escuela, String nombre, String matricula)
-            {
-                this.escuela = escuela;
-                this.nombre = nombre;
-                this.matricula = matricula;
-            }
-
-            public String getEscuela()
-            {
-                return this.escuela;
-            }
-
-            public String getNombre()
-            {
-                return this.nombre;
-            }
-            public String getMatricula()
-            {
-                return this.matricula;
-            }
-        }
-        class AlumnoInfo_Asiento
-        {
-            private AlumnoInfo alumno;
-            private int asiento;
-            public AlumnoInfo_Asiento(AlumnoInfo alumno, int asiento)
-            {
-                this.alumno = alumno;
-                this.asiento = asiento;
-            }
-
-            public AlumnoInfo getAlumnoInfo()
-            {
-                return alumno;
-            }
-
-            public int getAsiento()
-            {
-                return asiento;
-            }
-        }
-
         // Creamos la lista y las variables
-        string linea, filas_columnas, filas, columnas;
+        string linea, filas_columnas;
         string[] valores;
-        int[] AlumnosPorEscuelaPorSalon;
         int capacidadTotal = 0, capacidad, i = 0, j = 0;
         double auxAlumno;
         List<NombreEscuelas> Escuelas = new List<NombreEscuelas>();
         List<ListaSalones> Salones = new List<ListaSalones>();
-        int maxDeSalones = 64;//Variables temporal en lo que se calcula el verdadero numero de salones
         //Fonts
         iTextSharp.text.Font fontTimes12 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 12, iTextSharp.text.Font.NORMAL);
         //FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)
-        iTextSharp.text.Font fontTimes52 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 52, iTextSharp.text.Font.NORMAL);
-        iTextSharp.text.Font fontTimes9 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 9, iTextSharp.text.Font.NORMAL);
         Chunk glue = new Chunk(new VerticalPositionMark());
         private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Vemos cuantas líneas tiene el archivo para declarar el arreglo
-            System.IO.StreamReader file = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
-            file.ReadLine();
-            //procesamos cada fila para saber la capacidad del mismo
-            int numSalones = 0;
-            while ((linea = file.ReadLine()) != null)
+            System.IO.StreamReader filesReader = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
+            filesReader.ReadLine();
+            List<Salon> salones = new List<Salon>();
+            while ((linea = filesReader.ReadLine()) != null)
             {
                 valores = linea.Split(',');
+                salones.Add(new Salon(valores[0], valores[1], stringToInt(valores[2]), stringToInt(valores[3])));
+                //Karina
                 filas_columnas = valores[2] + ";" + valores[3];
                 capacidad = Convert.ToInt32(valores[2]) * Convert.ToInt32(valores[3]);
                 capacidadTotal += capacidad;
@@ -233,23 +181,22 @@ namespace BlocNotasToDatagridview
                     capacidadAUX = capacidad,
                     filas_columnas = filas_columnas
                 });
-                numSalones++;//CALCULO DE SALONES
+                //Fin
             }
 
-            //Leemos el archivo "Entrada" para saber cuantos alumnos hay de cada escuela y agruparlos
-            file = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
-            file.ReadLine();
-            //Se lee la siguiente línea y se compara hasta que se termine de leer el archivo
-            while ((linea = file.ReadLine()) != null)
+            filesReader = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
+            filesReader.ReadLine();
+            //Karina
+            List<Alumno> alumnos = new List<Alumno>();//Noe
+            while ((linea = filesReader.ReadLine()) != null)
             {
                 valores = linea.Split(',');
                 //Agregamos todos los valores del archivo a la lista
                 Escuelas.Add(new NombreEscuelas() { nombre = valores[0] });
+                alumnos.Add(new Alumno(valores[0], valores[1], valores[2]));//Noe
             }
 
-
-            //Vemos cuantas escuelas hay en total, cuantos alumnos tienen cada una
-            //y van de mayor a menor
+            //Karina
             var query = from escuela in Escuelas
                         group escuela by escuela.nombre into nuevoGrupo
                         orderby nuevoGrupo.Count() descending
@@ -288,242 +235,164 @@ namespace BlocNotasToDatagridview
                 }
                 i++;
             }
-
-            AlumnosPorEscuelaPorSalon = new int[i];
-            //prueba para ver que todo este saliendo de acuerdo al plan
+            //Fin
             tablaAlgoritmo tabla = new tablaAlgoritmo();
-            int cantidadDeEscuelas = 0;
-            for (i = 0; i < Escuelas.Count(); i++)
-            {
-                if (Escuelas[i].capacidadxSalon != null)
-                {
-                    capacidadTotal = i;
-                    tabla.dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes: " + Escuelas[i].capacidad,
-                    Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
-                    Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
-                    Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
-                    Escuelas[i].capacidadxSalon[6]);
-                    cantidadDeEscuelas++;
-                }
-                else break;
-            }
+
+            //Karina
+            //int cantidadDeEscuelas = 0;//Veamos Noe
+            //for (i = 0; i < Escuelas.Count(); i++)
+            //{
+            //    if (Escuelas[i].capacidadxSalon != null)
+            //    {
+            //        capacidadTotal = i;
+            //        tabla.dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes: " + Escuelas[i].capacidad,
+            //        Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
+            //        Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
+            //        Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
+            //        Escuelas[i].capacidadxSalon[6]);
+            //        cantidadDeEscuelas++;//Intento Noé
+            //    }
+            //    else break;
+            //}
             tabla.Show();
-            // Inicializamos el documento PDF
+
             Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
-            // Importante Abrir el documento
             doc.Open();
-            // Creamos un titulo personalizado con tamaño de fuente 18 y color Azul
             Paragraph title, tit, titulo;
-            AlumnoInfo[,] listaDeAlumnosPorSalon = new AlumnoInfo[Salones.Count(), maxDeSalones];
-
-            //FUNCION DE PROGRAMA-----------------------------------------------------------------------------------------------------
-            //LISTADO DE ESTUDIANTES POR SALON CON LA CANTIDAD CORRESPONDIENTE-----------------------------------------------------------------------------------------------------
-            for (int m = 0; m < cantidadDeEscuelas; m++)
+            //Fin
+            //----------------------------------------------------------------------------------------------------------------------------------------------
+            List<int> limitesPorSalon = new List<int>();
+            int limiteGeneral = alumnos.Count / salones.Count;
+            int restantes = alumnos.Count - limiteGeneral * salones.Count;
+            for (int i = 0; i < salones.Count; i++)
             {
-                System.IO.StreamReader listaAlumnos = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
-                listaAlumnos.ReadLine();
-                for (int n = 0; n < numSalones; n++)
+                if (salones[i].getFilas() * salones[i].getColumnas() >= limiteGeneral)
                 {
-                    int alumnosEnLalistaDelSalon = 0;
-                    //Se valida si hay alumnos antes para ingresar después del último
-                    while (listaDeAlumnosPorSalon[n, alumnosEnLalistaDelSalon] != null)
-                    {
-                        alumnosEnLalistaDelSalon++;
-                    }
-                    //Variable que indica cuantos de esa escuela ya han sido seleccionados.
-                    int seleccionados = 0;
-                    while ((Escuelas[m].capacidadxSalon[n] != 0) && ((linea = listaAlumnos.ReadLine()) != null))
-                    {
-                        valores = linea.Split(',');
-                        if (valores[0] == Escuelas[m].nombre)
-                        {
-                            listaDeAlumnosPorSalon[n, seleccionados + alumnosEnLalistaDelSalon] = new AlumnoInfo(valores[0], valores[2], valores[1]); ;
-                            seleccionados++;
-                        }
-                        if (Escuelas[m].capacidadxSalon[n] == seleccionados)
-                        {
-                            break;
-                        }
-                    }
+                    limitesPorSalon.Add(limiteGeneral);
+                }
+                else
+                {
+                    limitesPorSalon.Add(salones[i].getFilas() * salones[i].getColumnas());
+                    restantes += limiteGeneral - salones[i].getFilas() * salones[i].getColumnas();
                 }
             }
-            //ALGORTIMO PARA ACOMODAR A LOS ESTUDIANTES SIN QUE SEAN DE LA MISMA ESCUELA----------------------------------------------
-            //Array que contiene la informacion Folio/AlumnoNombre/AsientoEnElSalon
-            AlumnoInfo_Asiento[,] asientosInfo = new AlumnoInfo_Asiento[Salones.Count(), maxDeSalones];
-            System.IO.StreamReader fileSalon = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
-            fileSalon.ReadLine();
-            //SALONES--------------------------------------------
-            int[,] salonesFilasColumnas = new int[numSalones, 2];
-            for (int n = 0; n < numSalones; n++)
+            if (restantes > 0)
             {
-                int alumnoPosicion = 0;//Posicion en la lista de alumnos del salon
-                int asientosPosicion = 0;//Posicion en los asientos del salon
-                linea = fileSalon.ReadLine();
-                String[] salonesInfo = linea.Split(',');
-                salonesFilasColumnas[n, 0] = Convert.ToInt32(salonesInfo[2]);
-                salonesFilasColumnas[n, 1] = Convert.ToInt32(salonesInfo[3]);
-
-                int cantidadDeAlumnosEnElSalon = 0;//Variable para saber cuantos alumnos hay en el salon actual.
-                while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
+                for (int i = 0; i < salones.Count; i++)
                 {
-                    cantidadDeAlumnosEnElSalon++;
-                    alumnoPosicion++;
-                }
-                alumnoPosicion = 0;
-                int numDeVuletasRepetidas = 0;
-                int auxAsientosPosicion = 0;
-                int posicionAux = 0;
-                ArrayList posicionesSaltadas = new ArrayList();
-
-                while (asientosPosicion != cantidadDeAlumnosEnElSalon)
-                {
-                    int[] puntosCardinales;
-                    bool auxUsado = false;
-                    //Obtenemos lo puntos cardinales a la posicion del asiento(arriba, derecha, abajo, izquierda)
-                    if (posicionesSaltadas.Count == 0 && auxAsientosPosicion == 0)
+                    if (limitesPorSalon[i] == limiteGeneral)
                     {
-                        puntosCardinales = crearPuntosCardinales(asientosPosicion, Convert.ToInt32(salonesInfo[3]));
-                    }
-                    else
-                    {
-                        puntosCardinales = crearPuntosCardinales((int)posicionesSaltadas[0] + auxAsientosPosicion, Convert.ToInt32(salonesInfo[3]));
-                        posicionAux = (int)posicionesSaltadas[0] + auxAsientosPosicion;
-                        auxUsado = true;
-                    }
-
-                    //Obtenermos si estan ocupados, si lo están saber de que escuela es
-                    String[] nombresDeEscuelasCardinales = new string[4];
-                    //SE ASIGNAN LOS NOMBRES DE LAS ESCUELAS CARDINALES AL ASIENTO------------------------------------------------------------------------
-                    for (int m = 0; m < 4; m++)
-                    {
-                        if (puntosCardinales[m] >= 0)//Indica que el asiento existe
+                        int espacioParaAdicionar = salones[i].getFilas() * salones[i].getColumnas() - limiteGeneral;
+                        if (espacioParaAdicionar - restantes >= 0)
                         {
-                            if (asientosInfo[n, puntosCardinales[m]] != null)//Hay alguien en los puntos cardinales
-                            {
-                                nombresDeEscuelasCardinales[m] = asientosInfo[n, puntosCardinales[m]].getAlumnoInfo().getEscuela();
-                            }
-                            else
-                            {
-                                nombresDeEscuelasCardinales[m] = " ";
-                            }
-                            if (m == 1 && puntosCardinales[m] > 0 && ((puntosCardinales[m]) % Convert.ToInt32(salonesInfo[3]) == 0))
-                            {
-                                nombresDeEscuelasCardinales[m] = " ";
-                            }
-                            if (m == 3 && (puntosCardinales[m] + 1) % Convert.ToInt32(salonesInfo[3]) == 0)
-                            {
-                                nombresDeEscuelasCardinales[m] = " ";
-                            }
-                        }
-                        else//El asiento no existe
-                        {
-                            nombresDeEscuelasCardinales[m] = " ";
-                        }
-                    }
-
-                    //ASIGNACIÓN DE LOS ASIENTOS----------------------------------------------------------------------------------------------
-                    //SE VALIDAN PRIMERO SI SON DISTINTAS ESCUELAS LAS CARDINALES------------------------------------------------------------- 
-                    int validaciones = 0;
-                    for (int k = 0; k < 4; k++)
-                    {
-                        if (sonDistintaEscuela(nombresDeEscuelasCardinales[k], listaDeAlumnosPorSalon[n, alumnoPosicion].getEscuela()))
-                        {
-                            validaciones++;
+                            limitesPorSalon[i] = limiteGeneral + restantes;
+                            break;
                         }
                         else
                         {
-                            break;
+                            limitesPorSalon[i] = limiteGeneral + espacioParaAdicionar;
+                            restantes -= espacioParaAdicionar;
                         }
-                    }
-                    if (validaciones == 4)
-                    //LAS ESCUELAS CARDINALES SON DISTINTAS, AHORA VER SI NO FUE ASIGNADO CON ANTERIORIDAD------------------------------------
-                    {
-                        int validacionEnLista = 0;
-                        for (int k = 0; k < asientosPosicion; k++)//asientosPosicion
-                        {
-                            if (listaDeAlumnosPorSalon[n, alumnoPosicion].getNombre() != asientosInfo[n, k].getAlumnoInfo().getNombre())
-                            {
-                                validacionEnLista++;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        if (auxUsado)
-                        {
-                            for (int k = asientosPosicion; k < posicionAux; k++)
-                            {
-                                if (asientosInfo[n, k] == null)
-                                {
-                                    if (k == posicionAux)
-                                    {
-                                        validacionEnLista++;
-                                    }
-                                    break;
-                                }
-                                if (listaDeAlumnosPorSalon[n, alumnoPosicion].getNombre() != asientosInfo[n, k].getAlumnoInfo().getNombre())
-                                {
-                                    validacionEnLista++;
-                                }
-                            }
-                        }
-                        if (validacionEnLista == asientosPosicion)
-                        {
-                            if (auxUsado)
-                            {
-                                if (auxAsientosPosicion != 0)
-                                {
-                                    asientosInfo[n, (int)posicionesSaltadas[0] + auxAsientosPosicion] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + auxAsientosPosicion + 1));
-                                    auxAsientosPosicion = 0;
-                                    asientosPosicion++;
-                                    numDeVuletasRepetidas = 0;
-                                }
-                                else
-                                {
-                                    asientosInfo[n, (int)posicionesSaltadas[0]] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], ((int)posicionesSaltadas[0] + 1));
-                                    posicionesSaltadas.Remove(posicionesSaltadas[0]);
-                                    asientosPosicion++;
-                                    numDeVuletasRepetidas = 0;
-                                }
-                            }
-                            else
-                            {
-                                asientosInfo[n, asientosPosicion] = new AlumnoInfo_Asiento(listaDeAlumnosPorSalon[n, alumnoPosicion], (asientosPosicion + 1));
-                                asientosPosicion++;
-                                numDeVuletasRepetidas = 0;
-                            }
-                        }
-                    }
-
-                    alumnoPosicion++;
-                    //Se reinicia la lista para que se recorra de nuevo
-                    if (alumnoPosicion == cantidadDeAlumnosEnElSalon)
-                    {
-                        numDeVuletasRepetidas++;
-                        alumnoPosicion = 0;
-                        if (n == 4 && asientosPosicion == 23)
-                        {
-                        }
-                    }
-                    if (numDeVuletasRepetidas > 1)
-                    {
-                        auxAsientosPosicion++;
-                        //Se agrega la posicion saltada a un array
-                        posicionesSaltadas.Add(asientosPosicion);
-                        numDeVuletasRepetidas = 0;
                     }
                 }
             }
-            //CREANDO LA LISTA DE ESTUDIANTES POR SALON(PDF)--------------------------------------------------------------------------
-            for (int n = 0; n < numSalones; n++)
+            //----------------------------------------------------------------------------------------------------------------------------------------------
+            while (alumnos.Count > 0)
             {
-                filas = Salones[n].filas_columnas.Split(';')[0];
-                columnas = Salones[n].filas_columnas.Split(';')[1];
-                int capac = Int32.Parse(filas) * Int32.Parse(columnas);
+                int vueltasSinAsignarSalon = 0;
+                for (int s = 0; s < salones.Count; s++)
+                {
+                    if (!(alumnos.Count > 0))
+                    {
+                        break;
+                    }
 
-                //Lista salon
+                    int vueltasDadasSinAsignar = 0;//Máximo 2, porque sino indica iteraciones infinitas
+                    while (salones[s].getAsientosVacios().Count > 0 || !(alumnos.Count > 0))
+                    {
+                        bool asignado = false;
+                        int contadorAuxiliarAlumnos = alumnos.Count;
+                        int n = 0;
+                        while (n < contadorAuxiliarAlumnos)
+                        {
+                            if (!(alumnos.Count > 0))
+                            {
+                                break;
+                            }
+                            if (limitesPorSalon[s] == 0)
+                            {
+                                break;
+                            }
+                            int contadorAuxiliarAsientosLibres = salones[s].getAsientosVacios().Count;
+                            for (int m = 0; m < contadorAuxiliarAsientosLibres; m++)
+                            {
+                                if (limitesPorSalon[s] == 0)
+                                {
+                                    break;
+                                }
+                                if (contadorAuxiliarAlumnos == 0)
+                                {
+                                    break;
+                                }
+                                if (salones[s].puedoSentarmeAqui_B(alumnos[n], salones[s].getAsientosVacios()[m]))
+                                {
+                                    int fila = salones[s].getAsientosVacios()[m] / salones[s].getColumnas();
+                                    int columna = salones[s].getAsientosVacios()[m] % salones[s].getColumnas();
+                                    //if (salones[s].getAsientos().GetLength(0)<fila || salones[s].getAsientos().GetLength(1)<columna)
+                                    //{
+                                    //    continue;
+                                    //}
+                                    salones[s].getAsientos()[fila, columna] = new Asiento(alumnos[n], salones[s].getAsientosVacios()[m]);
+                                    //m--;
+                                    //n--;
+                                    asignado = true;
+                                    alumnos.RemoveAt(n);
+                                    contadorAuxiliarAlumnos--;
+                                    contadorAuxiliarAsientosLibres--;
+                                    limitesPorSalon[s]--;
+                                    vueltasSinAsignarSalon = 0;
+                                    break;
+                                }
+                                if (!(alumnos.Count > 0))
+                                {
+                                    break;
+                                }
+                                n++;
+                            }
+                            if (!asignado)
+                            {
+                                vueltasDadasSinAsignar++;
+                            }
+                        }
+                        if (vueltasDadasSinAsignar == 2)
+                        {
+                            vueltasSinAsignarSalon++;
+                            break;
+                        }
+                        if (!(alumnos.Count > 0))
+                        {
+                            break;
+                        }
+                        if (limitesPorSalon[s] == 0)
+                        {
+                            break;
+                        }
+                    }
+                }
+                if (!(alumnos.Count > 0) || alumnos.Count == restantes)
+                {
+                    break;
+                }
+                if (vueltasSinAsignarSalon == salones.Count)
+                {
+                    break;
+                }
+            }
+            //Se terminan de asignar los alumnos a los salones, y ahora si se trabaja con el escrito del PDF 
+
+            for (int n = 0; n < salones.Count; n++)
+            {
                 title = new Paragraph();
                 title.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
@@ -532,15 +401,12 @@ namespace BlocNotasToDatagridview
                 tit.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
 
                 //etiquetas
-
                 titulo = new Paragraph();
                 titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 18f, BaseColor.BLACK);
-                //var boldFont = FontFactory.GetFont(FontFactory.TIMES_BOLD, 12);
-
-                title.Add("Lista de alumnos del salón " + Salones[n].nombre);
+                //LISTA---------------------------------------------------------------------------------------
+                title.Add("Lista de alumnos del salón " + salones[n].getNombre());
                 doc.Add(title);
                 doc.Add(new Paragraph(" "));
-
                 //Cambiar tamaño
                 PdfPTable table = new PdfPTable(4);
                 table.SetTotalWidth(new float[] { 10f, 10f, 40f, 10f });
@@ -557,134 +423,77 @@ namespace BlocNotasToDatagridview
                 salon.HorizontalAlignment = 1;
                 table.AddCell(salon);
 
-                PdfPTable etiq = new PdfPTable(3);
-
-                int alumnoPosicion = 0;
-                while (listaDeAlumnosPorSalon[n, alumnoPosicion] != null)
+                List<Asiento> listaSalon = salones[n].generarLista();
+                for (int m = 0; m < listaSalon.Count; m++)
                 {
-                    alumnoPosicion++;
-                }
-                int alumnos = alumnoPosicion;
-                int saltosAsientos = 0;
-
-                //Unicamente la Lista de Alumnos del salon
-                AlumnoInfo_Asiento[] listaOrdenadaDeAlumnos = new AlumnoInfo_Asiento[alumnos];
-
-                for (int p = 0; p < alumnos; p++)
-                {
-                    while (asientosInfo[n, p + saltosAsientos] == null)
-                    {
-                        saltosAsientos++;
-                    }
-                    listaOrdenadaDeAlumnos[p] = asientosInfo[n, p + saltosAsientos];
-
-                    //Escribiendo lista
-
-
-                    //String numero = Convert.ToString(p + 1);
-                    //salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    //salon.HorizontalAlignment = 1;
-                    //table.AddCell(salon);
-                    
-                    //salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    //salon.HorizontalAlignment = 1;
-                    //table.AddCell(salon);
-                    
-                    //salon = new PdfPCell(new Phrase(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    //salon.HorizontalAlignment = 1;
-                    //table.AddCell(salon);
-                    
-                    //salon = new PdfPCell(new Phrase("" + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                    //salon.HorizontalAlignment = 1;
-                    //table.AddCell(salon);
-                    
-
-                    //Fin de lista 
-
-                    //Etiquetas
-                    //Cambiar tamaño en fontTimes__ 
-                    Phrase phraseEtiquetasF = new Phrase();
-                    phraseEtiquetasF.Add(
-                        new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
-                    );
-                    phraseEtiquetasF.Add(
-                        new Chunk(asientosInfo[n, p + saltosAsientos].getAlumnoInfo().getMatricula() + "\n", FontFactory.GetFont(FontFactory.TIMES_BOLD, 52f, BaseColor.BLACK))
-                    );
-                    phraseEtiquetasF.Add(glue);
-                    phraseEtiquetasF.Add(
-                        new Chunk(" " + asientosInfo[n, p + saltosAsientos].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
-                    );
-                    salon = new PdfPCell(phraseEtiquetasF);
-                    salon.HorizontalAlignment = 1;
-                    etiq.AddCell(salon);
-                    alumnoPosicion++;
-                    //Fin etiquetas
-                }
-                
-                for (int a = 0; a<listaOrdenadaDeAlumnos.Length; a++)
-                {
-                    for (int b = 0; b<listaOrdenadaDeAlumnos.Length-a-1; b++)
-                    {
-                        String alumno1 = RemoveDiacritics(listaOrdenadaDeAlumnos[b].getAlumnoInfo().getNombre());
-                        String alumno2 = RemoveDiacritics(listaOrdenadaDeAlumnos[b + 1].getAlumnoInfo().getNombre());
-                        if (alumno1.CompareTo(alumno2)>0)
-                        {
-                            AlumnoInfo_Asiento aux = listaOrdenadaDeAlumnos[b];
-                            listaOrdenadaDeAlumnos[b] = listaOrdenadaDeAlumnos[b + 1];
-                            listaOrdenadaDeAlumnos[b + 1] = aux;
-                        }
-
-                    }
-                }
-                for (int p = 0; p<alumnos; p++)
-                {
-                    //Escribiendo lista
-                    String numero = Convert.ToString(p + 1);
+                    String numero = Convert.ToString(m + 1);
                     salon = new PdfPCell(new Phrase(numero, FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
-                    
-                    salon = new PdfPCell(new Phrase(listaOrdenadaDeAlumnos[p].getAlumnoInfo().getMatricula(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+
+                    salon = new PdfPCell(new Phrase(listaSalon[m].getAlumno().getFolio(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Matricula
-                    salon = new PdfPCell(new Phrase(listaOrdenadaDeAlumnos[p].getAlumnoInfo().getNombre(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon = new PdfPCell(new Phrase(listaSalon[m].getAlumno().getNombreAlumno(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
                     //Nombre
-                    salon = new PdfPCell(new Phrase("" + listaOrdenadaDeAlumnos[p].getAsiento(), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                    salon = new PdfPCell(new Phrase("" + (listaSalon[m].getNumeroAsiento() + 1), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
                     salon.HorizontalAlignment = 1;
                     table.AddCell(salon);
-                    //Número de asiento 
-                    //Fin de lista 
                 }
-
-                //Unicamente el orden visual del salon ------------------------------------------------------------------------------------
-                PdfPTable ordenVisual = new PdfPTable(salonesFilasColumnas[n, 1]);
+                //ETIQUETAS---------------------------------------------------------------------------------------
+                PdfPTable etiq = new PdfPTable(3);
+                for (int m = 0; m < salones[n].getFilas(); m++)
+                {
+                    for (int l = 0; l < salones[n].getColumnas(); l++)
+                    {
+                        if (salones[n].getAsientos()[m, l] != null)
+                        {
+                            Phrase phraseEtiquetasF = new Phrase();
+                            phraseEtiquetasF.Add(
+                                new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
+                            );
+                            phraseEtiquetasF.Add(
+                                new Chunk(salones[n].getAsientos()[m, l].getAlumno().getFolio() + "\n", FontFactory.GetFont(FontFactory.TIMES_BOLD, 52f, BaseColor.BLACK))
+                            );
+                            phraseEtiquetasF.Add(glue);
+                            phraseEtiquetasF.Add(
+                                new Chunk(" " + (salones[n].getAsientos()[m, l].getNumeroAsiento() + 1), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
+                            );
+                            salon = new PdfPCell(phraseEtiquetasF);
+                            salon.HorizontalAlignment = 1;
+                            etiq.AddCell(salon);
+                        }
+                    }
+                }
+                //Orden visual
+                PdfPTable ordenVisual = new PdfPTable(salones[n].getColumnas());
                 Phrase phrase = new Phrase();
                 phrase.Add(
-                    new Chunk("PIZARRA",  FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK))
+                    new Chunk("PIZARRA", FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK))
                 );
                 salon = new PdfPCell(phrase);
-                salon.Colspan = salonesFilasColumnas[n, 1];
+                salon.Colspan = salones[n].getColumnas();
                 salon.HorizontalAlignment = 1;
                 ordenVisual.AddCell(salon);
-                for (int l = 0; l<salonesFilasColumnas[n,0]; l++)
+                for (int m = 0; m < salones[n].getFilas(); m++)
                 {
-                    for (int m = 0; m<salonesFilasColumnas[n,1]; m++)
+                    for (int l = 0; l < salones[n].getColumnas(); l++)
                     {
-                        if (asientosInfo[n, l*salonesFilasColumnas[n, 1] + m] != null)
+                        if (salones[n].getAsientos()[m, l] != null)
                         {
                             Phrase phraseOrden = new Phrase();
                             phraseOrden.Add(
                                 new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
                             phraseOrden.Add(
-                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAlumnoInfo().getMatricula() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
+                                new Chunk(salones[n].getAsientos()[m, l].getAlumno().getFolio() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
                             phraseOrden.Add(glue);
                             phraseOrden.Add(
-                                new Chunk(asientosInfo[n, l * salonesFilasColumnas[n, 1] + m].getAsiento() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
+                                new Chunk((salones[n].getAsientos()[m, l].getNumeroAsiento() + 1) + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
                             );
 
                             salon = new PdfPCell(phraseOrden);
@@ -703,7 +512,7 @@ namespace BlocNotasToDatagridview
                             );
                             phraseOrden.Add(glue);
                             phraseOrden.Add(
-                                new Chunk(" " + (l * salonesFilasColumnas[n, 1] + m + 1), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
+                                new Chunk(" " + (l * l), FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
                             );
 
                             salon = new PdfPCell(phraseOrden);
@@ -712,12 +521,11 @@ namespace BlocNotasToDatagridview
                         }
                     }
                 }
-                //Fin de orden visual------------------------------------------------------------------------------------------------------
                 doc.Add(table);
                 doc.Add(new Paragraph(" "));
 
                 //Inicio de una nueva página
-                doc.NewPage(); 
+                doc.NewPage();
                 tit.Add(" " + Salones[n].nombre + " - Orden visual");
                 doc.Add(tit);
                 doc.Add(new Paragraph(" "));
@@ -725,7 +533,7 @@ namespace BlocNotasToDatagridview
                 ordenVisual.WidthPercentage = 100;
                 ordenVisual.LockedWidth = true;
                 doc.Add(ordenVisual);
-                
+
                 //Unicamente Etiquetas
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
@@ -736,8 +544,8 @@ namespace BlocNotasToDatagridview
                 etiq.WidthPercentage = 100;
                 etiq.LockedWidth = true;
 
-                int pAux = alumnos;
-                while (pAux%3 != 0)
+                int pAux = listaSalon.Count;
+                while (pAux % 3 != 0)
                 {
                     etiq.AddCell(" ");
                     pAux++;
@@ -746,28 +554,19 @@ namespace BlocNotasToDatagridview
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
             }
+            MessageBox.Show("Sobraron estos alumnos " + alumnos.Count);
+            //Aqui debes crear una página con los alumnos que no pudieron ser asignados
+            //La informacion requerida la contiene la lista "alumnos"
+            for (int n = 0; n < alumnos.Count; n++)//For donde tendras todos los alumnos 
+            {
+                MessageBox.Show("Escribo la informacion del alumno " + alumnos[n].getNombreAlumno());//Aqui se debería escribir la información que se quiera mostrar
+            }
             doc.Add(new Paragraph(" "));
             doc.Close();
         }
-//FUNCIONES--------------------------------------------------------------------------------------------------------------
-        public Boolean sonDistintaEscuela(String escuelaCardinal, String escuelaActual)
-        {
-            if (escuelaActual != escuelaCardinal)
-            {
-                return true;
-            }
-            return false;
-        }
 
-        public int[] crearPuntosCardinales(int alumnoPosicion, int columnas)
-        {
-            int[] puntosCardinales = new int[4];
-            puntosCardinales[0] = alumnoPosicion - columnas;
-            puntosCardinales[1] = alumnoPosicion + 1;
-            puntosCardinales[2] = alumnoPosicion + columnas;
-            puntosCardinales[3] = alumnoPosicion - 1;
-            return puntosCardinales;
-        }
+
+        //FUNCIONES--------------------------------------------------------------------------------------------------------------
 
         public string RemoveDiacritics(string text)
         {
@@ -784,6 +583,11 @@ namespace BlocNotasToDatagridview
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        public int stringToInt(string value)
+        {
+            return Convert.ToInt32(value);
         }
     }
 }
