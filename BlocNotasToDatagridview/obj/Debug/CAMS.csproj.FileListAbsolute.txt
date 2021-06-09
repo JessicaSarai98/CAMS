@@ -71,13 +71,11 @@ C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\CAMS.cspro
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.exe
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.pdb
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form2.resources
-C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form2.resources
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Extras.resources
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Extras.resources
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas2.resources
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas2.resources
 C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Etiquetas.resources
-C:\Users\William carmona\Documents\Servicio Social\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.tablaAlgoritmo.resources
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Etiquetas.resources
 C:\Users\Jessica\Documents\Servicio\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.tablaAlgoritmo.resources
 C:\Users\noeal\Documents\Personal Projects\GIT\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.csprojAssemblyReference.cache
