@@ -229,32 +229,12 @@ namespace BlocNotasToDatagridview
                             capacidadTotal = capacidadTotal - (int)auxAlumno;
                             Escuelas[i].capacidadAUX = Escuelas[i].capacidadAUX - (int)auxAlumno;
                             Salones[j].capacidadAUX = Salones[j].capacidadAUX - (int)auxAlumno;
-                            //MessageBox.Show("Escuela "+Escuelas[i].capacidad+((double)Salones[j].capacidad / capacidadTotal * Escuelas[i].capacidad).ToString());
                         }
                     }
                 }
                 i++;
             }
             //Fin
-            tablaAlgoritmo tabla = new tablaAlgoritmo();
-
-            //Karina
-            //int cantidadDeEscuelas = 0;//Veamos Noe
-            //for (i = 0; i < Escuelas.Count(); i++)
-            //{
-            //    if (Escuelas[i].capacidadxSalon != null)
-            //    {
-            //        capacidadTotal = i;
-            //        tabla.dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes: " + Escuelas[i].capacidad,
-            //        Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
-            //        Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
-            //        Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
-            //        Escuelas[i].capacidadxSalon[6]);
-            //        cantidadDeEscuelas++;//Intento Noé
-            //    }
-            //    else break;
-            //}
-            tabla.Show();
 
             Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
@@ -554,12 +534,18 @@ namespace BlocNotasToDatagridview
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
             }
-            MessageBox.Show("Sobraron estos alumnos " + alumnos.Count);
+            MessageBox.Show("Sobraron estos alumnos: " + alumnos.Count);
             //Aqui debes crear una página con los alumnos que no pudieron ser asignados
-            //La informacion requerida la contiene la lista "alumnos"
+
+            doc.NewPage();
+            tit = new Paragraph();
+            tit.Add("Lista de alumnos que no pudieron ser acomodados bajo los criterios");
+            doc.Add(tit);
+            doc.Add(new Paragraph(" "));
             for (int n = 0; n < alumnos.Count; n++)//For donde tendras todos los alumnos 
             {
-                MessageBox.Show("Escribo la informacion del alumno " + alumnos[n].getNombreAlumno());//Aqui se debería escribir la información que se quiera mostrar
+                doc.Add(new Paragraph(alumnos[n].getNombreAlumno() + ": \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
+                //MessageBox.Show("Escribo la informacion del alumno " + alumnos[n].getNombreAlumno());//Aqui se debería escribir la información que se quiera mostrar
             }
             doc.Add(new Paragraph(" "));
             doc.Close();
