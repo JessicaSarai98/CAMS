@@ -51,8 +51,8 @@ namespace BlocNotasToDatagridview
                     if (Form1 == null)
                     {
                         Form1 = new Form1();
-                        Form1.setLimite(10);
                         Form1.Owner = this;
+                        Form1.setLimite(10);
                         Form1.button2.Visible = false;
                         Form1.FormClosed += Form1_FormClosed;
                         Form1.Show();
@@ -66,6 +66,7 @@ namespace BlocNotasToDatagridview
                 {
                     Form1 = new Form1();
                     Form1.Owner = this;
+                    Form1.setLimite(10);
                     Form1.FormClosed += Form1_FormClosed;
                     Form1.Show();
                 }
@@ -238,25 +239,6 @@ namespace BlocNotasToDatagridview
                 i++;
             }
             //Fin
-            tablaAlgoritmo tabla = new tablaAlgoritmo();
-
-            //Karina
-            //int cantidadDeEscuelas = 0;//Veamos Noe
-            //for (i = 0; i < Escuelas.Count(); i++)
-            //{
-            //    if (Escuelas[i].capacidadxSalon != null)
-            //    {
-            //        capacidadTotal = i;
-            //        tabla.dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes: " + Escuelas[i].capacidad,
-            //        Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
-            //        Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
-            //        Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
-            //        Escuelas[i].capacidadxSalon[6]);
-            //        cantidadDeEscuelas++;//Intento Noé
-            //    }
-            //    else break;
-            //}
-            //tabla.Show();
 
             Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
@@ -565,6 +547,7 @@ namespace BlocNotasToDatagridview
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
             }
+            MessageBox.Show("Se ha generado exitosamente el pdf. \nAl finalizar el procedimiento sobraron " + alumnos.Count + " alumnos" );
             //Aqui debes crear una página con los alumnos que no pudieron ser asignados
             //La informacion requerida la contiene la lista "alumnos"
             doc.NewPage();
@@ -597,9 +580,9 @@ namespace BlocNotasToDatagridview
                         cantidad += valoresListasTotales[n][m];
                     }
                 }
-                tabla.dataGridView1.Rows.Add(escuelas[n], "Partcipantes: " + cantidad, texto);
+                //tabla.dataGridView1.Rows.Add(escuelas[n], "Partcipantes: " + cantidad, texto);
             }
-            tabla.Show();
+            //tabla.Show();
             //MessageBox.Show("Sobraron estos alumnos " + alumnos.Count);
         }
 
