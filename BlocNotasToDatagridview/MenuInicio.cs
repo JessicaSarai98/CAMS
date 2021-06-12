@@ -160,6 +160,7 @@ namespace BlocNotasToDatagridview
         iTextSharp.text.Font fontTimes12 = FontFactory.GetFont(iTextSharp.text.Font.FontFamily.TIMES_ROMAN.ToString(), 12, iTextSharp.text.Font.NORMAL);
         //FontFactory.GetFont(FontFactory.TIMES_BOLD, 12f, BaseColor.BLACK)
         Chunk glue = new Chunk(new VerticalPositionMark());
+        List<List<Asiento>> listasDeSalones = new List<List<Asiento>>();
         private void generarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.IO.StreamReader filesReader = new System.IO.StreamReader("Archivos-Salones/Salones.csv");
@@ -195,6 +196,8 @@ namespace BlocNotasToDatagridview
                 Escuelas.Add(new NombreEscuelas() { nombre = valores[0] });
                 alumnos.Add(new Alumno(valores[0], valores[1], valores[2]));//Noe
             }
+
+            List<string> escuelas = getEscuelasParticipantes(alumnos);
 
             //Karina
             var query = from escuela in Escuelas
@@ -235,6 +238,25 @@ namespace BlocNotasToDatagridview
                 i++;
             }
             //Fin
+            tablaAlgoritmo tabla = new tablaAlgoritmo();
+
+            //Karina
+            //int cantidadDeEscuelas = 0;//Veamos Noe
+            //for (i = 0; i < Escuelas.Count(); i++)
+            //{
+            //    if (Escuelas[i].capacidadxSalon != null)
+            //    {
+            //        capacidadTotal = i;
+            //        tabla.dataGridView1.Rows.Add(Escuelas[i].nombre, "Partcipantes: " + Escuelas[i].capacidad,
+            //        Escuelas[i].capacidadxSalon[0] + "/" + Escuelas[i].capacidadxSalon[1] + "/" +
+            //        Escuelas[i].capacidadxSalon[2] + "/" + Escuelas[i].capacidadxSalon[3] + "/" +
+            //        Escuelas[i].capacidadxSalon[4] + "/" + Escuelas[i].capacidadxSalon[5] + "/" +
+            //        Escuelas[i].capacidadxSalon[6]);
+            //        cantidadDeEscuelas++;//Intento Noé
+            //    }
+            //    else break;
+            //}
+            //tabla.Show();
 
             Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
@@ -283,9 +305,12 @@ namespace BlocNotasToDatagridview
                 int vueltasSinAsignarSalon = 0;
                 for (int s = 0; s < salones.Count; s++)
                 {
+
+                    bool asignadoEnSalon = false;
                     if (!(alumnos.Count > 0))
                     {
-                        break;
+                        vueltasSinAsignarSalon++;
+                        continue;
                     }
 
                     int vueltasDadasSinAsignar = 0;//Máximo 2, porque sino indica iteraciones infinitas
@@ -296,22 +321,16 @@ namespace BlocNotasToDatagridview
                         int n = 0;
                         while (n < contadorAuxiliarAlumnos)
                         {
-                            if (!(alumnos.Count > 0))
+
+                            if (!(alumnos.Count > 0) || limitesPorSalon[s] == 0)
                             {
                                 break;
                             }
-                            if (limitesPorSalon[s] == 0)
-                            {
-                                break;
-                            }
+
                             int contadorAuxiliarAsientosLibres = salones[s].getAsientosVacios().Count;
                             for (int m = 0; m < contadorAuxiliarAsientosLibres; m++)
                             {
-                                if (limitesPorSalon[s] == 0)
-                                {
-                                    break;
-                                }
-                                if (contadorAuxiliarAlumnos == 0)
+                                if (excepcionLimiteSalon_Alumnos(limitesPorSalon[s], contadorAuxiliarAlumnos, n))
                                 {
                                     break;
                                 }
@@ -319,14 +338,9 @@ namespace BlocNotasToDatagridview
                                 {
                                     int fila = salones[s].getAsientosVacios()[m] / salones[s].getColumnas();
                                     int columna = salones[s].getAsientosVacios()[m] % salones[s].getColumnas();
-                                    //if (salones[s].getAsientos().GetLength(0)<fila || salones[s].getAsientos().GetLength(1)<columna)
-                                    //{
-                                    //    continue;
-                                    //}
                                     salones[s].getAsientos()[fila, columna] = new Asiento(alumnos[n], salones[s].getAsientosVacios()[m]);
-                                    //m--;
-                                    //n--;
                                     asignado = true;
+                                    asignadoEnSalon = true;
                                     alumnos.RemoveAt(n);
                                     contadorAuxiliarAlumnos--;
                                     contadorAuxiliarAsientosLibres--;
@@ -340,24 +354,28 @@ namespace BlocNotasToDatagridview
                                 }
                                 n++;
                             }
+
                             if (!asignado)
                             {
                                 vueltasDadasSinAsignar++;
                             }
+                            if (excepcionLimiteSalon_Alumnos(limitesPorSalon[s], contadorAuxiliarAlumnos, n))
+                            {
+                                break;
+                            }
                         }
                         if (vueltasDadasSinAsignar == 2)
                         {
-                            vueltasSinAsignarSalon++;
                             break;
                         }
-                        if (!(alumnos.Count > 0))
+                        if (!(alumnos.Count > 0) || limitesPorSalon[s] == 0)
                         {
                             break;
                         }
-                        if (limitesPorSalon[s] == 0)
-                        {
-                            break;
-                        }
+                    }
+                    if (!asignadoEnSalon)
+                    {
+                        vueltasSinAsignarSalon++;
                     }
                 }
                 if (!(alumnos.Count > 0) || alumnos.Count == restantes)
@@ -366,7 +384,13 @@ namespace BlocNotasToDatagridview
                 }
                 if (vueltasSinAsignarSalon == salones.Count)
                 {
-                    break;
+                    for (int n = 0; n<salones.Count; n++)
+                    {
+                        if (salones[n].getAsientosVacios().Count>0)
+                        {
+                            limitesPorSalon[n] += salones[n].getAsientosVacios().Count;
+                        }
+                    }
                 }
             }
             //Se terminan de asignar los alumnos a los salones, y ahora si se trabaja con el escrito del PDF 
@@ -404,6 +428,7 @@ namespace BlocNotasToDatagridview
                 table.AddCell(salon);
 
                 List<Asiento> listaSalon = salones[n].generarLista();
+                listasDeSalones.Add(listaSalon);
                 for (int m = 0; m < listaSalon.Count; m++)
                 {
                     String numero = Convert.ToString(m + 1);
@@ -468,9 +493,15 @@ namespace BlocNotasToDatagridview
                             phraseOrden.Add(
                                 new Chunk("Folio: \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
+                            //Escribe el Folio
                             phraseOrden.Add(
                                 new Chunk(salones[n].getAsientos()[m, l].getAlumno().getFolio() + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
                             );
+
+                            //Escribe el identificador de la escuela
+                            //phraseOrden.Add(
+                            //    new Chunk(getEscuelaID(escuelas, salones[n].getAsientos()[m, l].getAlumno().getNombreEscuela()) + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK))
+                            //);
                             phraseOrden.Add(glue);
                             phraseOrden.Add(
                                 new Chunk((salones[n].getAsientos()[m, l].getNumeroAsiento() + 1) + " \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9f, BaseColor.BLACK))
@@ -534,9 +565,8 @@ namespace BlocNotasToDatagridview
                 doc.Add(new Paragraph("  "));
                 doc.NewPage();
             }
-            MessageBox.Show("Sobraron estos alumnos: " + alumnos.Count);
             //Aqui debes crear una página con los alumnos que no pudieron ser asignados
-
+            //La informacion requerida la contiene la lista "alumnos"
             doc.NewPage();
             tit = new Paragraph();
             tit.Add("Lista de alumnos que no pudieron ser acomodados bajo los criterios");
@@ -545,10 +575,49 @@ namespace BlocNotasToDatagridview
             for (int n = 0; n < alumnos.Count; n++)//For donde tendras todos los alumnos 
             {
                 doc.Add(new Paragraph(alumnos[n].getNombreAlumno() + ": \n", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12f, BaseColor.BLACK)));
-                //MessageBox.Show("Escribo la informacion del alumno " + alumnos[n].getNombreAlumno());//Aqui se debería escribir la información que se quiera mostrar
             }
             doc.Add(new Paragraph(" "));
             doc.Close();
+
+            List<List<int>> valoresListasTotales = getParticipantesDeEscuelaEnCadaSalon(escuelas, listasDeSalones);
+            for (int n = 0; n < valoresListasTotales.Count; n++)
+            {
+                int cantidad = 0;
+                string texto = "";
+                for (int m=0; m<valoresListasTotales[n].Count; m++)
+                {
+                    if ((m+1) == valoresListasTotales[n].Count)
+                    {
+                        texto += valoresListasTotales[n][m];
+                        cantidad += valoresListasTotales[n][m];
+                    }
+                    else
+                    {
+                        texto += valoresListasTotales[n][m] + "/";
+                        cantidad += valoresListasTotales[n][m];
+                    }
+                }
+                tabla.dataGridView1.Rows.Add(escuelas[n], "Partcipantes: " + cantidad, texto);
+            }
+            tabla.Show();
+            //MessageBox.Show("Sobraron estos alumnos " + alumnos.Count);
+        }
+
+        private bool excepcionLimiteSalon_Alumnos(int limiteDelSalon, int contadorAuxiliarAlumnos, int n)
+        {
+            if (limiteDelSalon == 0)
+            {
+                return true;
+            }
+            if (contadorAuxiliarAlumnos == 0)
+            {
+                return true;
+            }
+            if (n == contadorAuxiliarAlumnos)
+            {
+                return true;
+            }
+            return false;
         }
 
 
@@ -574,6 +643,72 @@ namespace BlocNotasToDatagridview
         public int stringToInt(string value)
         {
             return Convert.ToInt32(value);
+        }
+
+        private List<string> getEscuelasParticipantes(List<Alumno> alumnos)
+        {
+            List<string> escuelas = new List<string>();
+            for (int i=0; i<alumnos.Count; i++)
+            {
+                if (escuelas.Count==0)
+                {
+                    escuelas.Add(alumnos[i].getNombreEscuela());
+                }
+                else
+                {
+                    bool esEscuelaNueva = true;
+                    for (int j=0; j<escuelas.Count; j++)
+                    {
+                        if (alumnos[i].getNombreEscuela().CompareTo(escuelas[j])==0)
+                        {
+                            esEscuelaNueva = false;
+                            break;
+                        }
+                    }
+                    if (esEscuelaNueva)
+                    {
+                        escuelas.Add(alumnos[i].getNombreEscuela());
+                    }
+                }
+            }
+            return escuelas; 
+        }
+
+        private int getEscuelaID(List<string> escuelas, string escuela)
+        {
+            int id = 0;
+            for (int i=0; i<escuelas.Count; i++)
+            {
+                if (escuelas[i].CompareTo(escuela)==0)
+                {
+                    id = i;
+                    break;
+                }
+            }
+            return id;
+        }
+
+        private List<List<int>> getParticipantesDeEscuelaEnCadaSalon(List<string> escuelas, List<List<Asiento>> listas)
+        {
+            List<List<int>> participantesPorTodasLasEscuelas = new List<List<int>>();
+            for (int i=0; i<escuelas.Count; i++)
+            {
+                List<int> participantesPorEscuelas = new List<int>();
+                int cantidad = 0;
+                for (int j=0; j<listas.Count; j++)
+                {
+                    for (int k=0; k<listas[j].Count; k++)
+                    {
+                        if (escuelas[i].CompareTo(listas[j][k].getAlumno().getNombreEscuela()) == 0)
+                        {
+                            cantidad++;
+                        }
+                    }
+                    participantesPorEscuelas.Add(cantidad);
+                }
+                participantesPorTodasLasEscuelas.Add(participantesPorEscuelas);
+            }
+            return participantesPorTodasLasEscuelas;
         }
     }
 }

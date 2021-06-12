@@ -75,40 +75,43 @@ namespace BlocNotasToDatagridview
 
         public bool puedoSentarmeAqui_B(Alumno alumno, int numeroDeAsiento)
         {
-            ArrayList asientosARevisar = this.crearAsientosARevisar(numeroDeAsiento);
+            List<int> asientosARevisar = this.crearAsientosARevisar(numeroDeAsiento);
             for (int i=0; i<asientosARevisar.Count; i++)
             {
-                int fila = numeroDeAsiento/columnas;
-                int columna = numeroDeAsiento%columnas;
+                int fila = asientosARevisar[i] / columnas;
+                int columna = asientosARevisar[i] % columnas;
                 if (asientos[fila, columna] == null)//No hay nadie sentado
                 {
-                    return true;
+                    continue;
                 }
                 //Hay alguien sentado
                 if (alumno.getNombreEscuela().CompareTo(asientos[fila, columna].getAlumno().getNombreEscuela()) == 0)//Ver que sean de distintas escuelas
                 {
-                    return false; 
+                    return false;
                 }
             }
             return true;
         }
 
-        public ArrayList crearAsientosARevisar(int posicionActual)
+        public List<int> crearAsientosARevisar(int posicionActual)
         {
-            ArrayList asientosARevisar = new ArrayList();
+            List<int> asientosARevisar = new List<int>();
             int arriba = posicionActual - columnas;
             int derecha = posicionActual + 1;
             int abajo = posicionActual + columnas;
             int izquierda = posicionActual - 1;
 
             int[] numeroAsientos = {arriba, derecha, abajo, izquierda};
+            string porRevisar = " ";
             for (int i=0; i<numeroAsientos.Length; i++)
             {
                 if (!esAsientoExcepcion(numeroAsientos[i], posicionActual))
                 {
                     asientosARevisar.Add(numeroAsientos[i]);
+                    porRevisar += numeroAsientos[i] + " ";
                 }
             }
+            //MessageBox.Show(porRevisar);
             return asientosARevisar;
         }
 
@@ -168,7 +171,7 @@ namespace BlocNotasToDatagridview
             List<Asiento> lista = crearArrayDeAlumnos();
             for (int i = 0; i <lista.Count; i++)
             {
-                for (int j = 0; j < lista.Count - j - 1; j++)
+                for (int j = 0; j < lista.Count - 1; j++)
                 {
                     String alumno1 = RemoveDiacritics(lista[j].getAlumno().getNombreAlumno());
                     String alumno2 = RemoveDiacritics(lista[j + 1].getAlumno().getNombreAlumno());
