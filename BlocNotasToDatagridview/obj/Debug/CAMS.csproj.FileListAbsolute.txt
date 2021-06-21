@@ -148,7 +148,6 @@ C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\CAMS.
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Etiquetas.resources
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Extras.resources
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form1.resources
-C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.Form2.resources
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.MenuInicio.resources
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.ParejasAleatorias.resources
 C:\Users\Jessica\Documents\Servicio\CAMS\BlocNotasToDatagridview\obj\Debug\BlocNotasToDatagridview.preguntas2.resources

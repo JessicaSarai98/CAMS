@@ -186,16 +186,17 @@ namespace BlocNotasToDatagridview
                 //Fin
             }
 
+            //Lectura de los alumnos
             filesReader = new System.IO.StreamReader("Archivos-Salones/Entrada.csv");
             filesReader.ReadLine();
-            //Karina
-            List<Alumno> alumnos = new List<Alumno>();//Noe
+            //Recopila en una lista tipo Alumnos
+            List<Alumno> alumnos = new List<Alumno>();
             while ((linea = filesReader.ReadLine()) != null)
             {
                 valores = linea.Split(',');
                 //Agregamos todos los valores del archivo a la lista
                 Escuelas.Add(new NombreEscuelas() { nombre = valores[0] });
-                alumnos.Add(new Alumno(valores[0], valores[1], valores[2]));//Noe
+                alumnos.Add(new Alumno(valores[0], valores[1], valores[2]));
             }
 
             List<string> escuelas = getEscuelasParticipantes(alumnos);
@@ -240,15 +241,18 @@ namespace BlocNotasToDatagridview
             }
             //Fin
 
+            //Empezando a crear el archivo PDF
             Document doc = new Document(PageSize.LETTER);
             PdfWriter.GetInstance(doc, new FileStream("Archivos-Salones/ListaSalones.pdf", FileMode.Create)); // asignamos el nombre de archivo hola.pdf
             doc.Open();
             Paragraph title, tit, titulo;
             //Fin
             //----------------------------------------------------------------------------------------------------------------------------------------------
+
+            //Metodo para limitar cantidad que habrá en cada salón 
             List<int> limitesPorSalon = new List<int>();
             int limiteGeneral = alumnos.Count / salones.Count;
-            int restantes = alumnos.Count - limiteGeneral * salones.Count;
+            int restantes = alumnos.Count - limiteGeneral * salones.Count; //los que faltaron por asignar 
             for (int i = 0; i < salones.Count; i++)
             {
                 if (salones[i].getFilas() * salones[i].getColumnas() >= limiteGeneral)
@@ -261,13 +265,16 @@ namespace BlocNotasToDatagridview
                     restantes += limiteGeneral - salones[i].getFilas() * salones[i].getColumnas();
                 }
             }
+            //se entra a esta condicion cuando aun hay alumnos sin asignar 
             if (restantes > 0)
             {
                 for (int i = 0; i < salones.Count; i++)
                 {
+                    //se entra cuando los salones tienen espacio aun o son iguales al limite general
                     if (limitesPorSalon[i] == limiteGeneral)
                     {
                         int espacioParaAdicionar = salones[i].getFilas() * salones[i].getColumnas() - limiteGeneral;
+                       //los alumnos restantes ya no hay, asigna las cantidades de alumno que debe tener cada salon
                         if (espacioParaAdicionar - restantes >= 0)
                         {
                             limitesPorSalon[i] = limiteGeneral + restantes;
@@ -287,8 +294,9 @@ namespace BlocNotasToDatagridview
                 int vueltasSinAsignarSalon = 0;
                 for (int s = 0; s < salones.Count; s++)
                 {
-
+                    //cuando termina el ciclo y verifica que esta variable sigue siendo false, se aumenta el cont de vueltasSinAsignar
                     bool asignadoEnSalon = false;
+                    //si ya no hay alumnos entonces ya no hay asignaciones
                     if (!(alumnos.Count > 0))
                     {
                         vueltasSinAsignarSalon++;
@@ -299,7 +307,7 @@ namespace BlocNotasToDatagridview
                     while (salones[s].getAsientosVacios().Count > 0 || !(alumnos.Count > 0))
                     {
                         bool asignado = false;
-                        int contadorAuxiliarAlumnos = alumnos.Count;
+                        int contadorAuxiliarAlumnos = alumnos.Count;//Te ayuda en las iteraciones
                         int n = 0;
                         while (n < contadorAuxiliarAlumnos)
                         {
@@ -308,14 +316,16 @@ namespace BlocNotasToDatagridview
                             {
                                 break;
                             }
-
+                            //indice de los array, considerando el desplazamiento de estos mismos
                             int contadorAuxiliarAsientosLibres = salones[s].getAsientosVacios().Count;
                             for (int m = 0; m < contadorAuxiliarAsientosLibres; m++)
                             {
+                                //cuando ya no encuentra un asiento, entonces nos da una excepcion
                                 if (excepcionLimiteSalon_Alumnos(limitesPorSalon[s], contadorAuxiliarAlumnos, n))
                                 {
                                     break;
                                 }
+                                //asignar alumno a un asiento/ toma el alumno y el asiento especifico para verificar si esta libre o no
                                 if (salones[s].puedoSentarmeAqui_B(alumnos[n], salones[s].getAsientosVacios()[m]))
                                 {
                                     int fila = salones[s].getAsientosVacios()[m] / salones[s].getColumnas();
@@ -337,39 +347,48 @@ namespace BlocNotasToDatagridview
                                 n++;
                             }
 
+                            //si no fue asignado. hace una vuelta más con un max de 2 vueltas
                             if (!asignado)
                             {
                                 vueltasDadasSinAsignar++;
                             }
+                            //ya no caben más en el salon, cuando el indice esta fuera del rango
                             if (excepcionLimiteSalon_Alumnos(limitesPorSalon[s], contadorAuxiliarAlumnos, n))
                             {
                                 break;
                             }
                         }
+                        //si ya son dos vueltas, pasa el siguiente alumno
                         if (vueltasDadasSinAsignar == 2)
                         {
                             break;
                         }
+                        //ya no hay alumnos o cuando mi limite ya fue alcanzado
                         if (!(alumnos.Count > 0) || limitesPorSalon[s] == 0)
                         {
                             break;
                         }
                     }
+                    //se reviso toda la lista los alumnos y no se asigno ninguno en ese salon, por lo tanot en ese salon ya no se puede asignar mas 
                     if (!asignadoEnSalon)
                     {
                         vueltasSinAsignarSalon++;
                     }
                 }
+                //ya no hay alumnos o se asignaron todos los que se pueden pero la lista es mayor al limite total de alumnos (no se puede hacer nada) 
+                //o si hay alumnos pero de plano ya no cumplen con el patron  
                 if (!(alumnos.Count > 0) || alumnos.Count == restantes)
                 {
                     break;
                 }
+                //hubo restantes pero ya no se pueden asignar en ningun salon 
                 if (vueltasSinAsignarSalon == salones.Count)
                 {
                     for (int n = 0; n<salones.Count; n++)
                     {
+                        //n salon tiene asientos vacios 
                         if (salones[n].getAsientosVacios().Count>0)
-                        {
+                        {//si en dado caso sobran alumnos, se le asigna al alumno el asiento disponible (respetando el patron)
                             limitesPorSalon[n] += salones[n].getAsientosVacios().Count;
                         }
                     }
@@ -586,6 +605,10 @@ namespace BlocNotasToDatagridview
             //MessageBox.Show("Sobraron estos alumnos " + alumnos.Count);
         }
 
+
+
+        //FUNCIONES--------------------------------------------------------------------------------------------------------------
+
         private bool excepcionLimiteSalon_Alumnos(int limiteDelSalon, int contadorAuxiliarAlumnos, int n)
         {
             if (limiteDelSalon == 0)
@@ -602,9 +625,6 @@ namespace BlocNotasToDatagridview
             }
             return false;
         }
-
-
-        //FUNCIONES--------------------------------------------------------------------------------------------------------------
 
         public string RemoveDiacritics(string text)
         {

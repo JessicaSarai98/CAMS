@@ -87,6 +87,7 @@ namespace BlocNotasToDatagridview
                 //Hay alguien sentado
                 if (alumno.getNombreEscuela().CompareTo(asientos[fila, columna].getAlumno().getNombreEscuela()) == 0)//Ver que sean de distintas escuelas
                 {
+                    //si son de la misma escuela no se puede sentar ahi 
                     return false;
                 }
             }
